@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/14 16:34:58 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/14 17:43:42 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ typedef struct s_scene_object
 	union {
 		struct
 		{
-			float			intensity;
+			double			intensity;
 			uint32_t		color;
 		}	s_ambient_light;
 		struct
 		{
-			float			intensity;
+			double			intensity;
 			t_vector3		dir;
 			uint32_t		color;
 		}	s_directional_light;
@@ -63,15 +63,15 @@ typedef struct s_scene_object
 		struct
 		{
 			t_vector3		pos;
-			float			diameter;
+			double			diameter;
 			uint32_t		color;
 		}	s_sphere;
 		struct
 		{
 			t_vector3		pos;
 			t_vector3		dir;
-			float			diameter;
-			float			height;
+			double			diameter;
+			double			height;
 			uint32_t		color;
 		}	s_cylinder;
 	};

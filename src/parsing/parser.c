@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:15:03 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/14 17:11:46 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/14 17:40:35 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static int	save_object(char *line, uint8_t *unique_obj_count)
 	if (type < 0)
 		return (-1);
 	printf("line n %d: %s\t|(%u)\n", count, line, *unique_obj_count);
+	printf("type = %d\n", type);
 	if (type == AMBIENT_LIGHT && (*unique_obj_count & UNIQUE_OBJ_COUNT_A))
 		return (free_arr(splt, -1, 1), -1);
 	*unique_obj_count |= (type == AMBIENT_LIGHT * UNIQUE_OBJ_COUNT_A);
@@ -110,4 +111,8 @@ void	parse_input(void)
 		return ;
 	if (read_file(&unique_objects_count) < 0)
 		return (free(get_program()->objects));
+
+	int i = -1;
+	while (++i < get_program()->object_count)
+		print_object(&get_program()->objects[i]);
 }
