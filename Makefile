@@ -8,9 +8,6 @@ OBJ_DIR = obj
 INCLUDES_DIR = includes
 LIB_DIR = ${INCLUDES_DIR}/lib
 
-SRCS =	main.c
-OBJS = ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
-
 LIBFT_DIR = ${LIB_DIR}/libft
 LIBFT = libft.a
 INCLUDE_LIBFT = -L${LIBFT_DIR} -lft
@@ -20,12 +17,22 @@ LIBMLX42 = libmlx42.a
 
 LIBS = ${INCLUDE_LIBFT} -L. ${MLX42_DIR}/${LIBMLX42} -ldl -lglfw -pthread -lm
 
+PARSER_SRCS =	parser.c
+PARSER_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${PARSER_SRCS:.c=.o}}}
+
+SRCS =	main.c			\
+		${PARSER_SRCS}
+OBJS = ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
+
 all : ${NAME}
 
 ${NAME} : ${OBJS} ${LIBFT} ${LIBMLX42}
 	@$(CC) $(CFLAGS) ${LIBS} ${OBJS} -o ${NAME} -lreadline
 
 ${OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c | ${OBJ_DIR}
+	@$(CC) $(CFLAGS) -I$(INCLUDES_DIR) -c $< -o $@
+
+${PARSER_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/parsing/%.c | ${OBJ_DIR}
 	@$(CC) $(CFLAGS) -I$(INCLUDES_DIR) -c $< -o $@
 
 ${OBJ_DIR} :
