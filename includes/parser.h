@@ -6,13 +6,13 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:20:05 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/14 14:20:19 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/14 14:46:31 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-
+void	parse_input(void);
 
 #endif

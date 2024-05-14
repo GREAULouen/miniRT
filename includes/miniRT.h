@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:48:52 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/14 14:28:55 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/14 14:41:40 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 /* ~~~~ local includes ~~~~	*/
 # include "scene_object.h"
+# include "parser.h"
 
 /* ~~~~ Other libraries ~~~	*/
 # include <math.h>		// math
@@ -31,10 +32,14 @@
 /* ~~~~ Main structure ~~~~	*/
 typedef struct s_program
 {
+	char			*file_name;
 	int				object_count;
 	t_scene_object	*objects;
 }					t_program;
 
 t_program			*get_program(void);
+
+/* ~ Argument validation ~	*/
+# define BAD_ARGS_FORMAT "Bad program arguments.\n"
 
 #endif
