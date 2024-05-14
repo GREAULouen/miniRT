@@ -20,7 +20,7 @@ LIBMLX42 = libmlx42.a
 
 LIBS = ${INCLUDE_LIBFT} -L. ${MLX42_DIR}/${LIBMLX42} -ldl -lglfw -pthread -lm
 
-all : ${NAME} | ${LIBFT_DIR}
+all : ${NAME}
 
 ${NAME} : ${OBJS} ${LIBFT} ${LIBMLX42}
 	@$(CC) $(CFLAGS) ${LIBS} ${OBJS} -o ${NAME} -lreadline
@@ -32,10 +32,8 @@ ${OBJ_DIR} :
 	@mkdir -p ${OBJ_DIR}
 
 ${LIBFT} :
-	@make -sC ${LIBFT_DIR} all
-
-${LIBFT_DIR} :
 	@git submodule update --init
+	@make -sC ${LIBFT_DIR} all
 
 ${LIBMLX42} :
 	@git submodule update --init
