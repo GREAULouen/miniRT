@@ -21,12 +21,14 @@ LIBS = ${INCLUDE_LIBFT} -L. ${MLX42_DIR}/${LIBMLX42} -ldl -lglfw -pthread -lm
 
 
 UTILS_SRCS =	quit_utils.c				\
-				object_type_misc.c
+				object_type_utils.c			\
+				object_type_misc.c			\
+				parsing_utils.c
 UTILS_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${UTILS_SRCS:.c=.o}}}
 
-PARSER_SRCS =	parser.c				\
-				object_type_utils.c		\
-				create_object.c
+PARSER_SRCS =	parser.c					\
+				create_ambient_light.c		\
+				create_camera.c
 PARSER_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${PARSER_SRCS:.c=.o}}}
 
 MAIN_SRCS =	main.c				\

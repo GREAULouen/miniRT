@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:15:03 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/14 17:40:35 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/14 18:42:36 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ static int	init_objects(void)
 	if (fd < 0)
 		return (perror(PROGRAM_NAME), -1);
 	line = ft_get_next_line_nonl(fd);
-	while (line && ++get_program()->object_count)
+	while (line)
 	{
+		if (line[0])
+			get_program()->object_count++;
 		free(line);
 		line = ft_get_next_line_nonl(fd);
 	}
@@ -60,8 +62,8 @@ static int	save_object(char *line, uint8_t *unique_obj_count)
 	type = get_object_type(splt[0]);
 	if (type < 0)
 		return (-1);
-	printf("line n %d: %s\t|(%u)\n", count, line, *unique_obj_count);
-	printf("type = %d\n", type);
+	// printf("line n %d: %s\t|(%u)\n", count, line, *unique_obj_count);
+	// printf("type = %d\n", type);
 	if (type == AMBIENT_LIGHT && (*unique_obj_count & UNIQUE_OBJ_COUNT_A))
 		return (free_arr(splt, -1, 1), -1);
 	*unique_obj_count |= (type == AMBIENT_LIGHT * UNIQUE_OBJ_COUNT_A);
@@ -109,10 +111,9 @@ void	parse_input(void)
 	printf("  |- file_name: %s\n", get_program()->file_name);
 	if (init_objects() < 0)
 		return ;
+	printf("  |- object_count: %d\n", get_program()->object_count);
 	if (read_file(&unique_objects_count) < 0)
 		return (free(get_program()->objects));
 
-	int i = -1;
-	while (++i < get_program()->object_count)
-		print_object(&get_program()->objects[i]);
+	print_objects();
 }

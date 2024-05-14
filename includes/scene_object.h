@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/14 17:43:42 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/14 18:27:10 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,31 +45,31 @@ typedef struct s_scene_object
 		struct
 		{
 			double			intensity;
-			t_vector3		dir;
+			t_vector3		*dir;
 			uint32_t		color;
 		}	s_directional_light;
 		struct
 		{
-			t_vector3		pos;
-			t_vector3		dir;
-			unsigned int	fov;
+			t_vector3		*pos;
+			t_vector3		*dir;
+			int				fov;
 		}	s_camera;
 		struct
 		{
-			t_vector3		pos;
-			t_vector3		normal;
+			t_vector3		*pos;
+			t_vector3		*normal;
 			uint32_t		color;
 		}	s_plane;
 		struct
 		{
-			t_vector3		pos;
+			t_vector3		*pos;
 			double			diameter;
 			uint32_t		color;
 		}	s_sphere;
 		struct
 		{
-			t_vector3		pos;
-			t_vector3		dir;
+			t_vector3		*pos;
+			t_vector3		*dir;
 			double			diameter;
 			double			height;
 			uint32_t		color;
