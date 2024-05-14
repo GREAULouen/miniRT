@@ -5,21 +5,24 @@ NAME = miniRT
 
 SRC_DIR = src
 OBJ_DIR = obj
-
 INCLUDES_DIR = includes
+LIB_DIR = ${INCLUDES_DIR}/lib
 
 SRCS =	main.c
 OBJS = ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
 
-LIBFT_DIR = ${INCLUDES_DIR}/libft
-LIBFT = ${LIBFT_DIR}/libft.a
+LIBFT_DIR = ${LIB_DIR}/libft
+LIBFT = libft.a
 INCLUDE_LIBFT = -L${LIBFT_DIR} -lft
 
-LIBS = ${INCLUDE_LIBFT} -L. ${LIB_DIR}/${MLX42_DIR}/${LIBMLX42} -ldl -lglfw -pthread -lm
+MLX42_DIR = ${LIB_DIR}/MLX42
+LIBMLX42 = libmlx42.a
 
-all : ${NAME}
+LIBS = ${INCLUDE_LIBFT} -L. ${MLX42_DIR}/${LIBMLX42} -ldl -lglfw -pthread -lm
 
-${NAME} : ${OBJS} ${LIBFT}
+all : ${NAME} | ${LIBFT_DIR}
+
+${NAME} : ${OBJS} ${LIBFT} ${LIBMLX42}
 	@$(CC) $(CFLAGS) ${LIBS} ${OBJS} -o ${NAME} -lreadline
 
 ${OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c | ${OBJ_DIR}
@@ -30,6 +33,13 @@ ${OBJ_DIR} :
 
 ${LIBFT} :
 	@make -sC ${LIBFT_DIR} all
+
+${LIBFT_DIR} :
+	@git submodule update --init
+
+${LIBMLX42} :
+	@git submodule update --init
+	@cmake ${LIB_DIR}/MLX42 -B ${MLX42_DIR} && make -C ${MLX42_DIR} -j4
 
 clean :
 	@rm -f ${OBJS}
