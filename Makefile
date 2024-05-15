@@ -26,9 +26,10 @@ UTILS_SRCS =	quit_utils.c				\
 				parsing_utils.c
 UTILS_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${UTILS_SRCS:.c=.o}}}
 
-PARSER_SRCS =	parser.c					\
-				create_ambient_light.c		\
-				create_camera.c
+PARSER_SRCS =	parser.c							\
+				create_ambient_light.c				\
+				create_camera.c						\
+				create_directional_light.c
 PARSER_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${PARSER_SRCS:.c=.o}}}
 
 MAIN_SRCS =	main.c				\

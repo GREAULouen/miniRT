@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/14 18:27:10 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/15 09:50:39 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ typedef struct s_scene_object
 		}	s_ambient_light;
 		struct
 		{
+			t_vector3		*pos;
 			double			intensity;
-			t_vector3		*dir;
 			uint32_t		color;
 		}	s_directional_light;
 		struct

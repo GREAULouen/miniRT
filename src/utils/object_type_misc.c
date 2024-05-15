@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:12:39 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/14 18:44:36 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/15 09:54:00 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	print_object(t_scene_object *obj)
 	}
 	else if (obj->type == DIRECTIONAL_LIGHT)
 	{
-		print_v3("      |- direction  ", obj->s_directional_light.dir, ONELINE);
+		print_v3("      |- position   ", obj->s_directional_light.pos, ONELINE);
 		printf("      |- intensity : %f\n", obj->s_directional_light.intensity);
 		printf("      |- color     : (%u, %u, %u)\n",
 			obj->s_directional_light.color >> SHIFT_R,
@@ -90,8 +90,8 @@ static char	*get_type_string(int type)
 	static	char	*type_string[OBJECT_TYPE_COUNT];
 
 	type_string[AMBIENT_LIGHT] = "Ambient light";
-	type_string[CAMERA] = "Camera";
 	type_string[DIRECTIONAL_LIGHT] = "Directional light";
+	type_string[CAMERA] = "Camera";
 	type_string[PLANE] = "Plane";
 	type_string[SPHERE] = "Sphere";
 	type_string[CYLINDER] = "Cylinder";

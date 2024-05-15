@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:36:31 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/14 18:32:26 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/15 09:48:20 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_obj_creator	*get_obj_creator(void)
 	static t_obj_creator	obj_creator[OBJECT_TYPE_COUNT];
 
 	obj_creator[AMBIENT_LIGHT] = create_ambient_light;
+	obj_creator[DIRECTIONAL_LIGHT] = create_directional_light;
 	obj_creator[CAMERA] = create_camera;
 	return (&obj_creator[0]);
 }

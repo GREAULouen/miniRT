@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:20:05 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/14 18:32:45 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/15 09:48:15 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@ void			parse_input(void);
 
 int				create_ambient_light(t_scene_object *obj, char **args);
 int				create_camera(t_scene_object *obj, char **args);
+int				create_directional_light(t_scene_object *obj, char **args);
 
 #endif
