@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/14 10:53:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/14 15:35:47 by lgreau           ###   ########.fr       */
+/*   Created: 2024/05/14 16:47:35 by lgreau            #+#    #+#             */
+/*   Updated: 2024/05/14 18:42:27 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#ifndef UTILS_H
+# define UTILS_H
 
-int	main(int argc, char *argv[])
-{
-	if (argc != 2 || !ft_endswith(argv[1], ".rt"))
-	{
-		write(2, BAD_ARGS_FORMAT, ft_strlen(BAD_ARGS_FORMAT));
-		exit(EXIT_FAILURE);
-	}
-	get_program()->file_name = argv[1];
-	parse_input();
-	// TODO : clean the program structure
-	exit(EXIT_SUCCESS);
-}
+void			free_arr(char **arr, int last, int is_allocated);
+void			print_object(t_scene_object *obj);
+void			print_objects(void);
+
+t_obj_creator	*get_obj_creator(void);
+int				get_object_type(char *type);
+uint32_t		atoc(char *arg);
+t_vector3		*atov(char *arg);;
+
+#endif
