@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:46:50 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/15 10:58:29 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/21 14:53:32 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	create_sphere(t_scene_object *obj, char **args)
 	obj->s_sphere.diameter = ft_atod(args[2]);
 	if (obj->s_sphere.diameter < 0)
 		return (free(obj->s_sphere.pos),
-				set_error((char *)__func__, INVALID_ARG), -1);
+			set_error((char *)__func__, INVALID_ARG), -1);
 	obj->s_sphere.color = atoc(args[3]);
 	return (0);
 }

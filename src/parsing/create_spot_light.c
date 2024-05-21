@@ -6,14 +6,14 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:43:27 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/21 14:23:27 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/21 14:53:34 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
 /**
- * @brief Initialize a directional light using the args as values
+ * @brief Initialize a spot light using the args as values
  *
  * @param type
  * @param args
@@ -31,7 +31,7 @@ int	create_spot_light(t_scene_object *obj, char **args)
 	if (obj->s_spot_light.intensity < 0
 		|| obj->s_spot_light.intensity > 1)
 		return (free(obj->s_spot_light.pos),
-				set_error((char *)__func__, INVALID_ARG), -1);
+			set_error((char *)__func__, INVALID_ARG), -1);
 	obj->s_spot_light.color = atoc(args[3]);
 	return (0);
 }

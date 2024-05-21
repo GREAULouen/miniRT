@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:15:03 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/21 14:25:17 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/21 14:53:53 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,5 @@ void	parse_input(void)
 	printf("  |- object_count: %d\n", get_program()->object_count);
 	if (read_file(&unique_objects_count) < 0)
 		return (free(get_program()->objects));
-
 	print_objects();
 }

@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:50:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/15 10:57:22 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/21 14:53:26 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ int	create_cylinder(t_scene_object *obj, char **args)
 		return (free(obj->s_cylinder.pos), -1);
 	if (ft_dot_product(obj->s_cylinder.dir, obj->s_cylinder.dir) > 1)
 		return (free(obj->s_cylinder.pos), free(obj->s_cylinder.dir),
-				set_error((char *)__func__, INVALID_ARG), -1);
+			set_error((char *)__func__, INVALID_ARG), -1);
 	obj->s_cylinder.diameter = ft_atod(args[3]);
 	if (obj->s_cylinder.diameter < 0)
 		return (free(obj->s_cylinder.pos), free(obj->s_cylinder.dir),
-				set_error((char *)__func__, INVALID_ARG), -1);
+			set_error((char *)__func__, INVALID_ARG), -1);
 	obj->s_cylinder.height = ft_atod(args[4]);
 	if (obj->s_cylinder.height < 0)
 		return (free(obj->s_cylinder.pos), free(obj->s_cylinder.dir),
-				set_error((char *)__func__, INVALID_ARG), -1);
+			set_error((char *)__func__, INVALID_ARG), -1);
 	obj->s_cylinder.color = atoc(args[5]);
 	return (0);
 }

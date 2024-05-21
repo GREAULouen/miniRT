@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 18:00:11 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/15 10:57:59 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/21 14:53:20 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	create_camera(t_scene_object *obj, char **args)
 		return (free(obj->s_camera.pos), -1);
 	if (ft_dot_product(obj->s_camera.dir, obj->s_camera.dir) > 1)
 		return (free(obj->s_camera.pos), free(obj->s_camera.dir),
-				set_error((char *)__func__, INVALID_ARG), -1);
+			set_error((char *)__func__, INVALID_ARG), -1);
 	obj->s_camera.fov = ft_btoi(args[3], BASE10_STR);
 	if (obj->s_camera.fov < 0 || obj->s_camera.fov > 180)
 		return (free(obj->s_camera.pos),
