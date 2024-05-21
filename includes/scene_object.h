@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/15 09:50:39 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/21 14:23:14 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 typedef enum e_scene_object_type
 {
 	AMBIENT_LIGHT,
-	DIRECTIONAL_LIGHT,
+	SPOT_LIGHT,
 	CAMERA,
 	PLANE,
 	SPHERE,
@@ -47,7 +47,7 @@ typedef struct s_scene_object
 			t_vector3		*pos;
 			double			intensity;
 			uint32_t		color;
-		}	s_directional_light;
+		}	s_spot_light;
 		struct
 		{
 			t_vector3		*pos;

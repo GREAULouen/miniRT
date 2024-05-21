@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:15:03 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/14 18:42:36 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/21 14:25:17 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,12 @@ static int	save_object(char *line, uint8_t *unique_obj_count)
 	type = get_object_type(splt[0]);
 	if (type < 0)
 		return (-1);
-	// printf("line n %d: %s\t|(%u)\n", count, line, *unique_obj_count);
-	// printf("type = %d\n", type);
 	if (type == AMBIENT_LIGHT && (*unique_obj_count & UNIQUE_OBJ_COUNT_A))
 		return (free_arr(splt, -1, 1), -1);
 	*unique_obj_count |= (type == AMBIENT_LIGHT * UNIQUE_OBJ_COUNT_A);
 	if (type == CAMERA && (*unique_obj_count & UNIQUE_OBJ_COUNT_C))
 		return (free_arr(splt, -1, 1), -1);
 	*unique_obj_count |= (type == CAMERA * UNIQUE_OBJ_COUNT_C);
-	if (type == DIRECTIONAL_LIGHT && (*unique_obj_count & UNIQUE_OBJ_COUNT_L))
-		return (free_arr(splt, -1, 1), -1);
-	*unique_obj_count |= (type == DIRECTIONAL_LIGHT * UNIQUE_OBJ_COUNT_L);
 	return (get_obj_creator()[type](&get_program()->objects[count++], splt));
 }
 

@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:36:31 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/15 10:54:33 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/21 14:25:32 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_obj_creator	*get_obj_creator(void)
 	static t_obj_creator	obj_creator[OBJECT_TYPE_COUNT];
 
 	obj_creator[AMBIENT_LIGHT] = create_ambient_light;
-	obj_creator[DIRECTIONAL_LIGHT] = create_directional_light;
+	obj_creator[SPOT_LIGHT] = create_spot_light;
 	obj_creator[CAMERA] = create_camera;
 	obj_creator[PLANE] = create_plane;
 	obj_creator[SPHERE] = create_sphere;
@@ -32,7 +32,7 @@ int	get_object_type(char *type)
 	if (ft_endswith(type, "A"))
 		return (AMBIENT_LIGHT);
 	if (ft_endswith(type, "L"))
-		return (DIRECTIONAL_LIGHT);
+		return (SPOT_LIGHT);
 	if (ft_endswith(type, "C"))
 		return (CAMERA);
 	if (ft_endswith(type, "pl"))

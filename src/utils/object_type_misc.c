@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:12:39 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/15 09:54:00 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/21 14:26:37 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,14 +72,14 @@ void	print_object(t_scene_object *obj)
 		print_v3("      |- direction ", obj->s_camera.dir, ONELINE);
 		printf("      |- fov       : %u\n", obj->s_camera.fov);
 	}
-	else if (obj->type == DIRECTIONAL_LIGHT)
+	else if (obj->type == SPOT_LIGHT)
 	{
-		print_v3("      |- position   ", obj->s_directional_light.pos, ONELINE);
-		printf("      |- intensity : %f\n", obj->s_directional_light.intensity);
+		print_v3("      |- position   ", obj->s_spot_light.pos, ONELINE);
+		printf("      |- intensity : %f\n", obj->s_spot_light.intensity);
 		printf("      |- color     : (%u, %u, %u)\n",
-			obj->s_directional_light.color >> SHIFT_R,
-			(obj->s_directional_light.color & COLOR_G) >> SHIFT_G,
-			obj->s_directional_light.color & COLOR_B);
+			obj->s_spot_light.color >> SHIFT_R,
+			(obj->s_spot_light.color & COLOR_G) >> SHIFT_G,
+			obj->s_spot_light.color & COLOR_B);
 	}
 	else
 		print_object2(obj);
@@ -90,7 +90,7 @@ static char	*get_type_string(int type)
 	static	char	*type_string[OBJECT_TYPE_COUNT];
 
 	type_string[AMBIENT_LIGHT] = "Ambient light";
-	type_string[DIRECTIONAL_LIGHT] = "Directional light";
+	type_string[SPOT_LIGHT] = "Spot light";
 	type_string[CAMERA] = "Camera";
 	type_string[PLANE] = "Plane";
 	type_string[SPHERE] = "Sphere";
