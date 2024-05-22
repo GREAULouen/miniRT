@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:10:17 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/22 17:54:22 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/22 21:56:28 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	init_ray(void)
 	t_vector3	ray;
 	int			row;
 	int			col;
+	t_vector3	*intersection;
 
 	row = -1;
 	program = get_program();
@@ -37,12 +38,17 @@ void	init_ray(void)
 			ray.x = ((double) col) * program->viewport_width / ((double) program->canvas_width) - program->viewport_width / 2.0;
 			// printf("ray @ [%d, %d]", row, col);
 			// print_v3("", &ray, ONELINE);
-			intersect_ray(&ray);
+			intersection = intersect_ray(&ray);
+			if (intersection)
+			{
+				mlx_put_pixel(program->image, row, col, COLOR_G);
+				free(intersection);
+			}
 		}
 	}
 }
 
-void	intersect_ray(t_vector3 *ray)
+t_vector3	*intersect_ray(t_vector3 *ray)
 {
 	t_program	*program;
 	t_vector3	*intersection;
@@ -56,10 +62,8 @@ void	intersect_ray(t_vector3 *ray)
 		{
 			intersection = intersect_sphere(ray, &program->objects[index]);
 			if (intersection != NULL)
-			{
-				print_v3("ray that intersect", ray, ONELINE);
-				free(intersection);
-			}
+				return (intersection);
 		}
 	}
+	return (NULL);
 }
