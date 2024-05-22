@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:47:35 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/14 18:42:27 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/22 14:08:14 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,7 @@ t_obj_creator	*get_obj_creator(void);
 int				get_object_type(char *type);
 uint32_t		atoc(char *arg);
 t_vector3		*atov(char *arg);;
+
+t_scene_object	*get_object(int type);
 
 #endif
