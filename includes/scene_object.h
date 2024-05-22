@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/22 16:11:41 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/22 17:16:31 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ typedef enum e_scene_object_type
 
 # define DEFAULT_WIDTH 1920
 # define DEFAULT_HEIGHT 1080
+
+# define EPSILON 0.00001
 
 typedef struct s_scene_object
 {
@@ -103,5 +105,7 @@ void						cleanup_camera(t_scene_object *obj);
 void						cleanup_plane(t_scene_object *obj);
 void						cleanup_sphere(t_scene_object *obj);
 void						cleanup_cylinder(t_scene_object *obj);
+
+t_vector3	*intersect_sphere(t_vector3 *ray, t_scene_object *obj);
 
 #endif
