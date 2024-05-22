@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:10:17 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/22 21:56:28 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/22 21:59:44 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	init_ray(void)
 			intersection = intersect_ray(&ray);
 			if (intersection)
 			{
-				mlx_put_pixel(program->image, row, col, COLOR_G);
+				mlx_put_pixel(program->image, col, row, 0xFF0000FF);
 				free(intersection);
 			}
 		}
