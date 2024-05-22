@@ -40,6 +40,9 @@ SCENE_OBJECTS_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${SCENE_OBJECTS_SRCS:.c=.
 RAY_TRACER_SRCS =	ray_init.c
 RAY_TRACER_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${RAY_TRACER_SRCS:.c=.o}}}
 
+MLX_SRCS =	mlx.c
+MLX_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${MLX_SRCS:.c=.o}}}
+
 MAIN_SRCS =	main.c				\
 			program_utils.c
 MAIN_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${MAIN_SRCS:.c=.o}}}
@@ -49,7 +52,8 @@ SRCS =	${MAIN_SRCS}			\
 		${PARSER_SRCS}			\
 		${UTILS_SRCS}			\
 		${RAY_TRACER_SRCS}		\
-		${SCENE_OBJECTS_SRCS}
+		${SCENE_OBJECTS_SRCS}	\
+		${MLX_SRCS}
 OBJS = ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
 
 
