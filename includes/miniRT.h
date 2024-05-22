@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:48:52 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/14 16:48:07 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/22 14:04:03 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@
 typedef struct s_program
 {
 	char			*file_name;
+	int				screen_width;
+	int				screen_height;
 	int				object_count;
 	t_scene_object	*objects;
 }					t_program;

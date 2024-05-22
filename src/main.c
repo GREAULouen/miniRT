@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:53:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/14 15:35:47 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/22 14:04:08 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	get_program()->file_name = argv[1];
+	get_program()->screen_width = DEFAULT_WIDTH;
+	get_program()->screen_height = DEFAULT_HEIGHT;
 	parse_input();
 	// TODO : clean the program structure
 	exit(EXIT_SUCCESS);

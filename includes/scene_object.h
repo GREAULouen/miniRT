@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/21 14:23:14 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/22 14:01:12 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ typedef enum e_scene_object_type
 # define COLOR_G 0x00FF00
 # define COLOR_B 0x0000FF
 
+# define DEFAULT_WIDTH 1920
+# define DEFAULT_HEIGHT 1080
+
 typedef struct s_scene_object
 {
 	t_scene_object_type		type;
@@ -53,6 +56,7 @@ typedef struct s_scene_object
 			t_vector3		*pos;
 			t_vector3		*dir;
 			int				fov;
+			double			view_plane;
 		}	s_camera;
 		struct
 		{
