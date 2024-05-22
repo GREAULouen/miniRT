@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:55:30 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/22 16:02:21 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/22 16:09:56 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,12 @@ int	create_plane(t_scene_object *obj, char **args)
 		return (free(obj->s_plane.pos), -1);
 	obj->s_plane.color = atoc(args[3]);
 	return (0);
+}
+
+void	cleanup_plane(t_scene_object *obj)
+{
+	if (!obj)
+		return ;
+	free(obj->s_plane.pos);
+	free(obj->s_plane.normal);
 }

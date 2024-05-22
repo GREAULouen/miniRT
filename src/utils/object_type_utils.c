@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:36:31 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/22 14:21:59 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/22 16:11:49 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,19 @@ t_obj_creator	*get_obj_creator(void)
 	obj_creator[SPHERE] = create_sphere;
 	obj_creator[CYLINDER] = create_cylinder;
 	return (&obj_creator[0]);
+}
+
+t_obj_cleanup	*get_obj_cleanup(void)
+{
+	static t_obj_cleanup	obj_cleanup[OBJECT_TYPE_COUNT];
+
+	obj_cleanup[AMBIENT_LIGHT] = NULL;
+	obj_cleanup[SPOT_LIGHT] = cleanup_spot_light;
+	obj_cleanup[CAMERA] = cleanup_camera;
+	obj_cleanup[PLANE] = cleanup_plane;
+	obj_cleanup[SPHERE] = cleanup_sphere;
+	obj_cleanup[CYLINDER] = cleanup_cylinder;
+	return (&obj_cleanup[0]);
 }
 
 int	get_object_type(char *type)

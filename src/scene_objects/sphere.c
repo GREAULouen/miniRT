@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:46:50 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/22 16:02:18 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/22 16:09:34 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,11 @@ int	create_sphere(t_scene_object *obj, char **args)
 			set_error((char *)__func__, INVALID_ARG), -1);
 	obj->s_sphere.color = atoc(args[3]);
 	return (0);
+}
+
+void	cleanup_sphere(t_scene_object *obj)
+{
+	if (!obj)
+		return ;
+	free(obj->s_sphere.pos);
 }

@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:48:52 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/22 16:03:21 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/22 16:14:51 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_program
 }					t_program;
 
 t_program			*get_program(void);
+void				cleanup_program(void);
 
 /* ~ Argument validation ~	*/
 # define BAD_ARGS_FORMAT "Bad program arguments.\n"
