@@ -26,14 +26,16 @@ UTILS_SRCS =	quit_utils.c				\
 				parsing_utils.c
 UTILS_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${UTILS_SRCS:.c=.o}}}
 
-PARSER_SRCS =	parser.c							\
-				create_ambient_light.c				\
-				create_camera.c						\
-				create_spot_light.c					\
-				create_plane.c						\
-				create_sphere.c						\
-				create_cylinder.c
+PARSER_SRCS =	parser.c
 PARSER_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${PARSER_SRCS:.c=.o}}}
+
+SCENE_OBJECTS_SRCS =	ambient_light.c				\
+						camera.c					\
+						spot_light.c				\
+						plane.c						\
+						sphere.c					\
+						cylinder.c
+SCENE_OBJECTS_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${SCENE_OBJECTS_SRCS:.c=.o}}}
 
 RAY_TRACER_SRCS =	ray_init.c
 RAY_TRACER_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${RAY_TRACER_SRCS:.c=.o}}}
@@ -46,7 +48,8 @@ MAIN_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${MAIN_SRCS:.c=.o}}}
 SRCS =	${MAIN_SRCS}			\
 		${PARSER_SRCS}			\
 		${UTILS_SRCS}			\
-		${RAY_TRACER_SRCS}
+		${RAY_TRACER_SRCS}		\
+		${SCENE_OBJECTS_SRCS}
 OBJS = ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
 
 
@@ -69,6 +72,9 @@ ${UTILS_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/utils/%.c | ${OBJ_DIR}
 	@$(CC) $(CFLAGS) -I$(INCLUDES_DIR) -c $< -o $@
 
 ${RAY_TRACER_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ray_tracer/%.c | ${OBJ_DIR}
+	@$(CC) $(CFLAGS) -I$(INCLUDES_DIR) -c $< -o $@
+
+${SCENE_OBJECTS_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/scene_objects/%.c | ${OBJ_DIR}
 	@$(CC) $(CFLAGS) -I$(INCLUDES_DIR) -c $< -o $@
 
 

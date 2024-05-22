@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:48:52 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/22 15:06:53 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/22 16:03:21 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@
 # include <stdio.h>		// printf, perror
 # include <stdlib.h>	// malloc, free
 # include <string.h>	// strerror
-
 
 /* ~~~~ Main structure ~~~~	*/
 typedef struct s_program
