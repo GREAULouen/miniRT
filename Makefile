@@ -15,7 +15,7 @@ INCLUDE_LIBFT = -L${LIBFT_DIR} -lft
 MLX42_DIR = ${LIB_DIR}/MLX42
 LIBMLX42 = libmlx42.a
 
-LIBS = ${INCLUDE_LIBFT} -L. ${MLX42_DIR}/${LIBMLX42} -ldl -lglfw -pthread -lm
+LIBS = ${INCLUDE_LIBFT} -L. ${MLX42_DIR}/${LIBMLX42} -ldl -lglfw -L"/opt/homebrew/Cellar/glfw/3.4/lib/" -pthread -lm
 
 
 
@@ -79,6 +79,9 @@ ${RAY_TRACER_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ray_tracer/%.c | ${OBJ_DIR}
 	@$(CC) $(CFLAGS) -I$(INCLUDES_DIR) -c $< -o $@
 
 ${SCENE_OBJECTS_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/scene_objects/%.c | ${OBJ_DIR}
+	@$(CC) $(CFLAGS) -I$(INCLUDES_DIR) -c $< -o $@
+
+${MLX_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/mlx/%.c | ${OBJ_DIR}
 	@$(CC) $(CFLAGS) -I$(INCLUDES_DIR) -c $< -o $@
 
 

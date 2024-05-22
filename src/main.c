@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:53:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/22 17:49:37 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/22 21:44:35 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(int argc, char *argv[])
 	get_program()->viewport_width = 1;
 	get_program()->viewport_height = 9.0/16.0;
 	parse_input();
-	init_ray();
+	start_mlx();
 	// TODO : clean the program structure
 	cleanup_program();
 	exit(EXIT_SUCCESS);

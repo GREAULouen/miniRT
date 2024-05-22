@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:48:52 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/22 18:06:09 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/22 20:55:56 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include "parser.h"
 # include "utils.h"
 # include "ray_tracer.h"
+# include "mlx.h"
 
 /* ~~~~ Other libraries ~~~	*/
 # include <math.h>		// math
@@ -44,6 +45,7 @@ typedef struct s_program
 	int				object_count;
 	t_scene_object	*objects;
 	mlx_t			*mlx;
+	mlx_image_t		*image;
 }					t_program;
 
 t_program			*get_program(void);
