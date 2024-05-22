@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:53:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/22 14:04:08 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/22 15:00:14 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@ int	main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	get_program()->file_name = argv[1];
-	get_program()->screen_width = DEFAULT_WIDTH;
-	get_program()->screen_height = DEFAULT_HEIGHT;
+	get_program()->canvas_width = DEFAULT_WIDTH;
+	get_program()->canvas_height = DEFAULT_HEIGHT;
+	get_program()->viewport_width = 1;
+	get_program()->viewport_height = 9/16;
 	parse_input();
+	init_ray();
 	// TODO : clean the program structure
 	exit(EXIT_SUCCESS);
 }

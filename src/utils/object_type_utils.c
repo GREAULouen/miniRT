@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:36:31 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/22 14:08:01 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/22 14:21:59 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_scene_object	*get_object(int type)
 
 	index = -1;
 	while (++index < get_program()->object_count)
-		if (get_program()->objects[index].type == type)
+		if ((int)get_program()->objects[index].type == type)
 			return (&get_program()->objects[index]);
 	return (NULL);
 }

@@ -35,6 +35,9 @@ PARSER_SRCS =	parser.c							\
 				create_cylinder.c
 PARSER_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${PARSER_SRCS:.c=.o}}}
 
+RAY_TRACER_SRCS =	ray_init.c
+RAY_TRACER_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${RAY_TRACER_SRCS:.c=.o}}}
+
 MAIN_SRCS =	main.c				\
 			program_utils.c
 MAIN_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${MAIN_SRCS:.c=.o}}}
@@ -42,7 +45,8 @@ MAIN_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${MAIN_SRCS:.c=.o}}}
 
 SRCS =	${MAIN_SRCS}			\
 		${PARSER_SRCS}			\
-		${UTILS_SRCS}
+		${UTILS_SRCS}			\
+		${RAY_TRACER_SRCS}
 OBJS = ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
 
 
@@ -62,6 +66,9 @@ ${PARSER_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/parsing/%.c | ${OBJ_DIR}
 	@$(CC) $(CFLAGS) -I$(INCLUDES_DIR) -c $< -o $@
 
 ${UTILS_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/utils/%.c | ${OBJ_DIR}
+	@$(CC) $(CFLAGS) -I$(INCLUDES_DIR) -c $< -o $@
+
+${RAY_TRACER_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/ray_tracer/%.c | ${OBJ_DIR}
 	@$(CC) $(CFLAGS) -I$(INCLUDES_DIR) -c $< -o $@
 
 

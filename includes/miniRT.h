@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:48:52 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/22 14:04:03 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/22 15:06:53 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include "scene_object.h"
 # include "parser.h"
 # include "utils.h"
+# include "ray_tracer.h"
 
 /* ~~~~ Other libraries ~~~	*/
 # include <math.h>		// math
@@ -37,8 +38,10 @@
 typedef struct s_program
 {
 	char			*file_name;
-	int				screen_width;
-	int				screen_height;
+	int				canvas_width;
+	int				canvas_height;
+	double			viewport_width;
+	double			viewport_height;
 	int				object_count;
 	t_scene_object	*objects;
 }					t_program;
