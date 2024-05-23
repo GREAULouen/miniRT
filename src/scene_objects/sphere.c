@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:46:50 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/22 17:54:07 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/23 16:06:03 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,14 @@ t_vector3	*intersect_sphere(t_vector3 *ray, t_scene_object *obj)
 	// printf("a: %f, b: %f, c: %f, delta: %f\n", a, b, c, delta);
 	if (delta < 0)
 		return (free(res), free(tmp), NULL);
-	t1 = (sqrt(delta) + (-1.0 * b)) / (2.0 * a);
+	t1 = -1.0 * (-1.0 * b + sqrt(delta)) / (2.0 * a);
 	if (t1 >= get_object(CAMERA)->s_camera.view_plane)
 	{
 		ft_v3_inadd(res, ray);
 		ft_v3_inmult(res, t1);
 		ft_v3_inadd(res, get_object(CAMERA)->s_camera.pos);
 	}
-	t2 = (-1.0 * sqrt(delta) - b) / (2.0 * a);
+	t2 = -1.0 * (-1.0 * b - sqrt(delta)) / (2.0 * a);
 	if (t2 >= get_object(CAMERA)->s_camera.view_plane)
 	{
 		ft_v3_inadd(tmp, ray);
