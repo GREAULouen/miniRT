@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:10:17 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/22 21:59:44 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:01:02 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	init_ray(void)
 	t_vector3	ray;
 	int			row;
 	int			col;
-	t_vector3	*intersection;
+	uint32_t	pixel_color;
 
 	row = -1;
 	program = get_program();
@@ -38,20 +38,16 @@ void	init_ray(void)
 			ray.x = ((double) col) * program->viewport_width / ((double) program->canvas_width) - program->viewport_width / 2.0;
 			// printf("ray @ [%d, %d]", row, col);
 			// print_v3("", &ray, ONELINE);
-			intersection = intersect_ray(&ray);
-			if (intersection)
-			{
-				mlx_put_pixel(program->image, col, row, 0xFF0000FF);
-				free(intersection);
-			}
+			pixel_color = intersect_ray(&ray);
+			mlx_put_pixel(program->image, col, row, (pixel_color << 8 | 255));
 		}
 	}
 }
 
-t_vector3	*intersect_ray(t_vector3 *ray)
+uint32_t	intersect_ray(t_vector3 *ray)
 {
 	t_program	*program;
-	t_vector3	*intersection;
+	uint32_t	color;
 	int			index;
 
 	program = get_program();
@@ -60,10 +56,10 @@ t_vector3	*intersect_ray(t_vector3 *ray)
 	{
 		if ((int) program->objects[index].type == SPHERE)
 		{
-			intersection = intersect_sphere(ray, &program->objects[index]);
-			if (intersection != NULL)
-				return (intersection);
+			color = intersect_sphere(ray, &program->objects[index]);
+			if (color != NO_INTERSECTION)
+				return (color);
 		}
 	}
-	return (NULL);
+	return (BACKGROUND_COLOR);
 }

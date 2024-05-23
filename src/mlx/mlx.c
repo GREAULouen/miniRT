@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 18:01:50 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/05/22 21:55:57 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:04:20 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	start_mlx(void)
 		ft_putstr_fd((char *) mlx_strerror(mlx_errno), 2);
 		return ;
 	}
-	program->image = mlx_new_image(program->mlx, program->canvas_height, program->canvas_width);
+	program->image = mlx_new_image(program->mlx, program->canvas_width, program->canvas_height);
 	if (program->image == NULL)
 	{
 		ft_putstr_fd((char *) mlx_strerror(mlx_errno), 2);
