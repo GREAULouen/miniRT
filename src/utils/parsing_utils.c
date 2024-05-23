@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 18:21:12 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/14 18:33:27 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/22 16:23:16 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ uint32_t	atoc(char *arg)
 	if (*get_errno() != NO_ERROR || tmp < 0 || tmp >= 256)
 		return (set_error((char *)__func__, INVALID_ARG), 0);
 	color |= tmp;
-	return (color);
+	return (free_arr(splt, -1, 1), color);
 }
 
 /**
@@ -69,5 +69,5 @@ t_vector3	*atov(char *arg)
 	res->z = ft_atod(splt[2]);
 	if (*get_errno() != NO_ERROR)
 		return (free(res), NULL);
-	return (res);
+	return (free_arr(splt, -1, 1), res);
 }

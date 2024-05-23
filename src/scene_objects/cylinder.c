@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_cylinder.c                                  :+:      :+:    :+:   */
+/*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:50:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/21 14:53:26 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/22 16:10:18 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,12 @@ int	create_cylinder(t_scene_object *obj, char **args)
 			set_error((char *)__func__, INVALID_ARG), -1);
 	obj->s_cylinder.color = atoc(args[5]);
 	return (0);
+}
+
+void	cleanup_cylinder(t_scene_object *obj)
+{
+	if (!obj)
+		return ;
+	free(obj->s_cylinder.pos);
+	free(obj->s_cylinder.dir);
 }

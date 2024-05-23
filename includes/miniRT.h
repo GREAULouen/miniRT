@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:48:52 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/14 16:48:07 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/22 20:55:56 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include "scene_object.h"
 # include "parser.h"
 # include "utils.h"
+# include "ray_tracer.h"
+# include "mlx.h"
 
 /* ~~~~ Other libraries ~~~	*/
 # include <math.h>		// math
@@ -32,16 +34,22 @@
 # include <stdlib.h>	// malloc, free
 # include <string.h>	// strerror
 
-
 /* ~~~~ Main structure ~~~~	*/
 typedef struct s_program
 {
 	char			*file_name;
+	int				canvas_width;
+	int				canvas_height;
+	double			viewport_width;
+	double			viewport_height;
 	int				object_count;
 	t_scene_object	*objects;
+	mlx_t			*mlx;
+	mlx_image_t		*image;
 }					t_program;
 
 t_program			*get_program(void);
+void				cleanup_program(void);
 
 /* ~ Argument validation ~	*/
 # define BAD_ARGS_FORMAT "Bad program arguments.\n"

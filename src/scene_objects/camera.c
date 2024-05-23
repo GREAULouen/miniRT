@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_camera.c                                    :+:      :+:    :+:   */
+/*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/14 18:00:11 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/21 14:53:20 by lgreau           ###   ########.fr       */
+/*   Created: 2024/05/22 15:56:58 by lgreau            #+#    #+#             */
+/*   Updated: 2024/05/22 16:05:07 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,15 @@ int	create_camera(t_scene_object *obj, char **args)
 		return (free(obj->s_camera.pos),
 			free(obj->s_camera.dir),
 			set_error((char *)__func__, INVALID_ARG), -1);
+	obj->s_camera.view_plane = get_program()->viewport_width
+		/ (2 * tan(M_PI * obj->s_camera.fov / 360));
 	return (0);
+}
+
+void	cleanup_camera(t_scene_object *obj)
+{
+	if (!obj)
+		return ;
+	free(obj->s_camera.pos);
+	free(obj->s_camera.dir);
 }

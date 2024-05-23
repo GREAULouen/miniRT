@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   mlx.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/14 14:20:05 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/22 16:01:05 by lgreau           ###   ########.fr       */
+/*   Created: 2024/05/22 20:55:20 by pgrossma          #+#    #+#             */
+/*   Updated: 2024/05/22 21:44:47 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#ifndef MLX_H
+# define MLX_H
 
-# define UNIQUE_OBJ_COUNT_A 0b00000001
-# define UNIQUE_OBJ_COUNT_C 0b00000010
-
-void			parse_input(void);
+void	start_mlx(void);
 
 #endif

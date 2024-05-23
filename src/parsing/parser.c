@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:15:03 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/21 14:53:53 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/22 16:22:00 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static int	save_object(char *line, uint8_t *unique_obj_count)
 	char		**splt;
 	static int	count = 0;
 	int			type;
+	int			res;
 
 	splt = ft_split(line, SPACE);
 	if (!splt)
@@ -68,7 +69,8 @@ static int	save_object(char *line, uint8_t *unique_obj_count)
 	if (type == CAMERA && (*unique_obj_count & UNIQUE_OBJ_COUNT_C))
 		return (free_arr(splt, -1, 1), -1);
 	*unique_obj_count |= (type == CAMERA * UNIQUE_OBJ_COUNT_C);
-	return (get_obj_creator()[type](&get_program()->objects[count++], splt));
+	res = get_obj_creator()[type](&get_program()->objects[count++], splt);
+	return (free_arr(splt, -1, 1), res);
 }
 
 /**
