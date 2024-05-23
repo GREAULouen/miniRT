@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:10:17 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/23 17:01:02 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/23 18:10:17 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,29 @@ void	init_ray(void)
 uint32_t	intersect_ray(t_vector3 *ray)
 {
 	t_program	*program;
-	uint32_t	color;
+	// t_vector3	*intersect;
 	int			index;
+	int			min;
+	double		min_value;
+	double		tmp;
 
 	program = get_program();
 	index = -1;
+	min = index;
+	min_value = INFINITY;
 	while (++index < program->object_count)
 	{
 		if ((int) program->objects[index].type == SPHERE)
 		{
-			color = intersect_sphere(ray, &program->objects[index]);
-			if (color != NO_INTERSECTION)
-				return (color);
+			tmp = get_obj_intersect()[program->objects[index].type](ray, &program->objects[index]);
+			if (tmp < min_value)
+			{
+				min = index;
+				min_value = tmp;
+			}
 		}
 	}
+	if (min_value < INFINITY)
+		return (program->objects[min].s_sphere.color);
 	return (BACKGROUND_COLOR);
 }
