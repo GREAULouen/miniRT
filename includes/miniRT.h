@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:48:52 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/22 20:55:56 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:54:02 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@
 # include <stdio.h>		// printf, perror
 # include <stdlib.h>	// malloc, free
 # include <string.h>	// strerror
+
+# define BACKGROUND_COLOR 0xDCDCDC // (220, 220, 220)
+# define NO_INTERSECTION 0xFF000000
 
 /* ~~~~ Main structure ~~~~	*/
 typedef struct s_program
