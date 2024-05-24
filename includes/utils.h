@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:47:35 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/23 17:50:45 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/24 10:43:35 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,15 @@ uint32_t		atoc(char *arg);
 t_vector3		*atov(char *arg);
 
 t_scene_object	*get_object(int type);
+
+/*	~~~~~~~~~~~~~~~~ COLOR ~~~~~~~~~~~~~~~~	*/
+
+uint32_t		get_red(uint32_t color);
+uint32_t		get_green(uint32_t color);
+uint32_t		get_blue(uint32_t color);
+
+uint32_t		color_k_mult(uint32_t color, int k);
+uint32_t		color_scal_mult(uint32_t color, double k);
+uint32_t		color_add(uint32_t color1, uint32_t color2);
 
 #endif
