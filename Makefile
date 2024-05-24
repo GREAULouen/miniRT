@@ -25,7 +25,9 @@ UTILS_SRCS =	quit_utils.c				\
 				object_type_misc.c			\
 				parsing_utils.c				\
 				color_extract_utils.c		\
-				color_utils.c
+				color_utils.c				\
+				ft_v3_math_utils.c			\
+				intersect_utils.c
 UTILS_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${UTILS_SRCS:.c=.o}}}
 
 PARSER_SRCS =	parser.c
@@ -40,7 +42,9 @@ SCENE_OBJECTS_SRCS =	ambient_light.c				\
 						scene_object_utils.c
 SCENE_OBJECTS_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${SCENE_OBJECTS_SRCS:.c=.o}}}
 
-RAY_TRACER_SRCS =	ray_init.c
+RAY_TRACER_SRCS =	ray_init.c					\
+					compute_intersection.c		\
+					compute_light.c
 RAY_TRACER_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${RAY_TRACER_SRCS:.c=.o}}}
 
 MLX_SRCS =	mlx.c

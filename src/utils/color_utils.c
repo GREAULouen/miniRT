@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:46:49 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/24 10:39:52 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/24 12:53:39 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,17 @@ uint32_t	color_add(uint32_t color1, uint32_t color2)
 	tmp = get_blue(color1) + get_blue(color2);
 	new_color |= (255 * (tmp > 255) + tmp * (tmp <= 255));
 	return (new_color);
+}
+
+/**
+ * @brief Returns C1 + k * C2
+ *
+ * @param color1
+ * @param k
+ * @param color2
+ * @return uint32_t
+ */
+uint32_t	color_add_scal(uint32_t color1, double k, uint32_t color2)
+{
+	return (color_add(color1, color_scal_mult(color2, k)));
 }

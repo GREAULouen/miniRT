@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/23 18:05:50 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/24 11:03:15 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,19 @@ typedef double	(*t_obj_intersect)(t_vector3 *, t_scene_object *);
 double						intersect_sphere(t_vector3 *ray,
 								t_scene_object *obj);
 
+/*	~~~~~~~~~~~~~~~ NORMAL_CALC ~~~~~~~~~~~~~~~	*/
+
+typedef t_vector3	*(*t_obj_normal)(t_vector3 *, t_scene_object *);
+
+t_vector3					*normal_sphere(t_vector3 *point,
+								t_scene_object *obj);
+
 /*	~~~~~~~~~~~~~~~~~ GETTERS ~~~~~~~~~~~~~~~~~	*/
 
 t_obj_creator				*get_obj_creator(void);
 t_obj_cleanup				*get_obj_cleanup(void);
 t_obj_intersect				*get_obj_intersect(void);
+t_obj_normal				*get_obj_normal(void);
+
 
 #endif

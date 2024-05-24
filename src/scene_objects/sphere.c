@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:46:50 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/23 18:05:21 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/24 11:01:53 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,20 @@ double	intersect_sphere(t_vector3 *ray, t_scene_object *obj)
 			&& ft_dot_product(get_object(CAMERA)->s_camera.pos, res) > ft_dot_product(get_object(CAMERA)->s_camera.pos, tmp))	// TODO: use the closest point for light reflection & color calculations
 		return (free(res), free(tmp), t2);
 	return (free(tmp), free(res), t1);
+}
+
+/**
+ * @brief Allocat & computes the normal vector at the point on the sphere
+ *
+ * @param point
+ * @return t_vector3*
+ */
+t_vector3	*normal_sphere(t_vector3 *point, t_scene_object *obj)
+{
+	t_vector3	*normal;
+
+	normal = ft_v3_sub(point, obj->s_sphere.pos);
+	if (!normal)
+		return (NULL);
+	return (normal);
 }
