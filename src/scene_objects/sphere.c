@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:46:50 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/23 16:58:49 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/23 18:05:21 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	cleanup_sphere(t_scene_object *obj)
 	free(obj->s_sphere.pos);
 }
 
-uint32_t	intersect_sphere(t_vector3 *ray, t_scene_object *obj)
+double	intersect_sphere(t_vector3 *ray, t_scene_object *obj)
 {
 	t_vector3	*res;
 	double		a;
@@ -64,7 +64,7 @@ uint32_t	intersect_sphere(t_vector3 *ray, t_scene_object *obj)
 	delta = b * b - 4.0 * a * c;
 	// printf("a: %f, b: %f, c: %f, delta: %f\n", a, b, c, delta);
 	if (delta < 0)
-		return (free(res), free(tmp), NO_INTERSECTION);
+		return (free(res), free(tmp), INFINITY);
 	t1 = -1.0 * (-1.0 * b + sqrt(delta)) / (2.0 * a);
 	if (t1 >= get_object(CAMERA)->s_camera.view_plane)
 	{
@@ -81,13 +81,13 @@ uint32_t	intersect_sphere(t_vector3 *ray, t_scene_object *obj)
 	}
 	// printf("t1: %f, t2: %f\n", t1, t2);
 	if (ft_dot_product(res, res) == 0 && ft_dot_product(tmp, tmp) == 0)
-		return (free(res), free(tmp), NO_INTERSECTION);
+		return (free(res), free(tmp), INFINITY);
 	if (ft_dot_product(res, res) != 0 && ft_dot_product(tmp, tmp) == 0)
-		return (free(tmp), free(res), obj->s_sphere.color);
+		return (free(tmp), free(res), t1);
 	if (ft_dot_product(res, res) == 0 && ft_dot_product(tmp, tmp) != 0)
-		return (free(res), free(tmp), obj->s_sphere.color);
+		return (free(res), free(tmp), t2);
 	if (ft_dot_product(res, res) != 0 && ft_dot_product(tmp, tmp) != 0
 			&& ft_dot_product(get_object(CAMERA)->s_camera.pos, res) > ft_dot_product(get_object(CAMERA)->s_camera.pos, tmp))	// TODO: use the closest point for light reflection & color calculations
-		return (free(res), free(tmp), obj->s_sphere.color);
-	return (free(tmp), free(res), obj->s_sphere.color);
+		return (free(res), free(tmp), t2);
+	return (free(tmp), free(res), t1);
 }

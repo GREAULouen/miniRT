@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/23 16:49:21 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/23 18:05:50 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ typedef struct s_scene_object
 	};
 }							t_scene_object;
 
-
 /*	~~~~~~~~~~~~~~~~ CREATION ~~~~~~~~~~~~~~~~	*/
 
 typedef int	(*t_obj_creator)(t_scene_object *, char **);
@@ -108,7 +107,15 @@ void						cleanup_cylinder(t_scene_object *obj);
 
 /*	~~~~~~~~~~~~ INTERSECTION_CALC ~~~~~~~~~~~~	*/
 
-uint32_t					intersect_sphere(t_vector3 *ray,
+typedef double	(*t_obj_intersect)(t_vector3 *, t_scene_object *);
+
+double						intersect_sphere(t_vector3 *ray,
 								t_scene_object *obj);
+
+/*	~~~~~~~~~~~~~~~~~ GETTERS ~~~~~~~~~~~~~~~~~	*/
+
+t_obj_creator				*get_obj_creator(void);
+t_obj_cleanup				*get_obj_cleanup(void);
+t_obj_intersect				*get_obj_intersect(void);
 
 #endif

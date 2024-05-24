@@ -36,7 +36,8 @@ SCENE_OBJECTS_SRCS =	ambient_light.c				\
 						spot_light.c				\
 						plane.c						\
 						sphere.c					\
-						cylinder.c
+						cylinder.c					\
+						scene_object_utils.c
 SCENE_OBJECTS_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${SCENE_OBJECTS_SRCS:.c=.o}}}
 
 RAY_TRACER_SRCS =	ray_init.c
