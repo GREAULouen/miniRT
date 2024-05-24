@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:46:50 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/24 11:01:53 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/24 17:39:03 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	cleanup_sphere(t_scene_object *obj)
 	free(obj->s_sphere.pos);
 }
 
-double	intersect_sphere(t_vector3 *ray, t_scene_object *obj)
+double	intersect_sphere(t_vector3 *og, t_vector3 *ray, t_scene_object *obj)
 {
 	t_vector3	*res;
 	double		a;
@@ -54,42 +54,46 @@ double	intersect_sphere(t_vector3 *ray, t_scene_object *obj)
 	t_vector3	*tmp;
 
 	res = ft_v3_zero();
-	tmp = ft_v3_zero();
 	a = ft_dot_product(ray, ray);
 	// print_v3("ray", ray, ONELINE);
 	// print_v3("pos", obj->s_sphere.pos, ONELINE);
-	b = 2.0 * ft_dot_product(ray, obj->s_sphere.pos);
-	c = ft_dot_product(obj->s_sphere.pos, obj->s_sphere.pos)
-		- obj->s_sphere.diameter * obj->s_sphere.diameter / 4.0;	// TODO: save this value in the sphere itself since it's constant
+	tmp = ft_v3_dir(og, obj->s_sphere.pos);
+	b = 2.0 * ft_dot_product(ray, tmp);
+	c = ft_dot_product(tmp, tmp)
+		- obj->s_sphere.diameter * obj->s_sphere.diameter / 4.0;
+	ft_v3_inmult(tmp, 0);
 	delta = b * b - 4.0 * a * c;
 	// printf("a: %f, b: %f, c: %f, delta: %f\n", a, b, c, delta);
 	if (delta < 0)
 		return (free(res), free(tmp), INFINITY);
 	t1 = -1.0 * (-1.0 * b + sqrt(delta)) / (2.0 * a);
-	if (t1 >= get_object(CAMERA)->s_camera.view_plane)
-	{
-		ft_v3_inadd(res, ray);
-		ft_v3_inmult(res, t1);
-		ft_v3_inadd(res, get_object(CAMERA)->s_camera.pos);
-	}
+	// if (t1 >= get_object(CAMERA)->s_camera.view_plane)
+	// {
+	// 	ft_v3_inadd(res, ray);
+	// 	ft_v3_inmult(res, t1);
+	// 	ft_v3_inadd(res, og);
+	// }
 	t2 = -1.0 * (-1.0 * b - sqrt(delta)) / (2.0 * a);
-	if (t2 >= get_object(CAMERA)->s_camera.view_plane)
-	{
-		ft_v3_inadd(tmp, ray);
-		ft_v3_inmult(tmp, t2);
-		ft_v3_inadd(tmp, get_object(CAMERA)->s_camera.pos);
-	}
-	// printf("t1: %f, t2: %f\n", t1, t2);
-	if (ft_dot_product(res, res) == 0 && ft_dot_product(tmp, tmp) == 0)
-		return (free(res), free(tmp), INFINITY);
-	if (ft_dot_product(res, res) != 0 && ft_dot_product(tmp, tmp) == 0)
+	if (fabs(t1) < fabs(t2))
 		return (free(tmp), free(res), t1);
-	if (ft_dot_product(res, res) == 0 && ft_dot_product(tmp, tmp) != 0)
-		return (free(res), free(tmp), t2);
-	if (ft_dot_product(res, res) != 0 && ft_dot_product(tmp, tmp) != 0
-			&& ft_dot_product(get_object(CAMERA)->s_camera.pos, res) > ft_dot_product(get_object(CAMERA)->s_camera.pos, tmp))	// TODO: use the closest point for light reflection & color calculations
-		return (free(res), free(tmp), t2);
-	return (free(tmp), free(res), t1);
+	return (free(tmp), free(res), t2);
+	// if (t2 >= get_object(CAMERA)->s_camera.view_plane)
+	// {
+	// 	ft_v3_inadd(tmp, ray);
+	// 	ft_v3_inmult(tmp, t2);
+	// 	ft_v3_inadd(tmp, og);
+	// }
+	// printf("t1: %f, t2: %f\n", t1, t2);
+	// if (ft_dot_product(res, res) == 0 && ft_dot_product(tmp, tmp) == 0)
+	// 	return (free(res), free(tmp), INFINITY);
+	// if (ft_dot_product(res, res) != 0 && ft_dot_product(tmp, tmp) == 0)
+	// 	return (free(tmp), free(res), t1);
+	// if (ft_dot_product(res, res) == 0 && ft_dot_product(tmp, tmp) != 0)
+	// 	return (free(res), free(tmp), t2);
+	// if (ft_dot_product(res, res) != 0 && ft_dot_product(tmp, tmp) != 0
+	// 		&& ft_dot_product(og, res) > ft_dot_product(og, tmp))
+	// 	return (free(res), free(tmp), t2);
+	// return (free(tmp), free(res), t1);
 }
 
 /**

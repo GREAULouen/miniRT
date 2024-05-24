@@ -1,49 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   compute_intersection.c                             :+:      :+:    :+:   */
+/*   compute_shadows.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/24 14:06:23 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/24 16:28:50 by lgreau           ###   ########.fr       */
+/*   Created: 2024/05/24 16:08:01 by lgreau            #+#    #+#             */
+/*   Updated: 2024/05/24 16:36:28 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-/**
- * @brief Computes if there's an intersection with any solid object in the scene
- * & returns the computed light
- *
- * @param ray
- * @return uint32_t
- */
-uint32_t	compute_intersection(t_vector3 *ray)
+int	is_in_shadow(t_vector3 *new_og, t_vector3 *light_pos)
 {
 	t_program	*program;
+	t_vector3	*ray;
 	int			index;
-	int			min;
 	double		min_value;
 	double		intersect;
 
 	program = get_program();
+	ray = ft_v3_dir(new_og, light_pos);
+	// ft_v3_inadd(ray, new_og);
 	index = -1;
-	min = index;
 	min_value = INFINITY;
 	while (++index < program->object_count)	// Can be changed to only test intersection with Solid objects that have been pre-processed
 	{
 		if ((int) program->objects[index].type == SPHERE)	// Can be changed to only test intersection with Solid objects that have been pre-processed
 		{
-			intersect = get_obj_intersect()[program->objects[index].type](get_object(CAMERA)->s_camera.pos, ray, &program->objects[index]);
-			if (intersect >= get_object(CAMERA)->s_camera.view_plane && intersect < min_value)
-			{
-				min = index;
+			intersect = get_obj_intersect()[program->objects[index].type](new_og, ray, &program->objects[index]);
+			// print_v3("ray", ray, ONELINE);
+			// printf("intersect solution: %f\n", intersect);
+			if (intersect > EPSILON && intersect < (1 - EPSILON) && intersect < min_value)
 				min_value = intersect;
-			}
 		}
 	}
-	if (min_value < INFINITY)
-		return (compute_light(min_value, ray, &program->objects[min]));
-	return (color_scal_mult(get_object(AMBIENT_LIGHT)->s_ambient_light.color, get_object(AMBIENT_LIGHT)->s_ambient_light.intensity));
+	free(ray);
+	return (min_value != INFINITY);
 }

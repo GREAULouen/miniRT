@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/24 11:03:15 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/24 16:24:46 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,9 @@ void						cleanup_cylinder(t_scene_object *obj);
 
 /*	~~~~~~~~~~~~ INTERSECTION_CALC ~~~~~~~~~~~~	*/
 
-typedef double	(*t_obj_intersect)(t_vector3 *, t_scene_object *);
+typedef double	(*t_obj_intersect)(t_vector3 *, t_vector3 *, t_scene_object *);
 
-double						intersect_sphere(t_vector3 *ray,
+double						intersect_sphere(t_vector3 *og, t_vector3 *ray,
 								t_scene_object *obj);
 
 /*	~~~~~~~~~~~~~~~ NORMAL_CALC ~~~~~~~~~~~~~~~	*/
