@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:06:23 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/24 14:07:40 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/24 14:10:12 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ uint32_t	compute_intersection(t_vector3 *ray)
 	index = -1;
 	min = index;
 	min_value = INFINITY;
-	while (++index < program->object_count)
+	while (++index < program->object_count)	// Can be changed to only test intersection with Solid objects that have been pre-processed
 	{
-		if ((int) program->objects[index].type == SPHERE)
+		if ((int) program->objects[index].type == SPHERE)	// Can be changed to only test intersection with Solid objects that have been pre-processed
 		{
 			intersect = get_obj_intersect()[program->objects[index].type](ray, &program->objects[index]);
 			if (intersect < min_value)
