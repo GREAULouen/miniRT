@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:10:17 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/24 12:17:47 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/24 13:52:34 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	init_ray(void)
 	row = -1;
 	program = get_program();
 	ray.z = get_object(CAMERA)->s_camera.view_plane;
-	// printf("%f\n", program->viewport_height);
 	while (++row < program->canvas_height)
 	{
 		ray.y = (program->viewport_height / 2.0) - (((double)row) * program->viewport_height / ((double) program->canvas_height));
@@ -36,8 +35,6 @@ void	init_ray(void)
 		while (++col < program->canvas_width)
 		{
 			ray.x = ((double) col) * program->viewport_width / ((double) program->canvas_width) - program->viewport_width / 2.0;
-			// printf("ray @ [%d, %d]", row, col);
-			// print_v3("", &ray, ONELINE);
 			pixel_color = intersect_ray(&ray);
 			mlx_put_pixel(program->image, col, row, (pixel_color << 8 | 255));
 		}
@@ -69,7 +66,7 @@ uint32_t	intersect_ray(t_vector3 *ray)
 		}
 	}
 	if (min_value < INFINITY)
-		return (color_scal_mult(program->objects[min].s_sphere.color, compute_light(min_value, ray, &program->objects[min])));
+		return (compute_light(min_value, ray, &program->objects[min]));
 	return (color_scal_mult(get_object(AMBIENT_LIGHT)->s_ambient_light.color, get_object(AMBIENT_LIGHT)->s_ambient_light.intensity));
 }
 
@@ -78,10 +75,11 @@ uint32_t	intersect_ray(t_vector3 *ray)
  * the object
  *
  * @param intersect Point = Ray.og + intersect * Ray.dir
+ * @param ray
  * @param obj
- * @return double
+ * @return uint32_t
  */
-double	compute_light(double intersect, t_vector3 *ray, t_scene_object *obj)
+uint32_t	compute_light(double intersect, t_vector3 *ray, t_scene_object *obj)
 {
 	t_program	*program;
 	t_vector3	*point_to_light;
@@ -89,27 +87,36 @@ double	compute_light(double intersect, t_vector3 *ray, t_scene_object *obj)
 	t_vector3	*normal;
 	double		dot;
 	double		total_intensity;
+	uint32_t	total_color;
 	int			index;
 
 	program = get_program();
 	total_intensity = 0.0;
+	total_color = 0x0;
 	index = -1;
 	point = sol_to_point(intersect, ray);
 	normal = get_obj_normal()[obj->type](point, obj);
-	while (++index < program->object_count)
+	while (++index < program->object_count)	// TODO: add pre-processing to have an array of Lights for simpler loops
 	{
 		if ((int) program->objects[index].type == AMBIENT_LIGHT)
+		{
 			total_intensity += program->objects[index].s_ambient_light.intensity;
+			total_color = color_add_scal(total_color, program->objects[index].s_ambient_light.intensity, program->objects[index].s_ambient_light.color);
+		}
 		else if ((int) program->objects[index].type == SPOT_LIGHT)
 		{
 			point_to_light = ft_v3_dir(point, program->objects[index].s_spot_light.pos);
 			dot = ft_dot_product(point_to_light, normal);
 			if (dot > 0)
+			{
 				total_intensity += program->objects[index].s_spot_light.intensity * dot / (ft_v3_length(normal) * ft_v3_length(point_to_light));
+				total_color = color_add_scal(total_color, program->objects[index].s_spot_light.intensity * dot / (ft_v3_length(normal) * ft_v3_length(point_to_light)), program->objects[index].s_spot_light.color);
+			}
 			free(point_to_light);
 		}
 	}
 	free(point);
 	free(normal);
-	return (total_intensity);
+	return (color_scal_mult(color_add(obj->s_sphere.color, total_color), total_intensity));
+	// return (total_color); // UNCOMENT FOR TOTAL_LIGHT RESULT
 }
