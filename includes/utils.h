@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:47:35 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/24 10:43:35 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/24 12:05:00 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,10 @@ uint32_t		atoc(char *arg);
 t_vector3		*atov(char *arg);
 
 t_scene_object	*get_object(int type);
+
+t_vector3		*sol_to_point(double intersect, t_vector3 *ray);
+
+double			ft_v3_length(t_vector3 *v);
 
 /*	~~~~~~~~~~~~~~~~ COLOR ~~~~~~~~~~~~~~~~	*/
 

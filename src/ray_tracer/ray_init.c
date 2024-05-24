@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:10:17 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/23 18:10:17 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/24 12:17:47 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,10 @@ void	init_ray(void)
 uint32_t	intersect_ray(t_vector3 *ray)
 {
 	t_program	*program;
-	// t_vector3	*intersect;
 	int			index;
 	int			min;
 	double		min_value;
-	double		tmp;
+	double		intersect;
 
 	program = get_program();
 	index = -1;
@@ -61,15 +60,56 @@ uint32_t	intersect_ray(t_vector3 *ray)
 	{
 		if ((int) program->objects[index].type == SPHERE)
 		{
-			tmp = get_obj_intersect()[program->objects[index].type](ray, &program->objects[index]);
-			if (tmp < min_value)
+			intersect = get_obj_intersect()[program->objects[index].type](ray, &program->objects[index]);
+			if (intersect < min_value)
 			{
 				min = index;
-				min_value = tmp;
+				min_value = intersect;
 			}
 		}
 	}
 	if (min_value < INFINITY)
-		return (program->objects[min].s_sphere.color);
-	return (BACKGROUND_COLOR);
+		return (color_scal_mult(program->objects[min].s_sphere.color, compute_light(min_value, ray, &program->objects[min])));
+	return (color_scal_mult(get_object(AMBIENT_LIGHT)->s_ambient_light.color, get_object(AMBIENT_LIGHT)->s_ambient_light.intensity));
+}
+
+/**
+ * @brief Computes the total intensity of light at the intersection with
+ * the object
+ *
+ * @param intersect Point = Ray.og + intersect * Ray.dir
+ * @param obj
+ * @return double
+ */
+double	compute_light(double intersect, t_vector3 *ray, t_scene_object *obj)
+{
+	t_program	*program;
+	t_vector3	*point_to_light;
+	t_vector3	*point;
+	t_vector3	*normal;
+	double		dot;
+	double		total_intensity;
+	int			index;
+
+	program = get_program();
+	total_intensity = 0.0;
+	index = -1;
+	point = sol_to_point(intersect, ray);
+	normal = get_obj_normal()[obj->type](point, obj);
+	while (++index < program->object_count)
+	{
+		if ((int) program->objects[index].type == AMBIENT_LIGHT)
+			total_intensity += program->objects[index].s_ambient_light.intensity;
+		else if ((int) program->objects[index].type == SPOT_LIGHT)
+		{
+			point_to_light = ft_v3_dir(point, program->objects[index].s_spot_light.pos);
+			dot = ft_dot_product(point_to_light, normal);
+			if (dot > 0)
+				total_intensity += program->objects[index].s_spot_light.intensity * dot / (ft_v3_length(normal) * ft_v3_length(point_to_light));
+			free(point_to_light);
+		}
+	}
+	free(point);
+	free(normal);
+	return (total_intensity);
 }
