@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:05:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/24 17:39:18 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/24 19:27:37 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ uint32_t	compute_light(double intersect, t_vector3 *ray, t_scene_object *obj)
 	total_intensity = 0.0;
 	total_color = 0x0;
 	index = -1;
-	point = sol_to_point(intersect, ray);
+	point = sol_to_point(intersect, ray, get_object(CAMERA)->s_camera.pos);
 	normal = get_obj_normal()[obj->type](point, obj);
+	dot = 0.0;
 	while (++index < program->object_count)	// TODO: add pre-processing to have an array of Lights for simpler loops
 	{
 		if ((int) program->objects[index].type == AMBIENT_LIGHT)

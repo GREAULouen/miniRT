@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:47:35 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/24 12:53:52 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/24 18:05:09 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ t_vector3		*atov(char *arg);
 
 t_scene_object	*get_object(int type);
 
-t_vector3		*sol_to_point(double intersect, t_vector3 *ray);
+t_vector3		*sol_to_point(double intersect, t_vector3 *ray, t_vector3 *og);
+double			closest_intersection(double t1, double t2, t_vector3 *ray, t_vector3 *og);
+int				valid_sol_from_cam(double sol);
+int				valid_sol_till_spot(double sol);
 
 double			ft_v3_length(t_vector3 *v);
 
