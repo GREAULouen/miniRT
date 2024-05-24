@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:50:24 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/23 17:53:42 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/24 11:03:56 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,17 @@ t_obj_intersect	*get_obj_intersect(void)
 	obj_intersect[SPHERE] = intersect_sphere;
 	obj_intersect[CYLINDER] = NULL;
 	return (&obj_intersect[0]);
+}
+
+t_obj_normal	*get_obj_normal(void)
+{
+	static t_obj_normal	obj_normal[OBJECT_TYPE_COUNT];
+
+	obj_normal[AMBIENT_LIGHT] = NULL;
+	obj_normal[SPOT_LIGHT] = NULL;
+	obj_normal[CAMERA] = NULL;
+	obj_normal[PLANE] = NULL;
+	obj_normal[SPHERE] = normal_sphere;
+	obj_normal[CYLINDER] = NULL;
+	return (&obj_normal[0]);
 }
