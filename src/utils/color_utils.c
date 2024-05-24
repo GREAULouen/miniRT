@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:46:49 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/23 19:05:14 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/24 10:39:52 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,30 @@
  * @return uint32_t
  */
 uint32_t	color_k_mult(uint32_t color, int k)
+{
+	uint32_t	new_color;
+	uint32_t	tmp;
+
+	if (k < 0)
+		return (0);
+	tmp = get_red(color) * k;
+	new_color = ((255 * (tmp > 255) + tmp * (tmp <= 255)) << 16);
+	tmp = get_green(color) * k;
+	new_color |= ((255 * (tmp > 255) + tmp * (tmp <= 255)) << 8);
+	tmp = get_blue(color) * k;
+	new_color |= (255 * (tmp > 255) + tmp * (tmp <= 255));
+	return (new_color);
+}
+
+/**
+ * @brief Calculates k * (RGB) = kR, kG, kB.
+ * Keeping the result in range 0-255.
+ *
+ * @param color
+ * @param k can be negative to get RGB = 000;
+ * @return uint32_t
+ */
+uint32_t	color_scal_mult(uint32_t color, double k)
 {
 	uint32_t	new_color;
 	uint32_t	tmp;
