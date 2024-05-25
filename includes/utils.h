@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:47:35 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/24 18:05:09 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/25 10:08:43 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int				valid_sol_from_cam(double sol);
 int				valid_sol_till_spot(double sol);
 
 double			ft_v3_length(t_vector3 *v);
+t_vector3		*ft_v3_cross_product(t_vector3 *v1, t_vector3 *v2);
 
 /*	~~~~~~~~~~~~~~~~ COLOR ~~~~~~~~~~~~~~~~	*/
 
