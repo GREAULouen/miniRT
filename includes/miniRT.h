@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:48:52 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/23 18:12:31 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/25 11:11:43 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 
 /* ~~~~ local includes ~~~~	*/
 # include "scene_object.h"
-# include "parser.h"
 # include "utils.h"
+# include "parser.h"
 # include "ray_tracer.h"
 # include "mlx.h"
 

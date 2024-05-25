@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:06:23 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/24 18:16:46 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/25 12:07:52 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ uint32_t	compute_intersection(t_vector3 *ray)
 	{
 		if ((int) program->objects[index].type == SPHERE)	// Can be changed to only test intersection with Solid objects that have been pre-processed
 		{
+			// printf("Sphere x = %f\n", program->objects[index].s_sphere.pos->x);
 			intersect = get_obj_intersect()[program->objects[index].type](get_object(CAMERA)->s_camera.pos, ray, &program->objects[index], valid_sol_from_cam);
+			// if (program->objects[index].s_sphere.pos->z == 0.0)
+			// 	printf("intersect test: %f\n", intersect);
 			if (intersect != INFINITY && intersect < min_value)
 			{
 				min = index;

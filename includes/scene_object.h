@@ -6,14 +6,14 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/24 18:10:25 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/25 11:13:53 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SCENE_OBJECT_H
 # define SCENE_OBJECT_H
 
-# include "lib/libft/libft.h"
+typedef double t_matrix[3][3];
 
 typedef enum e_scene_object_type
 {
@@ -36,7 +36,7 @@ typedef enum e_scene_object_type
 # define DEFAULT_WIDTH 1920
 # define DEFAULT_HEIGHT 1080
 
-# define EPSILON 0.00001
+# define EPSILON 0.0000001
 
 typedef struct s_scene_object
 {
@@ -59,6 +59,7 @@ typedef struct s_scene_object
 			t_vector3		*dir;
 			int				fov;
 			double			view_plane;
+			t_matrix		rot;
 		}	s_camera;
 		struct
 		{
@@ -71,6 +72,7 @@ typedef struct s_scene_object
 			t_vector3		*pos;
 			double			diameter;
 			uint32_t		color;
+			double			sq_rad;
 		}	s_sphere;
 		struct
 		{

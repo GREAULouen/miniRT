@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:46:50 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/24 19:19:51 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/25 13:03:23 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	create_sphere(t_scene_object *obj, char **args)
 		return (free(obj->s_sphere.pos),
 			set_error((char *)__func__, INVALID_ARG), -1);
 	obj->s_sphere.color = atoc(args[3]);
+	obj->s_sphere.sq_rad = obj->s_sphere.diameter * obj->s_sphere.diameter / 4.0;
 	return (0);
 }
 
@@ -56,18 +57,18 @@ double	intersect_sphere(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int 
 	tmp = ft_v3_dir(og, obj->s_sphere.pos);
 	b = 2.0 * ft_dot_product(ray, tmp);
 	c = ft_dot_product(tmp, tmp)
-		- obj->s_sphere.diameter * obj->s_sphere.diameter / 4.0;
+		- obj->s_sphere.sq_rad;
 	free(tmp);
 	delta = b * b - 4.0 * a * c;
-	// if (og->x != 0 && og->y != 0 && og->z != 0 && c != 0)
+	if (delta < 0)
+		return (INFINITY);
+	// if (obj->s_sphere.pos->x > 10.0)
 	// {
 	// 	printf("  |-a: %f\n", a);
 	// 	printf("  |-b: %f\n", b);
 	// 	printf("  |-c: %f\n", c);
 	// 	printf("  |- delta: %f\n", delta);
 	// }
-	if (delta < 0)
-		return (INFINITY);
 	t1 = -1.0 * (-1.0 * b + sqrt(delta)) / (2.0 * a);
 	if (!is_valid(t1))
 		t1 = INFINITY;
