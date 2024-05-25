@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:47:35 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/25 10:08:43 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/25 11:11:48 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int				valid_sol_till_spot(double sol);
 
 double			ft_v3_length(t_vector3 *v);
 t_vector3		*ft_v3_cross_product(t_vector3 *v1, t_vector3 *v2);
+void			ft_v3_innormalize(t_vector3 *v);
+void			ft_rotation_matrix(t_vector3 *dir, t_matrix *rot);
 
 /*	~~~~~~~~~~~~~~~~ COLOR ~~~~~~~~~~~~~~~~	*/
 
