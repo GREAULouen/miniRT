@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:55:30 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/22 16:09:56 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/25 15:34:29 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	create_plane(t_scene_object *obj, char **args)
 	if (!obj->s_plane.normal)
 		return (free(obj->s_plane.pos), -1);
 	obj->s_plane.color = atoc(args[3]);
+	obj->s_plane.dot = ft_dot_product(obj->s_plane.pos, obj->s_plane.normal);
 	return (0);
 }
 
@@ -40,4 +41,29 @@ void	cleanup_plane(t_scene_object *obj)
 		return ;
 	free(obj->s_plane.pos);
 	free(obj->s_plane.normal);
+}
+
+double	intersect_plane(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double))
+{
+	double	t;
+	double	ray_n;
+	double	og_n;
+
+	ray_n = ft_dot_product(ray, obj->s_plane.normal);
+	og_n = ft_dot_product(og, obj->s_plane.normal);
+	if (fabs(ray_n) <= EPSILON)
+	{
+		// Ray parallel to the plane
+		return (INFINITY);
+	}
+	t = (obj->s_plane.dot - og_n) / ray_n;
+	if (!is_valid(t))
+		return (INFINITY);
+	return (t);
+}
+
+t_vector3	*normal_plane(t_vector3 *point, t_scene_object *obj)
+{
+	(void)point;
+	return (ft_v3_cpy(obj->s_plane.normal));
 }
