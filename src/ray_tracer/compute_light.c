@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:05:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/25 10:11:08 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/27 14:46:49 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@ uint32_t	compute_light(double intersect, t_vector3 *ray, t_scene_object *obj)
 	index = -1;
 	point = sol_to_point(intersect, ray, get_object(CAMERA)->s_camera.pos);
 	normal = get_obj_normal()[obj->type](point, obj);
+	// if (ray->x > -0.03 && ray->x < -0.029 && ray->z > -0.03 && ray->z < -0.029 && point->z < 100 && point->z > 95 && point->x > -5.0 && point->x < 5.0)
+	// {
+	// 	print_v3("ray", ray, ONELINE);
+	// 	print_v3("  |- point ", point, ONELINE);
+	// 	print_v3("  |- normal ", normal, ONELINE);
+	// }
 	dot = 0.0;
 	while (++index < program->object_count)	// TODO: add pre-processing to have an array of Lights for simpler loops
 	{
@@ -50,14 +56,24 @@ uint32_t	compute_light(double intersect, t_vector3 *ray, t_scene_object *obj)
 		{
 			point_to_light = ft_v3_dir(point, program->objects[index].s_spot_light.pos);
 			dot = ft_dot_product(point_to_light, normal);
-			if (dot > 0)
-			{
-				total_intensity += program->objects[index].s_spot_light.intensity * dot / (ft_v3_length(normal) * ft_v3_length(point_to_light));
-				total_color = color_add_scal(total_color, program->objects[index].s_spot_light.intensity * dot / (ft_v3_length(normal) * ft_v3_length(point_to_light)), program->objects[index].s_spot_light.color);
-			}
+			// if (ray->x > -0.03 && ray->x < -0.029 && ray->z > -0.03 && ray->z < -0.029 && point->z < 100 && point->z > 95 && point->x > -5.0 && point->x < 5.0)
+			// {
+			// 	print_v3("  |- L ", point_to_light, ONELINE);
+			// 	printf("  |- dot : %f\n", dot);
+			// }
+			// if (dot > 0)
+			// {
+			total_intensity += program->objects[index].s_spot_light.intensity * dot / (ft_v3_length(point_to_light));
+			total_color = color_add_scal(total_color, program->objects[index].s_spot_light.intensity * dot / (ft_v3_length(point_to_light)), program->objects[index].s_spot_light.color);
+			// }
 			free(point_to_light);
 		}
 	}
+	// if (ray->x > -0.03 && ray->x < -0.029 && ray->z > -0.03 && ray->z < -0.029 && point->z < 100 && point->z > 95 && point->x > -5.0 && point->x < 5.0)
+	// {
+	// 	printf("  |- total_intensity: %f\n", total_intensity);
+	// 	printf("  |- total_color    : (%d, %d, %d)\n", get_red(total_color), get_green(total_color), get_blue(total_color));
+	// }
 	free(point);
 	free(normal);
 	return (color_scal_mult(color_add(obj->s_sphere.color, total_color), total_intensity));
