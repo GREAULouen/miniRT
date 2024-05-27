@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 18:01:50 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/05/25 13:11:01 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/27 15:20:55 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	loop_mlx(void *param)
 {
 	(void) param;
 	init_ray();
-	get_object(SPOT_LIGHT)->s_spot_light.pos->z += 1;
+	get_object(CAMERA)->s_camera.pos->y += 1.0;
 }
 
 void	start_mlx(void)

@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 11:58:36 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/25 12:28:21 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/27 13:20:13 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,26 +69,36 @@ void	ft_v3_innormalize(t_vector3 *v)
  */
 void	ft_rotation_matrix(t_vector3 *dir, t_matrix *rot)
 {
-	t_vector3	*relative_up;
+	t_vector3	n_dir;
 	t_vector3	*right;
 	t_vector3	*real_up;
 
-	dir->z *= -1;
-	relative_up = ft_v3_zero();
-	relative_up->y = 1.0;
-	right = ft_v3_cross_product(relative_up, dir);
+	n_dir = (t_vector3){dir->x, dir->y, -dir->z};
+	ft_v3_innormalize(&n_dir);
+	print_v3("n_dir", &n_dir, ONELINE);
+	if (fabs(n_dir.y) == 1.0)
+		right = ft_v3_cross_product(&(t_vector3){0.0, 0.0, 1.0}, &n_dir);
+	else
+		right = ft_v3_cross_product(&(t_vector3){0.0, 1.0, 0.0}, &n_dir);
 	ft_v3_innormalize(right);
-	real_up = ft_v3_cross_product(dir, right);
+	real_up = ft_v3_cross_product(&n_dir, right);
 	(*rot)[0][0] = right->x;
 	(*rot)[0][1] = real_up->x;
-	(*rot)[0][2] = -1.0 * dir->x;
-	(*rot)[1][0] = right->y;
-	(*rot)[1][1] = real_up->y;
-	(*rot)[1][2] = -1.0 * dir->y;
+	(*rot)[0][2] = -1.0 * n_dir.x;
+	(*rot)[1][0] = -right->y;
+	(*rot)[1][1] = -real_up->y;
+	(*rot)[1][2] = n_dir.y;
 	(*rot)[2][0] = right->z;
 	(*rot)[2][1] = real_up->z;
-	(*rot)[2][2] = -1.0 * dir->z;
-	free(relative_up);
+	(*rot)[2][2] = -1.0 * n_dir.z;
+
+	for(int row = 0; row < 3; row++)
+	{
+		for(int col = 0; col < 3; col++)
+			printf("% .6f ", (*rot)[row][col]);
+		printf("\n");
+	}
+
 	free(right);
 	free(real_up);
 }

@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/25 11:13:53 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/27 15:12:22 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_scene_object
 			t_vector3		*pos;
 			t_vector3		*normal;
 			uint32_t		color;
+			double			dot;
 		}	s_plane;
 		struct
 		{
@@ -113,13 +114,15 @@ typedef double	(*t_obj_intersect)(t_vector3 *, t_vector3 *, t_scene_object *, in
 
 double						intersect_sphere(t_vector3 *og, t_vector3 *ray,
 								t_scene_object *obj, int (*is_valid)(double));
+double						intersect_plane(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
 
 /*	~~~~~~~~~~~~~~~ NORMAL_CALC ~~~~~~~~~~~~~~~	*/
 
-typedef t_vector3	*(*t_obj_normal)(t_vector3 *, t_scene_object *);
+typedef t_vector3	*(*t_obj_normal)(t_vector3 *, t_vector3 *, t_scene_object *);
 
-t_vector3					*normal_sphere(t_vector3 *point,
+t_vector3					*normal_sphere(t_vector3 *og, t_vector3 *point,
 								t_scene_object *obj);
+t_vector3					*normal_plane(t_vector3 *og, t_vector3 *point, t_scene_object *obj);
 
 /*	~~~~~~~~~~~~~~~~~ GETTERS ~~~~~~~~~~~~~~~~~	*/
 

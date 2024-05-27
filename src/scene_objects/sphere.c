@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:46:50 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/25 13:03:23 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/27 15:12:27 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,22 @@ double	intersect_sphere(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int 
 	delta = b * b - 4.0 * a * c;
 	if (delta < 0)
 		return (INFINITY);
-	// if (obj->s_sphere.pos->x > 10.0)
-	// {
-	// 	printf("  |-a: %f\n", a);
-	// 	printf("  |-b: %f\n", b);
-	// 	printf("  |-c: %f\n", c);
-	// 	printf("  |- delta: %f\n", delta);
-	// }
 	t1 = -1.0 * (-1.0 * b + sqrt(delta)) / (2.0 * a);
 	if (!is_valid(t1))
 		t1 = INFINITY;
 	t2 = -1.0 * (-1.0 * b - sqrt(delta)) / (2.0 * a);
 	if (!is_valid(t2))
 		t2 = INFINITY;
+	// if (ray->x < 0.03 && ray->x > -0.03 & ray->z < 0.03 && ray->z > -0.03)
+	// {
+	// 	print_v3("ray", ray, ONELINE);
+	// 	printf("  |-a: %f\n", a);
+	// 	printf("  |-b: %f\n", b);
+	// 	printf("  |-c: %f\n", c);
+	// 	printf("  |- delta: %f\n", delta);
+	// 	printf("  |- t1: %f\n", t1);
+	// 	printf("  |- t2: %f\n", t2);
+	// }
 	return (closest_intersection(t1, t2, ray, og));
 }
 
@@ -84,12 +87,14 @@ double	intersect_sphere(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int 
  * @param point
  * @return t_vector3*
  */
-t_vector3	*normal_sphere(t_vector3 *point, t_scene_object *obj)
+t_vector3	*normal_sphere(t_vector3 *og, t_vector3 *point, t_scene_object *obj)
 {
 	t_vector3	*normal;
 
+	(void)og;
 	normal = ft_v3_dir(obj->s_sphere.pos, point);
 	if (!normal)
 		return (NULL);
+	ft_v3_innormalize(normal);
 	return (normal);
 }
