@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:05:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/27 14:46:49 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/27 15:18:22 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ uint32_t	compute_light(double intersect, t_vector3 *ray, t_scene_object *obj)
 	total_color = 0x0;
 	index = -1;
 	point = sol_to_point(intersect, ray, get_object(CAMERA)->s_camera.pos);
-	normal = get_obj_normal()[obj->type](point, obj);
+	normal = get_obj_normal()[obj->type](get_object(CAMERA)->s_camera.pos, point, obj);
 	// if (ray->x > -0.03 && ray->x < -0.029 && ray->z > -0.03 && ray->z < -0.029 && point->z < 100 && point->z > 95 && point->x > -5.0 && point->x < 5.0)
 	// {
 	// 	print_v3("ray", ray, ONELINE);
@@ -76,6 +76,6 @@ uint32_t	compute_light(double intersect, t_vector3 *ray, t_scene_object *obj)
 	// }
 	free(point);
 	free(normal);
-	return (color_scal_mult(color_add(obj->s_sphere.color, total_color), total_intensity));
-	// return (total_color); // UNCOMENT FOR TOTAL_LIGHT RESULT
+	// return (color_scal_mult(color_add(obj->s_sphere.color, total_color), total_intensity));
+	return (total_color); // UNCOMENT FOR TOTAL_LIGHT RESULT
 }

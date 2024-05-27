@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:55:30 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/25 15:34:29 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/27 15:19:54 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,16 @@ double	intersect_plane(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (
 	return (t);
 }
 
-t_vector3	*normal_plane(t_vector3 *point, t_scene_object *obj)
+t_vector3	*normal_plane(t_vector3 *og, t_vector3 *point, t_scene_object *obj)
 {
-	(void)point;
-	return (ft_v3_cpy(obj->s_plane.normal));
+	t_vector3	*p_og;
+	t_vector3	*res;
+
+	p_og = ft_v3_dir(og, point);
+	if (ft_dot_product(p_og, obj->s_plane.normal) > 0)
+	{
+		res = ft_v3_mult(obj->s_plane.normal, -1.0);
+		return (free(p_og), res);
+	}
+	return (free(p_og), ft_v3_cpy(obj->s_plane.normal));
 }

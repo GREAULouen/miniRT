@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:46:50 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/27 14:45:39 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/27 15:12:27 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,11 @@ double	intersect_sphere(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int 
  * @param point
  * @return t_vector3*
  */
-t_vector3	*normal_sphere(t_vector3 *point, t_scene_object *obj)
+t_vector3	*normal_sphere(t_vector3 *og, t_vector3 *point, t_scene_object *obj)
 {
 	t_vector3	*normal;
 
+	(void)og;
 	normal = ft_v3_dir(obj->s_sphere.pos, point);
 	if (!normal)
 		return (NULL);

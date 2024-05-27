@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/25 15:05:15 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/27 15:12:22 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,11 @@ double						intersect_plane(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, 
 
 /*	~~~~~~~~~~~~~~~ NORMAL_CALC ~~~~~~~~~~~~~~~	*/
 
-typedef t_vector3	*(*t_obj_normal)(t_vector3 *, t_scene_object *);
+typedef t_vector3	*(*t_obj_normal)(t_vector3 *, t_vector3 *, t_scene_object *);
 
-t_vector3					*normal_sphere(t_vector3 *point,
+t_vector3					*normal_sphere(t_vector3 *og, t_vector3 *point,
 								t_scene_object *obj);
-t_vector3					*normal_plane(t_vector3 *point, t_scene_object *obj);
+t_vector3					*normal_plane(t_vector3 *og, t_vector3 *point, t_scene_object *obj);
 
 /*	~~~~~~~~~~~~~~~~~ GETTERS ~~~~~~~~~~~~~~~~~	*/
 
