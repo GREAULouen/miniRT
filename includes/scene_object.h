@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 14:19:35 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/28 14:25:04 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef enum e_scene_object_type
 typedef struct s_scene_object
 {
 	uint32_t	color;
+	double		shininess;
 	t_scene_object_type		type;
 	union {
 		struct

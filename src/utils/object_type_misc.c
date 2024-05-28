@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:12:39 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 14:21:48 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/28 14:44:32 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ void	print_objects(void)
 	{
 		printf("    |- %s:\n",
 			get_type_string(get_program()->objects[index].type));
+		if (get_program()->objects[index].type > CAMERA)
+			printf("  |- shininess: %f\n", get_program()->objects[index].shininess);
 		print_object(&get_program()->objects[index]);
 	}
 }
