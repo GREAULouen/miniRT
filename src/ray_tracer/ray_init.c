@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:10:17 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 10:58:30 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/28 13:59:55 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	init_ray(void)
 		col = -1;
 		while (++col < program->canvas_width)
 		{
-			ray.x = program->half_view_width - (((double) col) * program->vc_width_ratio);
+			ray.x = (((double) col) * program->vc_width_ratio) - program->half_view_width;
 			ft_apply_rotate(&ray, &get_object(CAMERA)->s_camera.rot, &tmp);
 			pixel_color = compute_intersection(&tmp);
 			mlx_put_pixel(program->image, col, row, (pixel_color << 8 | 255));

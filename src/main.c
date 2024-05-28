@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:53:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 11:37:18 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/28 13:55:56 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	main(int argc, char *argv[])
 
 
 	// t_matrix	rot;
-	// t_vector3	dir = (t_vector3){1.0, 1.0, 1.0};
+	// t_vector3	dir = (t_vector3){0.000000, -0.382683, 0.923880};
 	// ft_v3_innormalize(&dir);
 
 	// ft_rotation_matrix(&dir, &rot);
