@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 15:56:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 14:19:09 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:31:06 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	create_camera(t_scene_object *obj, char **args)
 			free(obj->s_camera.dir),
 			set_error((char *)__func__, INVALID_ARG), -1);
 	update_viewport(obj);
-	// ft_inrotate_x(obj->s_camera.dir, - M_PI_4 / 8.0);
+	ft_inrotate_x(obj->s_camera.dir, M_PI_4 / 2.0);
 	ft_rotation_matrix(obj->s_camera.dir, &obj->s_camera.rot);
 	return (0);
 }

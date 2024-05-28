@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:47:35 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/25 11:11:48 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/28 12:13:01 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ double			ft_v3_length(t_vector3 *v);
 t_vector3		*ft_v3_cross_product(t_vector3 *v1, t_vector3 *v2);
 void			ft_v3_innormalize(t_vector3 *v);
 void			ft_rotation_matrix(t_vector3 *dir, t_matrix *rot);
+void			ft_apply_rotate(t_vector3 *dir, t_matrix *rot, t_vector3 *res);
 
 /*	~~~~~~~~~~~~~~~~ COLOR ~~~~~~~~~~~~~~~~	*/
 
@@ -39,9 +40,10 @@ uint32_t		get_red(uint32_t color);
 uint32_t		get_green(uint32_t color);
 uint32_t		get_blue(uint32_t color);
 
-uint32_t		color_k_mult(uint32_t color, int k);
+uint32_t		color_sub(uint32_t color1, uint32_t color2);
 uint32_t		color_scal_mult(uint32_t color, double k);
 uint32_t		color_add(uint32_t color1, uint32_t color2);
 uint32_t		color_add_scal(uint32_t color1, double k, uint32_t color2);
+uint32_t		color_rem_opposite(uint32_t color1, uint32_t color2);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:53:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 14:54:50 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:26:46 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,37 @@ int	main(int argc, char *argv[])
 	}
 	// TODO : clean the program structure
 	cleanup_program();
+
+	// (void)argc;
+	// (void)argv;
+
+
+	// t_matrix	rot;
+	// t_vector3	dir = (t_vector3){0.000000, -0.382683, 0.923880};
+	// ft_v3_innormalize(&dir);
+
+	// ft_rotation_matrix(&dir, &rot);
+
+	// t_vector3	input = (t_vector3){0.0, 0.0, 1.0};
+	// t_vector3	res = (t_vector3){0.0, 0.0, 0.0};
+
+	// ft_apply_rotate(&input, &rot, &res);
+	// print_v3("Before, ", &input, ONELINE);
+	// print_v3(" > After", &res, ONELINE);
+
+	// printf("\n");
+
+	// input = (t_vector3){1.0, 0.0, 0.0};
+	// ft_apply_rotate(&input, &rot, &res);
+	// print_v3("Before, ", &input, ONELINE);
+	// print_v3(" > After", &res, ONELINE);
+
+	// printf("\n");
+
+	// input = (t_vector3){1.0, 1.0, 1.0};
+	// ft_apply_rotate(&input, &rot, &res);
+	// print_v3("Before, ", &input, ONELINE);
+	// print_v3(" > After", &res, ONELINE);
+
 	exit(EXIT_SUCCESS);
 }

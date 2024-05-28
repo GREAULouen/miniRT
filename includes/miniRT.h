@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:48:52 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/25 11:11:43 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/27 15:38:40 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,11 @@ typedef struct s_program
 	int				canvas_width;
 	int				canvas_height;
 	double			viewport_width;
+	double			half_view_width;
 	double			viewport_height;
+	double			half_view_height;
+	double			vc_width_ratio;
+	double			vc_height_ratio;
 	int				object_count;
 	t_scene_object	*objects;
 	mlx_t			*mlx;
