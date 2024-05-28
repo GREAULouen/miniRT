@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_type_misc.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:12:39 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/21 14:26:37 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/28 18:30:48 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void	print_object3(t_scene_object *obj)
 	{
 		print_v3("      |- position ", obj->s_cylinder.pos, ONELINE);
 		print_v3("      |- normal   ", obj->s_cylinder.dir, ONELINE);
+		print_v3("      |- end1     ", obj->s_cylinder.end1, ONELINE);
+		print_v3("      |- end2     ", obj->s_cylinder.end2, ONELINE);
 		printf("      |- diameter : %f\n", obj->s_cylinder.diameter);
 		printf("      |- height   : %f\n", obj->s_cylinder.height);
 		printf("      |- color    : (%u, %u, %u)\n",

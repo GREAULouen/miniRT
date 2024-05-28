@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:50:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/22 16:10:18 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/28 18:53:04 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,49 @@ int	create_cylinder(t_scene_object *obj, char **args)
 		return (free(obj->s_cylinder.pos), free(obj->s_cylinder.dir),
 			set_error((char *)__func__, INVALID_ARG), -1);
 	obj->s_cylinder.color = atoc(args[5]);
+	update_ends(obj);
 	return (0);
+}
+
+void	update_ends(t_scene_object *obj)
+{
+	obj->s_cylinder.end1 = ft_v3_mult(obj->s_cylinder.pos, obj->s_cylinder.height / 2.0);
+	obj->s_cylinder.end2 = ft_v3_mult(obj->s_cylinder.pos, -(obj->s_cylinder.height / 2.0));
+}
+
+double	intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double))
+{
+	t_vector3	*oc;
+	double		dot_org;
+	double		dot_org_ray;
+	double		dot_org_oc;
+	double		k2;
+	double		k1;
+	double		k0;
+
+	(void) is_valid;
+	oc = ft_v3_sub(og, obj->s_cylinder.end1);
+	dot_org = ft_dot_product(obj->s_cylinder.pos, obj->s_cylinder.pos);
+	dot_org_ray = ft_dot_product(obj->s_cylinder.pos, ray);
+	dot_org_oc = ft_dot_product(obj->s_cylinder.pos, oc);
+
+	k2 = dot_org - dot_org_ray * dot_org_ray;
+	k1 = dot_org * ft_dot_product(oc, ray) - dot_org_oc * dot_org_ray;
+	k0 = dot_org * ft_dot_product(oc, oc) - dot_org_oc * dot_org_oc - obj->s_cylinder.diameter * obj->s_cylinder.diameter * dot_org;
+
+	double	h;
+	h = k1 * k1 - k2 * k0;
+	if (h < 0.0)
+		return (INFINITY);
+	h = sqrt(h);
+	double	t;
+	t = (-k1-h) / k2;
+
+	double y;
+	y = dot_org_oc + t * dot_org_ray;
+	if (y > 0.0 && y < dot_org)
+		return (t);
+	return (INFINITY);
 }
 
 void	cleanup_cylinder(t_scene_object *obj)
@@ -51,4 +93,6 @@ void	cleanup_cylinder(t_scene_object *obj)
 		return ;
 	free(obj->s_cylinder.pos);
 	free(obj->s_cylinder.dir);
+	free(obj->s_cylinder.end1);
+	free(obj->s_cylinder.end2);
 }

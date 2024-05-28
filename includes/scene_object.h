@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 14:23:14 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:15:07 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ typedef struct s_scene_object
 		{
 			t_vector3		*pos;
 			t_vector3		*dir;
+			t_vector3		*end1;
+			t_vector3		*end2;
 			double			diameter;
 			double			height;
 			uint32_t		color;
@@ -95,6 +97,7 @@ void						update_viewport(t_scene_object *obj);
 int							create_plane(t_scene_object *obj, char **args);
 int							create_sphere(t_scene_object *obj, char **args);
 int							create_cylinder(t_scene_object *obj, char **args);
+void						update_ends(t_scene_object *obj);
 
 /*	~~~~~~~~~~~~~~~~ CLEANUP ~~~~~~~~~~~~~~~~	*/
 
@@ -113,6 +116,7 @@ typedef double	(*t_obj_intersect)(t_vector3 *, t_vector3 *, t_scene_object *, in
 double						intersect_sphere(t_vector3 *og, t_vector3 *ray,
 								t_scene_object *obj, int (*is_valid)(double));
 double						intersect_plane(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
+double						intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
 
 /*	~~~~~~~~~~~~~~~ NORMAL_CALC ~~~~~~~~~~~~~~~	*/
 

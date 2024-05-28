@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene_object_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:50:24 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/25 15:05:42 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/28 18:14:35 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_obj_intersect	*get_obj_intersect(void)
 	obj_intersect[CAMERA] = NULL;
 	obj_intersect[PLANE] = intersect_plane;
 	obj_intersect[SPHERE] = intersect_sphere;
-	obj_intersect[CYLINDER] = NULL;
+	obj_intersect[CYLINDER] = intersect_cylinder;
 	return (&obj_intersect[0]);
 }
 
