@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:53:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 13:55:56 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/28 15:26:46 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,14 @@ int	main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	get_program()->file_name = argv[1];
-	get_program()->canvas_width = DEFAULT_WIDTH;
-	get_program()->canvas_height = DEFAULT_HEIGHT;
-	get_program()->viewport_width = 1;
-	get_program()->half_view_width = get_program()->viewport_width / 2.0;
-	get_program()->viewport_height = 9.0/16.0;
-	get_program()->half_view_height = get_program()->viewport_height / 2.0;
-	get_program()->vc_width_ratio = get_program()->viewport_width / get_program()->canvas_width;
-	get_program()->vc_height_ratio = get_program()->viewport_height / get_program()->canvas_height;
+	set_width_height(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	parse_input();
-	start_mlx();
+	if (*get_errno() != NO_ERROR
+		|| !start_mlx())
+	{
+		cleanup_program();
+		exit(EXIT_FAILURE);
+	}
 	// TODO : clean the program structure
 	cleanup_program();
 
