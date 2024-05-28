@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 18:01:50 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/05/27 15:20:55 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/28 11:43:32 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ void	loop_mlx(void *param)
 {
 	(void) param;
 	init_ray();
-	get_object(CAMERA)->s_camera.pos->y += 1.0;
+	// get_object(CAMERA)->s_camera.pos->y += 1.0;
+	// ft_inrotate_x(get_object(CAMERA)->s_camera.dir, 0.1);
+	// ft_rotation_matrix(get_object(CAMERA)->s_camera.dir, &get_object(CAMERA)->s_camera.rot);
 }
 
 void	start_mlx(void)

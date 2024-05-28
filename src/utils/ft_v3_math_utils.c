@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 11:58:36 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/27 13:20:13 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/28 11:35:45 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,27 +70,26 @@ void	ft_v3_innormalize(t_vector3 *v)
 void	ft_rotation_matrix(t_vector3 *dir, t_matrix *rot)
 {
 	t_vector3	n_dir;
-	t_vector3	*right;
-	t_vector3	*real_up;
+	t_vector3	og;
+	t_vector3	*axis;
+	float		cosA;
+	float		k;
 
 	n_dir = (t_vector3){dir->x, dir->y, -dir->z};
-	ft_v3_innormalize(&n_dir);
-	print_v3("n_dir", &n_dir, ONELINE);
-	if (fabs(n_dir.y) == 1.0)
-		right = ft_v3_cross_product(&(t_vector3){0.0, 0.0, 1.0}, &n_dir);
-	else
-		right = ft_v3_cross_product(&(t_vector3){0.0, 1.0, 0.0}, &n_dir);
-	ft_v3_innormalize(right);
-	real_up = ft_v3_cross_product(&n_dir, right);
-	(*rot)[0][0] = right->x;
-	(*rot)[0][1] = real_up->x;
-	(*rot)[0][2] = -1.0 * n_dir.x;
-	(*rot)[1][0] = -right->y;
-	(*rot)[1][1] = -real_up->y;
-	(*rot)[1][2] = n_dir.y;
-	(*rot)[2][0] = right->z;
-	(*rot)[2][1] = real_up->z;
-	(*rot)[2][2] = -1.0 * n_dir.z;
+	og = (t_vector3){0.0, 0.0, -1.0};
+	axis = ft_v3_cross_product(&n_dir, &og);
+	cosA = ft_dot_product(&n_dir, &og);
+	k = 1.0 / (1.0 + cosA);
+
+	(*rot)[0][0] = (axis->x * axis->x * k) + cosA;
+	(*rot)[0][1] = (axis->y * axis->x * k) - axis->z;
+	(*rot)[0][2] = (axis->z * axis->x * k) + axis->y;
+	(*rot)[1][0] = (axis->x * axis->y * k) + axis->z;
+	(*rot)[1][1] = (axis->y * axis->y * k) + cosA;
+	(*rot)[1][2] = (axis->z * axis->y * k) - axis->x;
+	(*rot)[2][0] = (axis->x * axis->z * k) - axis->y;
+	(*rot)[2][1] = (axis->y * axis->z * k) + axis->x;
+	(*rot)[2][2] = (axis->z * axis->z * k) + cosA;
 
 	for(int row = 0; row < 3; row++)
 	{
@@ -98,7 +97,17 @@ void	ft_rotation_matrix(t_vector3 *dir, t_matrix *rot)
 			printf("% .6f ", (*rot)[row][col]);
 		printf("\n");
 	}
+	free(axis);
+}
 
-	free(right);
-	free(real_up);
+/**
+ * @brief Rotates the ray to match the direction of the camera
+ *
+ * @param ray
+ */
+void	ft_apply_rotate(t_vector3 *dir, t_matrix *rot, t_vector3 *res)
+{
+	res->x = dir->x * (*rot)[0][0] + dir->y * (*rot)[0][1] + dir->z * (*rot)[0][2];
+	res->y = dir->x * (*rot)[1][0] + dir->y * (*rot)[1][1] + dir->z * (*rot)[1][2];
+	res->z = dir->x * (*rot)[2][0] + dir->y * (*rot)[2][1] + dir->z * (*rot)[2][2];
 }
