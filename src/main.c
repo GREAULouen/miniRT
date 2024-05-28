@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:53:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 14:36:07 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/28 14:54:50 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,12 @@ int	main(int argc, char *argv[])
 	get_program()->file_name = argv[1];
 	set_width_height(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	parse_input();
-	start_mlx();
+	if (*get_errno() != NO_ERROR
+		|| !start_mlx())
+	{
+		cleanup_program();
+		exit(EXIT_FAILURE);
+	}
 	// TODO : clean the program structure
 	cleanup_program();
 	exit(EXIT_SUCCESS);

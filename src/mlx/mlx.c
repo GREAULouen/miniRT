@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 18:01:50 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/05/28 14:47:31 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/28 14:57:22 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,29 +26,21 @@ void	register_hooks(mlx_t *mlx)
 	mlx_key_hook(mlx, key_hook, NULL);
 }
 
-void	start_mlx(void)
+bool	start_mlx(void)
 {
 	t_program	*program;
 
 	program = get_program();
 	program->mlx = mlx_init(program->canvas_width, program->canvas_height, PROGRAM_NAME, true);
 	if (program->mlx == NULL)
-	{
-		ft_putstr_fd((char *) mlx_strerror(mlx_errno), 2);
-		return ;
-	}
+		return (mlx_error());
 	program->image = mlx_new_image(program->mlx, program->canvas_width, program->canvas_height);
 	if (program->image == NULL)
-	{
-		ft_putstr_fd((char *) mlx_strerror(mlx_errno), 2);
-		return ;
-	}
+		return (mlx_error());
 	if (mlx_image_to_window(program->mlx, program->image, 0, 0) == -1)
-	{
-		ft_putstr_fd((char *) mlx_strerror(mlx_errno), 2);
-		return ;
-	}
+		return (mlx_error());
 	register_hooks(program->mlx);
 	mlx_loop(program->mlx);
 	mlx_terminate(program->mlx);
+	return (true);
 }
