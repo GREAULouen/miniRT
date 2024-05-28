@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:46:50 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 14:29:00 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/28 15:37:40 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
  * @param args
  * @return int : -1 if error else 0
  */
-int	create_sphere(t_scene_object *obj, char **args)
+int	create_sphere(t_scene_object *obj, int argc, char **args)
 {
-	if (!args[1] || !args[2] || !args[3] || (args[4] && args[5]))
+	if (argc < 4 || !args[1] || !args[2] || !args[3])
 		return (set_error((char *)__func__, INVALID_ARG), -1);
 	obj->type = SPHERE;
 	obj->s_sphere.pos = atov(args[1]);

@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 14:25:04 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/28 15:18:05 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct s_scene_object
 {
 	uint32_t	color;
 	double		shininess;
+	double		reflectiveness;
 	t_scene_object_type		type;
 	union {
 		struct
@@ -85,15 +86,14 @@ typedef struct s_scene_object
 
 /*	~~~~~~~~~~~~~~~~ CREATION ~~~~~~~~~~~~~~~~	*/
 
-typedef int	(*t_obj_creator)(t_scene_object *, char **);
+typedef int	(*t_obj_creator)(t_scene_object *, int, char **);
 
-int							create_ambient_light(t_scene_object *obj,
-								char **args);
-int							create_spot_light(t_scene_object *obj, char **args);
-int							create_camera(t_scene_object *obj, char **args);
-int							create_plane(t_scene_object *obj, char **args);
-int							create_sphere(t_scene_object *obj, char **args);
-int							create_cylinder(t_scene_object *obj, char **args);
+int							create_ambient_light(t_scene_object *obj, int argc, char **args);
+int							create_spot_light(t_scene_object *obj, int argc, char **args);
+int							create_camera(t_scene_object *obj, int argc, char **args);
+int							create_plane(t_scene_object *obj, int argc, char **args);
+int							create_sphere(t_scene_object *obj, int argc, char **args);
+int							create_cylinder(t_scene_object *obj, int argc, char **args);
 
 /*	~~~~~~~~~~~~~~~~ CLEANUP ~~~~~~~~~~~~~~~~	*/
 
@@ -109,16 +109,14 @@ void						cleanup_cylinder(t_scene_object *obj);
 
 typedef double	(*t_obj_intersect)(t_vector3 *, t_vector3 *, t_scene_object *, int (*)(double));
 
-double						intersect_sphere(t_vector3 *og, t_vector3 *ray,
-								t_scene_object *obj, int (*is_valid)(double));
+double						intersect_sphere(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
 double						intersect_plane(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
 
 /*	~~~~~~~~~~~~~~~ NORMAL_CALC ~~~~~~~~~~~~~~~	*/
 
 typedef t_vector3	*(*t_obj_normal)(t_vector3 *, t_vector3 *, t_scene_object *);
 
-t_vector3					*normal_sphere(t_vector3 *og, t_vector3 *point,
-								t_scene_object *obj);
+t_vector3					*normal_sphere(t_vector3 *og, t_vector3 *point, t_scene_object *obj);
 t_vector3					*normal_plane(t_vector3 *og, t_vector3 *point, t_scene_object *obj);
 
 /*	~~~~~~~~~~~~~~~~~ GETTERS ~~~~~~~~~~~~~~~~~	*/

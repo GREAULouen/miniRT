@@ -27,7 +27,8 @@ UTILS_SRCS =	quit_utils.c				\
 				color_extract_utils.c		\
 				color_utils.c				\
 				ft_v3_math_utils.c			\
-				intersect_utils.c
+				intersect_utils.c			\
+				string_utils.c
 UTILS_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${UTILS_SRCS:.c=.o}}}
 
 PARSER_SRCS =	parser.c
