@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 18:01:50 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/05/28 15:03:09 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:19:07 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,14 @@ bool	start_mlx(void)
 	t_program	*program;
 
 	program = get_program();
-	program->mlx = mlx_init(program->canvas_width, program->canvas_height, PROGRAM_NAME, true);
+	program->mlx = mlx_init(program->canvas_width,
+			program->canvas_height,
+			PROGRAM_NAME, true);
 	if (program->mlx == NULL)
 		return (mlx_print_error());
-	program->image = mlx_new_image(program->mlx, program->canvas_width, program->canvas_height);
+	program->image = mlx_new_image(program->mlx,
+			program->canvas_width,
+			program->canvas_height);
 	if (program->image == NULL)
 		return (mlx_print_error());
 	if (mlx_image_to_window(program->mlx, program->image, 0, 0) == -1)
