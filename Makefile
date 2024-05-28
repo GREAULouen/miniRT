@@ -48,7 +48,7 @@ RAY_TRACER_SRCS =	ray_init.c					\
 					compute_shadows.c
 RAY_TRACER_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${RAY_TRACER_SRCS:.c=.o}}}
 
-MLX_SRCS =	mlx.c
+MLX_SRCS =	mlx.c resize_hook.c
 MLX_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${MLX_SRCS:.c=.o}}}
 
 MAIN_SRCS =	main.c				\

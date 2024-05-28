@@ -3,20 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 18:01:50 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/05/27 15:20:55 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/28 12:12:28 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	loop_mlx(void *param)
+void	loop_hook(void *param)
 {
 	(void) param;
 	init_ray();
-	get_object(CAMERA)->s_camera.pos->y += 1.0;
+	// get_object(CAMERA)->s_camera.pos->y += 1.0;
+}
+
+void	register_hooks(mlx_t *mlx)
+{
+	mlx_loop_hook(mlx, loop_hook, NULL);
+	mlx_resize_hook(mlx, resize_hook, NULL);
 }
 
 void	start_mlx(void)
@@ -41,7 +47,7 @@ void	start_mlx(void)
 		ft_putstr_fd((char *) mlx_strerror(mlx_errno), 2);
 		return ;
 	}
-	mlx_loop_hook(program->mlx, loop_mlx, NULL);
+	register_hooks(program->mlx);
 	mlx_loop(program->mlx);
 	mlx_terminate(program->mlx);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:53:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/23 19:07:08 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/28 14:36:07 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ int	main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	get_program()->file_name = argv[1];
-	get_program()->canvas_width = DEFAULT_WIDTH;
-	get_program()->canvas_height = DEFAULT_HEIGHT;
-	get_program()->viewport_width = 1;
-	get_program()->viewport_height = 9.0/16.0;
+	set_width_height(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	parse_input();
 	start_mlx();
 	// TODO : clean the program structure
