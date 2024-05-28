@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/27 15:12:22 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/28 14:19:35 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,17 @@ typedef enum e_scene_object_type
 
 typedef struct s_scene_object
 {
+	uint32_t	color;
 	t_scene_object_type		type;
 	union {
 		struct
 		{
 			double			intensity;
-			uint32_t		color;
 		}	s_ambient_light;
 		struct
 		{
 			t_vector3		*pos;
 			double			intensity;
-			uint32_t		color;
 		}	s_spot_light;
 		struct
 		{
@@ -65,14 +64,12 @@ typedef struct s_scene_object
 		{
 			t_vector3		*pos;
 			t_vector3		*normal;
-			uint32_t		color;
 			double			dot;
 		}	s_plane;
 		struct
 		{
 			t_vector3		*pos;
 			double			diameter;
-			uint32_t		color;
 			double			sq_rad;
 		}	s_sphere;
 		struct
@@ -81,7 +78,6 @@ typedef struct s_scene_object
 			t_vector3		*dir;
 			double			diameter;
 			double			height;
-			uint32_t		color;
 		}	s_cylinder;
 	};
 }							t_scene_object;

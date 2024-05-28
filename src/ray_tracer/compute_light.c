@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:05:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 13:05:39 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/28 14:22:59 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,18 @@ uint32_t	compute_light(double intersect, t_vector3 *ray, t_scene_object *obj)
 		if ((int) program->objects[index].type == AMBIENT_LIGHT)
 		{
 			total_intensity += program->objects[index].s_ambient_light.intensity;
-			total_color = color_add_scal(total_color, program->objects[index].s_ambient_light.intensity, program->objects[index].s_ambient_light.color);
+			total_color = color_add_scal(total_color, program->objects[index].s_ambient_light.intensity, program->objects[index].color);
 		}
 		else if ((int) program->objects[index].type == SPOT_LIGHT && !is_in_shadow(point, program->objects[index].s_spot_light.pos))
 		{
 			point_to_light = ft_v3_dir(point, program->objects[index].s_spot_light.pos);
 			dot = ft_dot_product(point_to_light, normal);
 			total_intensity += program->objects[index].s_spot_light.intensity * dot / (ft_v3_length(point_to_light));
-			total_color = color_add_scal(total_color, program->objects[index].s_spot_light.intensity * dot / (ft_v3_length(point_to_light)), program->objects[index].s_spot_light.color);
+			total_color = color_add_scal(total_color, program->objects[index].s_spot_light.intensity * dot / (ft_v3_length(point_to_light)), program->objects[index].color);
 			free(point_to_light);
 		}
 	}
 	free(point);
 	free(normal);
-	return (color_scal_mult(color_rem_opposite(total_color, obj->s_sphere.color), total_intensity));
-	// return (color_rem_opposite(total_color, obj->s_sphere.color));
-	// return (color_scal_mult(color_add(obj->s_sphere.color, total_color), total_intensity));
-	// return (total_color); // UNCOMENT FOR TOTAL_LIGHT RESULT
+	return (color_scal_mult(color_rem_opposite(total_color, obj->color), total_intensity));
 }

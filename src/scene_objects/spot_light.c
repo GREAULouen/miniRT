@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:43:27 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/22 16:09:13 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/28 14:20:14 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	create_spot_light(t_scene_object *obj, char **args)
 		|| obj->s_spot_light.intensity > 1)
 		return (free(obj->s_spot_light.pos),
 			set_error((char *)__func__, INVALID_ARG), -1);
-	obj->s_spot_light.color = atoc(args[3]);
+	obj->color = atoc(args[3]);
 	return (0);
 }
 

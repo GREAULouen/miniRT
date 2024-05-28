@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 15:56:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 11:44:15 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/28 14:19:48 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	create_camera(t_scene_object *obj, char **args)
 			set_error((char *)__func__, INVALID_ARG), -1);
 	obj->s_camera.view_plane = get_program()->viewport_width
 		/ (2 * tan(M_PI * obj->s_camera.fov / 360));
-	ft_inrotate_x(obj->s_camera.dir, M_PI_4 / 2.0);
 	ft_rotation_matrix(obj->s_camera.dir, &obj->s_camera.rot);
 	return (0);
 }
