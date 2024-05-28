@@ -49,8 +49,10 @@ RAY_TRACER_SRCS =	ray_init.c					\
 RAY_TRACER_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${RAY_TRACER_SRCS:.c=.o}}}
 
 MLX_SRCS =	mlx.c			\
+			mlx_utils.c		\
 			resize_hook.c	\
-			key_hook.c
+			key_hook.c		\
+			loop_hook.c
 MLX_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${MLX_SRCS:.c=.o}}}
 
 MAIN_SRCS =	main.c				\

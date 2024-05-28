@@ -6,18 +6,11 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 18:01:50 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/05/28 14:57:22 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:03:09 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-void	loop_hook(void *param)
-{
-	(void) param;
-	init_ray();
-	// get_object(CAMERA)->s_camera.pos->y += 1.0;
-}
 
 void	register_hooks(mlx_t *mlx)
 {
@@ -33,12 +26,12 @@ bool	start_mlx(void)
 	program = get_program();
 	program->mlx = mlx_init(program->canvas_width, program->canvas_height, PROGRAM_NAME, true);
 	if (program->mlx == NULL)
-		return (mlx_error());
+		return (mlx_print_error());
 	program->image = mlx_new_image(program->mlx, program->canvas_width, program->canvas_height);
 	if (program->image == NULL)
-		return (mlx_error());
+		return (mlx_print_error());
 	if (mlx_image_to_window(program->mlx, program->image, 0, 0) == -1)
-		return (mlx_error());
+		return (mlx_print_error());
 	register_hooks(program->mlx);
 	mlx_loop(program->mlx);
 	mlx_terminate(program->mlx);
