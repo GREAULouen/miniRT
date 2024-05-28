@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx.h                                              :+:      :+:    :+:   */
+/*   key_hook.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/22 20:55:20 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/05/28 14:47:41 by pgrossma         ###   ########.fr       */
+/*   Created: 2024/05/28 14:45:18 by pgrossma          #+#    #+#             */
+/*   Updated: 2024/05/28 14:48:06 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MLX_H
-# define MLX_H
+#include "miniRT.h"
 
-# define DEFAULT_WIDTH 1280
-# define DEFAULT_HEIGHT 720
+void	key_hook(mlx_key_data_t keydata, void *param)
+{
+	(void) param;
 
-void	start_mlx(void);
-void	resize_hook(int32_t width, int32_t height, void *param);
-void	set_width_height(int32_t width, int32_t height);
-void	key_hook(mlx_key_data_t keydata, void *param);
-
-#endif
+	if (keydata.key == MLX_KEY_ESCAPE)
+		mlx_close_window(get_program()->mlx);
+}

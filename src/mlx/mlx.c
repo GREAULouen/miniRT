@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 18:01:50 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/05/28 12:12:28 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/28 14:47:31 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	register_hooks(mlx_t *mlx)
 {
 	mlx_loop_hook(mlx, loop_hook, NULL);
 	mlx_resize_hook(mlx, resize_hook, NULL);
+	mlx_key_hook(mlx, key_hook, NULL);
 }
 
 void	start_mlx(void)
