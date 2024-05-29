@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 15:56:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/29 11:51:43 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/29 12:05:51 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	create_camera(t_scene_object *obj, int argc, char **args)
 			free(obj->s_camera.dir),
 			set_error((char *)__func__, INVALID_ARG), -1);
 	update_viewport(obj);
-	ft_inrotate_x(obj->s_camera.dir, M_PI_4 / 2.0);
 	ft_rotation_matrix(obj->s_camera.dir, &obj->s_camera.rot);
 	return (0);
 }

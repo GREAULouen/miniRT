@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:46:50 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 15:37:40 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/29 12:06:49 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,11 @@ int	create_sphere(t_scene_object *obj, int argc, char **args)
 	obj->color = atoc(args[3]);
 	obj->s_sphere.sq_rad = obj->s_sphere.diameter * obj->s_sphere.diameter / 4.0;
 	obj->shininess = 0.0;
-	if (args[4])
+	if (argc >= 5)
 		obj->shininess = ft_atod(args[4]);
+	obj->reflectiveness = 0.0;
+	if (argc >= 6)
+		obj->reflectiveness = ft_atod(args[5]);
 	return (0);
 }
 
