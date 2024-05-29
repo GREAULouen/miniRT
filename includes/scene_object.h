@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 15:18:05 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/29 11:51:28 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@ typedef enum e_scene_object_type
 # define COLOR_R 0xFF0000
 # define COLOR_G 0x00FF00
 # define COLOR_B 0x0000FF
-
-# define DEFAULT_WIDTH 1920
-# define DEFAULT_HEIGHT 1080
 
 # define EPSILON 0.0000001
 
@@ -91,6 +88,7 @@ typedef int	(*t_obj_creator)(t_scene_object *, int, char **);
 int							create_ambient_light(t_scene_object *obj, int argc, char **args);
 int							create_spot_light(t_scene_object *obj, int argc, char **args);
 int							create_camera(t_scene_object *obj, int argc, char **args);
+void						update_viewport(t_scene_object *obj);
 int							create_plane(t_scene_object *obj, int argc, char **args);
 int							create_sphere(t_scene_object *obj, int argc, char **args);
 int							create_cylinder(t_scene_object *obj, int argc, char **args);
