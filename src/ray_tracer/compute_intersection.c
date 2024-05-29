@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:06:23 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/29 13:44:00 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/29 14:12:53 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,23 @@ uint32_t	compute_intersection(t_vector3 *og, t_vector3 *ray, int depth, int (*is
 	normal = get_obj_normal()[program->objects[min].type](og, point, &program->objects[min]);
 	reflected_ray(&(t_vector3){-ray->x, -ray->y, -ray->z}, normal, &reflected);
 	local_color = compute_light(point, normal, &reflected, &program->objects[min]);
-	// local_color = compute_light(min_value, ray, &program->objects[min]);
-	// return (color_scal_mult(get_object(AMBIENT_LIGHT)->color, get_object(AMBIENT_LIGHT)->s_ambient_light.intensity));
-	if (local_color == BACKGROUND_COLOR)
-		return (free(point), free(normal), 0x0);
 	if (program->objects[min].reflectiveness <= 0.0 || depth <= 0.0)
 		return (free(point), free(normal), local_color);
 	reflected_color = compute_intersection(point, &reflected, depth - 1, is_valid);
+	if (reflected_color == BACKGROUND_COLOR)
+		return (free(point), free(normal), color_scal_mult(local_color, program->objects[min].reflectiveness));// color_scal_mult(local_color, 1.0 - program->objects[min].reflectiveness));
+	// if (get_green(local_color) > 50)
+	// {
+	// 	printf("\nlocal_color: (%d, %d, %d)\n", get_red(local_color), get_green(local_color), get_blue(local_color));
+	// 	printf("reflected_color: (%d, %d, %d)\n", get_red(reflected_color), get_green(reflected_color), get_blue(reflected_color));
+	// 	printf("reflectiveness: %f\n", program->objects[min].reflectiveness);
+	// 	printf("scaled colors:\n");
+	// 	printf("  |- local_color: (%d, %d, %d)\n", get_red(color_scal_mult(local_color, 1.0 - program->objects[min].reflectiveness)), get_green(color_scal_mult(local_color, 1.0 - program->objects[min].reflectiveness)), get_blue(color_scal_mult(local_color, 1.0 - program->objects[min].reflectiveness)));
+	// 	printf("  |- reflected_color: (%d, %d, %d)\n", get_red(color_scal_mult(reflected_color, program->objects[min].reflectiveness)), get_green(color_scal_mult(reflected_color, program->objects[min].reflectiveness)), get_blue(color_scal_mult(reflected_color, program->objects[min].reflectiveness)));
+	// 	uint32_t final_color = color_add(color_scal_mult(local_color, 1.0 - program->objects[min].reflectiveness), color_scal_mult(reflected_color, program->objects[min].reflectiveness));
+	// 	printf("final_color: (%d, %d, %d)\n", get_red(final_color), get_green(final_color), get_blue(final_color));
+	// }
+
+
 	return (free(point), free(normal), color_add(color_scal_mult(local_color, 1.0 - program->objects[min].reflectiveness), color_scal_mult(reflected_color, program->objects[min].reflectiveness)));
 }
