@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:05:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 15:03:42 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/29 13:51:11 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@
  * @param obj
  * @return uint32_t
  */
-uint32_t	compute_light(double intersect, t_vector3 *ray, t_scene_object *obj)
+uint32_t	compute_light(t_vector3 *point, t_vector3 *normal, t_vector3 *reflected, t_scene_object *obj)
 {
 	t_program	*program;
 	t_vector3	*point_to_light;
-	t_vector3	*point;
-	t_vector3	*normal;
-	t_vector3	*reflected;
+	// t_vector3	*point;
+	// t_vector3	*normal;
+	// t_vector3	reflected;
 	t_vector3	*point_to_cam;
 	double		n_dot_l;
 	double		r_dot_c;
@@ -39,10 +39,11 @@ uint32_t	compute_light(double intersect, t_vector3 *ray, t_scene_object *obj)
 	total_intensity = 0.0;
 	total_color = 0x0;
 	index = -1;
-	point = sol_to_point(intersect, ray, get_object(CAMERA)->s_camera.pos);
-	normal = get_obj_normal()[obj->type](get_object(CAMERA)->s_camera.pos, point, obj);
+	// point = sol_to_point(intersect, ray, get_object(CAMERA)->s_camera.pos);
+	// normal = get_obj_normal()[obj->type](get_object(CAMERA)->s_camera.pos, point, obj);
 	point_to_cam = ft_v3_dir(point, get_object(CAMERA)->s_camera.pos);
 	n_dot_l = 0.0;
+	// reflected = (t_vector3){0.0, 0.0, 0.0};
 	while (++index < program->object_count)	// TODO: add pre-processing to have an array of Lights for simpler loops
 	{
 		if ((int) program->objects[index].type == AMBIENT_LIGHT)
@@ -61,23 +62,24 @@ uint32_t	compute_light(double intersect, t_vector3 *ray, t_scene_object *obj)
 			}
 			if (obj->shininess > 0.0)
 			{
-				reflected = ft_v3_cpy(normal);
-				ft_v3_inmult(reflected, 2.0 * n_dot_l);
 				r_dot_c = ft_dot_product(reflected, point_to_cam);
 				if (r_dot_c > 0)
-				{
 					total_intensity += program->objects[index].s_spot_light.intensity * pow(r_dot_c / (ft_v3_length(reflected) * ft_v3_length(point_to_cam)), obj->shininess);
-				}
 			}
 			free(point_to_light);
-			free(reflected);
 		}
 	}
-	free(point);
-	free(normal);
 	free(point_to_cam);
 
-	// uint32_t	diffuse_light = color_scal_mult(color_rem_opposite(total_color, obj->color), total_intensity);
-
 	return (color_scal_mult(color_rem_opposite(total_color, obj->color), total_intensity));
+}
+
+void	reflected_ray(t_vector3 *ray, t_vector3 *normal, t_vector3 *res)
+{
+	double	dot;
+
+	dot = ft_dot_product(ray, normal);
+	res->x = 2 * dot * normal->x - ray->x;
+	res->y = 2 * dot * normal->y - ray->y;
+	res->z = 2 * dot * normal->z - ray->z;
 }
