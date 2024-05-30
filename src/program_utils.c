@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:21:31 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/22 16:19:16 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/30 16:05:05 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,15 @@ void	cleanup_program(void)
 			get_obj_cleanup()[program->objects[index].type]
 				(&program->objects[index]);
 	free(program->objects);
+}
+
+void	part_cleanup_program(int last)
+{
+	t_program	*program;
+
+	program = get_program();
+	while (--last >= 0)
+		if ((int) program->objects[last].type != AMBIENT_LIGHT)
+			get_obj_cleanup()[program->objects[last].type]
+				(&program->objects[last]);
 }

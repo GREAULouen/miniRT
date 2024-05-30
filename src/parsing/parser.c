@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:15:03 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 14:15:43 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/30 16:04:13 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,15 +82,17 @@ static int	read_file(uint8_t *unique_obj_count)
 {
 	char	*line;
 	int		fd;
+	int		count;
 
 	fd = open(get_program()->file_name, O_RDONLY);
 	if (fd < 0)
 		return (perror(PROGRAM_NAME), -1);
 	line = ft_get_next_line_nonl(fd);
+	count = -1;
 	while (line)
 	{
-		if (line[0] && line[0] != '#' && save_object(line, unique_obj_count) < 0)
-			return (free(line), -1);	// TODO : free alerady created objects
+		if (line[0] && line[0] != '#' && ++count > -1 && save_object(line, unique_obj_count) < 0)
+			return (free(line), part_cleanup_program(count), -1);	// TODO : free alerady created objects
 		free(line);
 		line = ft_get_next_line_nonl(fd);
 	}
