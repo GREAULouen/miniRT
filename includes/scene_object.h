@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/29 11:51:28 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/30 17:27:44 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef enum e_scene_object_type
 	PLANE,
 	SPHERE,
 	CYLINDER,
+	CONE,
 	OBJECT_TYPE_COUNT
 }							t_scene_object_type;
 
@@ -78,6 +79,16 @@ typedef struct s_scene_object
 			double			diameter;
 			double			height;
 		}	s_cylinder;
+		struct
+		{
+			t_vector3		*pos;
+			t_vector3		*dir;
+			double			diameter;
+			double			height;
+			double			theta;
+			t_matrix		rot;
+			t_matrix		inv_rot;
+		}	s_cone;
 	};
 }							t_scene_object;
 
