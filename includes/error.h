@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:32:45 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 14:10:29 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/30 16:10:14 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 typedef enum e_error_types
 {
+	WRONG_PROGRAM_ARGUMENT,
 	INTENSITY_OUT_OF_RANGE,
 	COLOR_OUT_OF_RANGE,
 	FOV_OUT_OF_RANGE,
@@ -29,6 +30,8 @@ typedef enum e_error_types
 
 # define DEFAULT_ERROR_MSG "Error\n"
 
+# define WRONG_PROGRAM_ARGUMENT_MSG "the program requires 1 and only 1 \
+.rt scene file as argument"
 # define INTENSITY_OUT_OF_RANGE_MSG "intensity value not in range [0.0, 1.0]"
 # define COLOR_OUT_OF_RANGE_MSG "color value not in range [0, 255]"
 # define FOV_OUT_OF_RANGE_MSG "fov value not in range [0, 180]"

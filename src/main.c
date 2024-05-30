@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:53:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 13:55:15 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/30 16:10:26 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char *argv[])
 	atexit(leaks);
 	if (argc != 2 || !ft_endswith(argv[1], ".rt"))
 	{
-		write(2, BAD_ARGS_FORMAT, ft_strlen(BAD_ARGS_FORMAT));
+		rt_perror((char *)__func__, WRONG_PROGRAM_ARGUMENT);
 		exit(EXIT_FAILURE);
 	}
 	get_program()->file_name = argv[1];
