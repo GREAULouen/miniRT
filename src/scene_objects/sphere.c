@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:46:50 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/29 12:08:19 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/30 14:04:01 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 int	create_sphere(t_scene_object *obj, int argc, char **args)
 {
 	if (argc < 4 || !args[1] || !args[2] || !args[3])
-		return (set_error((char *)__func__, INVALID_ARG), -1);
+		return (rt_perror((char *)__func__, WRONG_ARGUMENT_COUNT), -1);
 	obj->type = SPHERE;
 	obj->s_sphere.pos = atov(args[1]);
 	if (!obj->s_sphere.pos)
@@ -30,7 +30,7 @@ int	create_sphere(t_scene_object *obj, int argc, char **args)
 	obj->s_sphere.diameter = ft_atod(args[2]);
 	if (obj->s_sphere.diameter < 0)
 		return (free(obj->s_sphere.pos),
-			set_error((char *)__func__, INVALID_ARG), -1);
+			rt_perror((char *)__func__, DIAMETER_OUT_OF_RANGE), -1);
 	obj->color = atoc(args[3]);
 	obj->s_sphere.sq_rad = obj->s_sphere.diameter * obj->s_sphere.diameter / 4.0;
 	obj->shininess = 0.0;

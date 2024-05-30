@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:53:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 12:39:01 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/30 16:10:26 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,15 @@ int	main(int argc, char *argv[])
 	atexit(leaks);
 	if (argc != 2 || !ft_endswith(argv[1], ".rt"))
 	{
-		write(2, BAD_ARGS_FORMAT, ft_strlen(BAD_ARGS_FORMAT));
+		rt_perror((char *)__func__, WRONG_PROGRAM_ARGUMENT);
 		exit(EXIT_FAILURE);
 	}
 	get_program()->file_name = argv[1];
 	set_width_height(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	get_program()->max_reflections = 2;
-	parse_input();
-	if (*get_errno() != NO_ERROR
-		|| !start_mlx())
+	if (parse_input() < 0)
+		exit(EXIT_FAILURE);
+	if (!start_mlx())
 	{
 		cleanup_program();
 		exit(EXIT_FAILURE);

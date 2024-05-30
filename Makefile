@@ -34,6 +34,9 @@ UTILS_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${UTILS_SRCS:.c=.o}}}
 PARSER_SRCS =	parser.c
 PARSER_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${PARSER_SRCS:.c=.o}}}
 
+ERROR_SRCS =	error_utils.c
+ERROR_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${ERROR_SRCS:.c=.o}}}
+
 SCENE_OBJECTS_SRCS =	ambient_light.c				\
 						camera.c					\
 						spot_light.c				\
@@ -66,7 +69,8 @@ SRCS =	${MAIN_SRCS}			\
 		${UTILS_SRCS}			\
 		${RAY_TRACER_SRCS}		\
 		${SCENE_OBJECTS_SRCS}	\
-		${MLX_SRCS}
+		${MLX_SRCS}				\
+		${ERROR_SRCS}
 OBJS = ${addprefix ${OBJ_DIR}/, ${notdir ${SRCS:.c=.o}}}
 
 
@@ -95,6 +99,9 @@ ${SCENE_OBJECTS_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/scene_objects/%.c | ${OBJ_DIR}
 	@$(CC) $(CFLAGS) -I$(INCLUDES_DIR) -c $< -o $@
 
 ${MLX_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/mlx/%.c | ${OBJ_DIR}
+	@$(CC) $(CFLAGS) -I$(INCLUDES_DIR) -c $< -o $@
+
+${ERROR_OBJS}: ${OBJ_DIR}/%.o: ${SRC_DIR}/error/%.c | ${OBJ_DIR}
 	@$(CC) $(CFLAGS) -I$(INCLUDES_DIR) -c $< -o $@
 
 

@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:48:52 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/29 13:05:40 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/30 15:59:36 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include "parser.h"
 # include "ray_tracer.h"
 # include "mlx.h"
+# include "error.h"
 
 /* ~~~~ Other libraries ~~~	*/
 # include <math.h>		// math
@@ -55,6 +56,7 @@ typedef struct s_program
 
 t_program			*get_program(void);
 void				cleanup_program(void);
+void				part_cleanup_program(int last);
 
 /* ~ Argument validation ~	*/
 # define BAD_ARGS_FORMAT "Bad program arguments.\n"
