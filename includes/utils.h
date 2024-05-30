@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:47:35 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 15:19:43 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/30 17:09:46 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,24 @@ t_vector3		*atov(char *arg);
 
 t_scene_object	*get_object(int type);
 
+/*	~~~~~~~~~~~~~~~ INTERSECT ~~~~~~~~~~~~~~~~	*/
+
 t_vector3		*sol_to_point(double intersect, t_vector3 *ray, t_vector3 *og);
 double			closest_intersection(double t1, double t2, t_vector3 *ray, t_vector3 *og);
 int				valid_sol_from_cam(double sol);
 int				valid_sol_till_spot(double sol);
 
+/*	~~~~~~~~~~~~~~~~ VECTOR3 ~~~~~~~~~~~~~~~~	*/
+
 double			ft_v3_length(t_vector3 *v);
 t_vector3		*ft_v3_cross_product(t_vector3 *v1, t_vector3 *v2);
 void			ft_v3_innormalize(t_vector3 *v);
+
+/*	~~~~~~~~~~~~~~~~ MATRIX ~~~~~~~~~~~~~~~~	*/
+
 void			ft_rotation_matrix(t_vector3 *dir, t_matrix *rot);
 void			ft_apply_rotate(t_vector3 *dir, t_matrix *rot, t_vector3 *res);
+void			ft_invert_rot_matrix(t_matrix *og, t_matrix *inv);
 
 /*	~~~~~~~~~~~~~~~~ COLOR ~~~~~~~~~~~~~~~~	*/
 
