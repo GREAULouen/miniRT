@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:15:03 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/29 12:06:21 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/30 13:55:33 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static int	read_file(uint8_t *unique_obj_count)
 	return (0);
 }
 
-void	parse_input(void)
+int	parse_input(void)
 {
 	uint8_t	unique_objects_count;
 
@@ -107,9 +107,10 @@ void	parse_input(void)
 	printf("program state:\n");
 	printf("  |- file_name: %s\n", get_program()->file_name);
 	if (init_objects() < 0)
-		return ;
+		return (-1);
 	printf("  |- object_count: %d\n", get_program()->object_count);
 	if (read_file(&unique_objects_count) < 0)
-		return (free(get_program()->objects));
+		return (free(get_program()->objects), -1);
 	print_objects();
+	return (0);
 }

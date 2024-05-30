@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:48:52 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/29 13:05:40 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/30 13:40:42 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include "parser.h"
 # include "ray_tracer.h"
 # include "mlx.h"
+# include "error.h"
 
 /* ~~~~ Other libraries ~~~	*/
 # include <math.h>		// math
