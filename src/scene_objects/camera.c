@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 15:56:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/29 12:05:51 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/30 13:59:25 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 int	create_camera(t_scene_object *obj, int argc, char **args)
 {
 	if (argc < 4 || !args[1] || !args[2] || !args[3])
-		return (set_error((char *)__func__, INVALID_ARG), -1);
+		return (rt_perror((char *)__func__, WRONG_ARGUMENT_COUNT), -1);
 	obj->type = CAMERA;
 	obj->s_camera.pos = atov(args[1]);
 	if (!obj->s_camera.pos)
@@ -30,14 +30,12 @@ int	create_camera(t_scene_object *obj, int argc, char **args)
 	obj->s_camera.dir = atov(args[2]);
 	if (!obj->s_camera.dir)
 		return (free(obj->s_camera.pos), -1);
-	if (ft_dot_product(obj->s_camera.dir, obj->s_camera.dir) > 1)
-		return (free(obj->s_camera.pos), free(obj->s_camera.dir),
-			set_error((char *)__func__, INVALID_ARG), -1);
+	ft_v3_innormalize(obj->s_camera.dir);
 	obj->s_camera.fov = ft_btoi(args[3], BASE10_STR);
 	if (obj->s_camera.fov < 0 || obj->s_camera.fov > 180)
 		return (free(obj->s_camera.pos),
 			free(obj->s_camera.dir),
-			set_error((char *)__func__, INVALID_ARG), -1);
+			rt_perror((char *)__func__, FOV_OUT_OF_RANGE), -1);
 	update_viewport(obj);
 	ft_rotation_matrix(obj->s_camera.dir, &obj->s_camera.rot);
 	return (0);
