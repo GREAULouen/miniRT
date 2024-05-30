@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:47:35 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 17:09:46 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/30 17:49:13 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_vector3		*sol_to_point(double intersect, t_vector3 *ray, t_vector3 *og);
 double			closest_intersection(double t1, double t2, t_vector3 *ray, t_vector3 *og);
 int				valid_sol_from_cam(double sol);
 int				valid_sol_till_spot(double sol);
+int				solve_quadratic(double a, double b, double c, int sol[2]);
 
 /*	~~~~~~~~~~~~~~~~ VECTOR3 ~~~~~~~~~~~~~~~~	*/
 
