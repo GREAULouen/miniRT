@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:50:24 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/25 15:05:42 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/30 16:57:41 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_obj_creator	*get_obj_creator(void)
 	obj_creator[PLANE] = create_plane;
 	obj_creator[SPHERE] = create_sphere;
 	obj_creator[CYLINDER] = create_cylinder;
+	obj_creator[TORUS] = create_torus;
 	return (&obj_creator[0]);
 }
 
@@ -35,6 +36,7 @@ t_obj_cleanup	*get_obj_cleanup(void)
 	obj_cleanup[PLANE] = cleanup_plane;
 	obj_cleanup[SPHERE] = cleanup_sphere;
 	obj_cleanup[CYLINDER] = cleanup_cylinder;
+	obj_cleanup[TORUS] = cleanup_torus;
 	return (&obj_cleanup[0]);
 }
 
@@ -48,6 +50,7 @@ t_obj_intersect	*get_obj_intersect(void)
 	obj_intersect[PLANE] = intersect_plane;
 	obj_intersect[SPHERE] = intersect_sphere;
 	obj_intersect[CYLINDER] = NULL;
+	obj_intersect[TORUS] = NULL;
 	return (&obj_intersect[0]);
 }
 
@@ -61,5 +64,6 @@ t_obj_normal	*get_obj_normal(void)
 	obj_normal[PLANE] = normal_plane;
 	obj_normal[SPHERE] = normal_sphere;
 	obj_normal[CYLINDER] = NULL;
+	obj_normal[TORUS] = NULL;
 	return (&obj_normal[0]);
 }

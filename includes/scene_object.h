@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 16:41:38 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/30 17:10:21 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,11 @@ typedef struct s_scene_object
 		struct
 		{
 			t_vector3		*pos;
-			double			major_radius;
+			t_vector3		*dir;
 			double			minor_radius;
+			double			major_radius;
+			t_matrix		rot;
+			t_matrix		inv_rot;
 		}	s_torus;
 	};
 }							t_scene_object;
@@ -99,6 +102,7 @@ void						update_viewport(t_scene_object *obj);
 int							create_plane(t_scene_object *obj, int argc, char **args);
 int							create_sphere(t_scene_object *obj, int argc, char **args);
 int							create_cylinder(t_scene_object *obj, int argc, char **args);
+int							create_torus(t_scene_object *obj, int argc, char **args);
 
 /*	~~~~~~~~~~~~~~~~ CLEANUP ~~~~~~~~~~~~~~~~	*/
 
@@ -109,6 +113,7 @@ void						cleanup_camera(t_scene_object *obj);
 void						cleanup_plane(t_scene_object *obj);
 void						cleanup_sphere(t_scene_object *obj);
 void						cleanup_cylinder(t_scene_object *obj);
+void						cleanup_torus(t_scene_object *obj);
 
 /*	~~~~~~~~~~~~ INTERSECTION_CALC ~~~~~~~~~~~~	*/
 
@@ -116,6 +121,7 @@ typedef double	(*t_obj_intersect)(t_vector3 *, t_vector3 *, t_scene_object *, in
 
 double						intersect_sphere(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
 double						intersect_plane(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
+double						intersect_torus(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
 
 /*	~~~~~~~~~~~~~~~ NORMAL_CALC ~~~~~~~~~~~~~~~	*/
 
