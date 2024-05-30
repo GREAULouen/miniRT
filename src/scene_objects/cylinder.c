@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:50:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 18:53:04 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/30 18:16:45 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	create_cylinder(t_scene_object *obj, char **args)
 	if (obj->s_cylinder.diameter < 0)
 		return (free(obj->s_cylinder.pos), free(obj->s_cylinder.dir),
 			set_error((char *)__func__, INVALID_ARG), -1);
+	obj->s_cylinder.sq_rad = obj->s_cylinder.diameter * obj->s_cylinder.diameter / 4.0;
 	obj->s_cylinder.height = ft_atod(args[4]);
 	if (obj->s_cylinder.height < 0)
 		return (free(obj->s_cylinder.pos), free(obj->s_cylinder.dir),
@@ -54,37 +55,45 @@ void	update_ends(t_scene_object *obj)
 
 double	intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double))
 {
-	t_vector3	*oc;
-	double		dot_org;
-	double		dot_org_ray;
-	double		dot_org_oc;
-	double		k2;
-	double		k1;
-	double		k0;
+	double		a;
+	double		b;
+	double		c;
+	double		delta;
+	double		t1;
+	double		t2;
+	t_matrix	*rot_ray = malloc(sizeof(t_matrix));
+	t_vector3	rotated_ray;
 
-	(void) is_valid;
-	oc = ft_v3_sub(og, obj->s_cylinder.end1);
-	dot_org = ft_dot_product(obj->s_cylinder.pos, obj->s_cylinder.pos);
-	dot_org_ray = ft_dot_product(obj->s_cylinder.pos, ray);
-	dot_org_oc = ft_dot_product(obj->s_cylinder.pos, oc);
-
-	k2 = dot_org - dot_org_ray * dot_org_ray;
-	k1 = dot_org * ft_dot_product(oc, ray) - dot_org_oc * dot_org_ray;
-	k0 = dot_org * ft_dot_product(oc, oc) - dot_org_oc * dot_org_oc - obj->s_cylinder.diameter * obj->s_cylinder.diameter * dot_org;
-
-	double	h;
-	h = k1 * k1 - k2 * k0;
-	if (h < 0.0)
+	og = ft_v3_sub(og, obj->s_cylinder.pos);
+	ft_rotation_matrix(ray, rot_ray);
+	ft_apply_rotate(ray, rot_ray, &rotated_ray);
+	ft_rotation_matrix(og, rot_ray);
+	ft_apply_rotate(og, rot_ray, og);
+	a = rotated_ray.x * rotated_ray.x + rotated_ray.y * rotated_ray.y;
+	b = 2.0 * ft_dot_product(&rotated_ray, og);
+	c = ft_dot_product(&rotated_ray, &rotated_ray)
+		- obj->s_cylinder.sq_rad;
+	free(og);
+	delta = b * b - 4.0 * a * c;
+	if (delta < 0)
 		return (INFINITY);
-	h = sqrt(h);
-	double	t;
-	t = (-k1-h) / k2;
-
-	double y;
-	y = dot_org_oc + t * dot_org_ray;
-	if (y > 0.0 && y < dot_org)
-		return (t);
-	return (INFINITY);
+	t1 = -1.0 * (-1.0 * b + sqrt(delta)) / (2.0 * a);
+	if (!is_valid(t1))
+		t1 = INFINITY;
+	t2 = -1.0 * (-1.0 * b - sqrt(delta)) / (2.0 * a);
+	if (!is_valid(t2))
+		t2 = INFINITY;
+	// if (ray->x < 0.03 && ray->x > -0.03 & ray->z < 0.03 && ray->z > -0.03)
+	// {
+	// 	print_v3("ray", ray, ONELINE);
+	// 	printf("  |-a: %f\n", a);
+	// 	printf("  |-b: %f\n", b);
+	// 	printf("  |-c: %f\n", c);
+	// 	printf("  |- delta: %f\n", delta);
+	// 	printf("  |- t1: %f\n", t1);
+	// 	printf("  |- t2: %f\n", t2);
+	// }
+	return (closest_intersection(t1, t2, ray, og));
 }
 
 void	cleanup_cylinder(t_scene_object *obj)

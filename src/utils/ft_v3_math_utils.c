@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v3_math_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 11:58:36 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 11:35:45 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/30 18:02:54 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,12 @@ void	ft_rotation_matrix(t_vector3 *dir, t_matrix *rot)
 	(*rot)[2][1] = (axis->y * axis->z * k) + axis->x;
 	(*rot)[2][2] = (axis->z * axis->z * k) + cosA;
 
-	for(int row = 0; row < 3; row++)
-	{
-		for(int col = 0; col < 3; col++)
-			printf("% .6f ", (*rot)[row][col]);
-		printf("\n");
-	}
+	// for(int row = 0; row < 3; row++)
+	// {
+	// 	for(int col = 0; col < 3; col++)
+	// 		printf("% .6f ", (*rot)[row][col]);
+	// 	printf("\n");
+	// }
 	free(axis);
 }
 

@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 18:15:07 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/30 17:16:38 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_scene_object
 			t_vector3		*end1;
 			t_vector3		*end2;
 			double			diameter;
+			double			sq_rad;
 			double			height;
 			uint32_t		color;
 		}	s_cylinder;
