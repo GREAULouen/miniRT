@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 15:56:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 15:31:06 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:05:51 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
  * @param args
  * @return int : -1 if error else 0
  */
-int	create_camera(t_scene_object *obj, char **args)
+int	create_camera(t_scene_object *obj, int argc, char **args)
 {
-	if (!args[1] || !args[2] || !args[3] || args[4])
+	if (argc < 4 || !args[1] || !args[2] || !args[3])
 		return (set_error((char *)__func__, INVALID_ARG), -1);
 	obj->type = CAMERA;
 	obj->s_camera.pos = atov(args[1]);
@@ -39,7 +39,6 @@ int	create_camera(t_scene_object *obj, char **args)
 			free(obj->s_camera.dir),
 			set_error((char *)__func__, INVALID_ARG), -1);
 	update_viewport(obj);
-	ft_inrotate_x(obj->s_camera.dir, M_PI_4 / 2.0);
 	ft_rotation_matrix(obj->s_camera.dir, &obj->s_camera.rot);
 	return (0);
 }

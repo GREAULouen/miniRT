@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:12:39 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/21 14:26:37 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/28 14:45:58 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static void	print_object3(t_scene_object *obj)
 		printf("      |- diameter : %f\n", obj->s_cylinder.diameter);
 		printf("      |- height   : %f\n", obj->s_cylinder.height);
 		printf("      |- color    : (%u, %u, %u)\n",
-			obj->s_cylinder.color >> SHIFT_R,
-			(obj->s_cylinder.color & COLOR_G) >> SHIFT_G,
-			obj->s_cylinder.color & COLOR_B);
+			obj->color >> SHIFT_R,
+			(obj->color & COLOR_G) >> SHIFT_G,
+			obj->color & COLOR_B);
 	}
 }
 
@@ -34,18 +34,18 @@ static void	print_object2(t_scene_object *obj)
 		print_v3("      |- position ", obj->s_plane.pos, ONELINE);
 		print_v3("      |- normal   ", obj->s_plane.normal, ONELINE);
 		printf("      |- color    : (%u, %u, %u)\n",
-			obj->s_plane.color >> SHIFT_R,
-			(obj->s_plane.color & COLOR_G) >> SHIFT_G,
-			obj->s_plane.color & COLOR_B);
+			obj->color >> SHIFT_R,
+			(obj->color & COLOR_G) >> SHIFT_G,
+			obj->color & COLOR_B);
 	}
 	else if (obj->type == SPHERE)
 	{
 		print_v3("      |- position ", obj->s_sphere.pos, ONELINE);
 		printf("      |- diameter : %f\n", obj->s_sphere.diameter);
 		printf("      |- color    : (%u, %u, %u)\n",
-			obj->s_sphere.color >> SHIFT_R,
-			(obj->s_sphere.color & COLOR_G) >> SHIFT_G,
-			obj->s_sphere.color & COLOR_B);
+			obj->color >> SHIFT_R,
+			(obj->color & COLOR_G) >> SHIFT_G,
+			obj->color & COLOR_B);
 	}
 	else
 		print_object3(obj);
@@ -62,9 +62,9 @@ void	print_object(t_scene_object *obj)
 	{
 		printf("      |- intensity : %f\n", obj->s_ambient_light.intensity);
 		printf("      |- color     : (%u, %u, %u)\n",
-			obj->s_ambient_light.color >> SHIFT_R,
-			(obj->s_ambient_light.color & COLOR_G) >> SHIFT_G,
-			obj->s_ambient_light.color & COLOR_B);
+			obj->color >> SHIFT_R,
+			(obj->color & COLOR_G) >> SHIFT_G,
+			obj->color & COLOR_B);
 	}
 	else if (obj->type == CAMERA)
 	{
@@ -77,9 +77,9 @@ void	print_object(t_scene_object *obj)
 		print_v3("      |- position   ", obj->s_spot_light.pos, ONELINE);
 		printf("      |- intensity : %f\n", obj->s_spot_light.intensity);
 		printf("      |- color     : (%u, %u, %u)\n",
-			obj->s_spot_light.color >> SHIFT_R,
-			(obj->s_spot_light.color & COLOR_G) >> SHIFT_G,
-			obj->s_spot_light.color & COLOR_B);
+			obj->color >> SHIFT_R,
+			(obj->color & COLOR_G) >> SHIFT_G,
+			obj->color & COLOR_B);
 	}
 	else
 		print_object2(obj);
@@ -108,6 +108,8 @@ void	print_objects(void)
 	{
 		printf("    |- %s:\n",
 			get_type_string(get_program()->objects[index].type));
+		if (get_program()->objects[index].type > CAMERA)
+			printf("      |- shininess: %f\n", get_program()->objects[index].shininess);
 		print_object(&get_program()->objects[index]);
 	}
 }

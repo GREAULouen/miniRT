@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene_object.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 14:23:14 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/29 11:51:28 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,19 @@ typedef enum e_scene_object_type
 
 typedef struct s_scene_object
 {
+	uint32_t	color;
+	double		shininess;
+	double		reflectiveness;
 	t_scene_object_type		type;
 	union {
 		struct
 		{
 			double			intensity;
-			uint32_t		color;
 		}	s_ambient_light;
 		struct
 		{
 			t_vector3		*pos;
 			double			intensity;
-			uint32_t		color;
 		}	s_spot_light;
 		struct
 		{
@@ -62,14 +63,12 @@ typedef struct s_scene_object
 		{
 			t_vector3		*pos;
 			t_vector3		*normal;
-			uint32_t		color;
 			double			dot;
 		}	s_plane;
 		struct
 		{
 			t_vector3		*pos;
 			double			diameter;
-			uint32_t		color;
 			double			sq_rad;
 		}	s_sphere;
 		struct
@@ -78,23 +77,21 @@ typedef struct s_scene_object
 			t_vector3		*dir;
 			double			diameter;
 			double			height;
-			uint32_t		color;
 		}	s_cylinder;
 	};
 }							t_scene_object;
 
 /*	~~~~~~~~~~~~~~~~ CREATION ~~~~~~~~~~~~~~~~	*/
 
-typedef int	(*t_obj_creator)(t_scene_object *, char **);
+typedef int	(*t_obj_creator)(t_scene_object *, int, char **);
 
-int							create_ambient_light(t_scene_object *obj,
-								char **args);
-int							create_spot_light(t_scene_object *obj, char **args);
-int							create_camera(t_scene_object *obj, char **args);
+int							create_ambient_light(t_scene_object *obj, int argc, char **args);
+int							create_spot_light(t_scene_object *obj, int argc, char **args);
+int							create_camera(t_scene_object *obj, int argc, char **args);
 void						update_viewport(t_scene_object *obj);
-int							create_plane(t_scene_object *obj, char **args);
-int							create_sphere(t_scene_object *obj, char **args);
-int							create_cylinder(t_scene_object *obj, char **args);
+int							create_plane(t_scene_object *obj, int argc, char **args);
+int							create_sphere(t_scene_object *obj, int argc, char **args);
+int							create_cylinder(t_scene_object *obj, int argc, char **args);
 
 /*	~~~~~~~~~~~~~~~~ CLEANUP ~~~~~~~~~~~~~~~~	*/
 
@@ -110,16 +107,14 @@ void						cleanup_cylinder(t_scene_object *obj);
 
 typedef double	(*t_obj_intersect)(t_vector3 *, t_vector3 *, t_scene_object *, int (*)(double));
 
-double						intersect_sphere(t_vector3 *og, t_vector3 *ray,
-								t_scene_object *obj, int (*is_valid)(double));
+double						intersect_sphere(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
 double						intersect_plane(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
 
 /*	~~~~~~~~~~~~~~~ NORMAL_CALC ~~~~~~~~~~~~~~~	*/
 
 typedef t_vector3	*(*t_obj_normal)(t_vector3 *, t_vector3 *, t_scene_object *);
 
-t_vector3					*normal_sphere(t_vector3 *og, t_vector3 *point,
-								t_scene_object *obj);
+t_vector3					*normal_sphere(t_vector3 *og, t_vector3 *point, t_scene_object *obj);
 t_vector3					*normal_plane(t_vector3 *og, t_vector3 *point, t_scene_object *obj);
 
 /*	~~~~~~~~~~~~~~~~~ GETTERS ~~~~~~~~~~~~~~~~~	*/

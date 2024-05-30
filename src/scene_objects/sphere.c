@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:46:50 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 14:00:45 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/29 12:08:19 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
  * @param args
  * @return int : -1 if error else 0
  */
-int	create_sphere(t_scene_object *obj, char **args)
+int	create_sphere(t_scene_object *obj, int argc, char **args)
 {
-	if (!args[1] || !args[2] || !args[3] || args[4])
+	if (argc < 4 || !args[1] || !args[2] || !args[3])
 		return (set_error((char *)__func__, INVALID_ARG), -1);
 	obj->type = SPHERE;
 	obj->s_sphere.pos = atov(args[1]);
@@ -31,8 +31,14 @@ int	create_sphere(t_scene_object *obj, char **args)
 	if (obj->s_sphere.diameter < 0)
 		return (free(obj->s_sphere.pos),
 			set_error((char *)__func__, INVALID_ARG), -1);
-	obj->s_sphere.color = atoc(args[3]);
+	obj->color = atoc(args[3]);
 	obj->s_sphere.sq_rad = obj->s_sphere.diameter * obj->s_sphere.diameter / 4.0;
+	obj->shininess = 0.0;
+	if (argc >= 5)
+		obj->shininess = ft_atod(args[4]);
+	obj->reflectiveness = 0.0;
+	if (argc >= 6)
+		obj->reflectiveness = ft_atod(args[5]);
 	return (0);
 }
 
@@ -68,16 +74,6 @@ double	intersect_sphere(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int 
 	t2 = -1.0 * (-1.0 * b - sqrt(delta)) / (2.0 * a);
 	if (!is_valid(t2))
 		t2 = INFINITY;
-	// if (ray->x < 0.03 && ray->x > -0.03 & ray->z < 0.03 && ray->z > -0.03)
-	// {
-	// 	print_v3("ray", ray, ONELINE);
-	// 	printf("  |-a: %f\n", a);
-	// 	printf("  |-b: %f\n", b);
-	// 	printf("  |-c: %f\n", c);
-	// 	printf("  |- delta: %f\n", delta);
-	// 	printf("  |- t1: %f\n", t1);
-	// 	printf("  |- t2: %f\n", t2);
-	// }
 	return (closest_intersection(t1, t2, ray, og));
 }
 

@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:05:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 13:05:39 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/29 13:51:11 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,16 @@
  * @param obj
  * @return uint32_t
  */
-uint32_t	compute_light(double intersect, t_vector3 *ray, t_scene_object *obj)
+uint32_t	compute_light(t_vector3 *point, t_vector3 *normal, t_vector3 *reflected, t_scene_object *obj)
 {
 	t_program	*program;
 	t_vector3	*point_to_light;
-	t_vector3	*point;
-	t_vector3	*normal;
-	double		dot;
+	// t_vector3	*point;
+	// t_vector3	*normal;
+	// t_vector3	reflected;
+	t_vector3	*point_to_cam;
+	double		n_dot_l;
+	double		r_dot_c;
 	double		total_intensity;
 	uint32_t	total_color;
 	int			index;
@@ -36,29 +39,47 @@ uint32_t	compute_light(double intersect, t_vector3 *ray, t_scene_object *obj)
 	total_intensity = 0.0;
 	total_color = 0x0;
 	index = -1;
-	point = sol_to_point(intersect, ray, get_object(CAMERA)->s_camera.pos);
-	normal = get_obj_normal()[obj->type](get_object(CAMERA)->s_camera.pos, point, obj);
-	dot = 0.0;
+	// point = sol_to_point(intersect, ray, get_object(CAMERA)->s_camera.pos);
+	// normal = get_obj_normal()[obj->type](get_object(CAMERA)->s_camera.pos, point, obj);
+	point_to_cam = ft_v3_dir(point, get_object(CAMERA)->s_camera.pos);
+	n_dot_l = 0.0;
+	// reflected = (t_vector3){0.0, 0.0, 0.0};
 	while (++index < program->object_count)	// TODO: add pre-processing to have an array of Lights for simpler loops
 	{
 		if ((int) program->objects[index].type == AMBIENT_LIGHT)
 		{
 			total_intensity += program->objects[index].s_ambient_light.intensity;
-			total_color = color_add_scal(total_color, program->objects[index].s_ambient_light.intensity, program->objects[index].s_ambient_light.color);
+			total_color = color_add_scal(total_color, program->objects[index].s_ambient_light.intensity, program->objects[index].color);
 		}
 		else if ((int) program->objects[index].type == SPOT_LIGHT && !is_in_shadow(point, program->objects[index].s_spot_light.pos))
 		{
 			point_to_light = ft_v3_dir(point, program->objects[index].s_spot_light.pos);
-			dot = ft_dot_product(point_to_light, normal);
-			total_intensity += program->objects[index].s_spot_light.intensity * dot / (ft_v3_length(point_to_light));
-			total_color = color_add_scal(total_color, program->objects[index].s_spot_light.intensity * dot / (ft_v3_length(point_to_light)), program->objects[index].s_spot_light.color);
+			n_dot_l = ft_dot_product(point_to_light, normal);
+			if (n_dot_l > 0)
+			{
+				total_intensity += program->objects[index].s_spot_light.intensity * n_dot_l / (ft_v3_length(point_to_light));
+				total_color = color_add_scal(total_color, program->objects[index].s_spot_light.intensity * n_dot_l / (ft_v3_length(point_to_light)), program->objects[index].color);
+			}
+			if (obj->shininess > 0.0)
+			{
+				r_dot_c = ft_dot_product(reflected, point_to_cam);
+				if (r_dot_c > 0)
+					total_intensity += program->objects[index].s_spot_light.intensity * pow(r_dot_c / (ft_v3_length(reflected) * ft_v3_length(point_to_cam)), obj->shininess);
+			}
 			free(point_to_light);
 		}
 	}
-	free(point);
-	free(normal);
-	return (color_scal_mult(color_rem_opposite(total_color, obj->s_sphere.color), total_intensity));
-	// return (color_rem_opposite(total_color, obj->s_sphere.color));
-	// return (color_scal_mult(color_add(obj->s_sphere.color, total_color), total_intensity));
-	// return (total_color); // UNCOMENT FOR TOTAL_LIGHT RESULT
+	free(point_to_cam);
+
+	return (color_scal_mult(color_rem_opposite(total_color, obj->color), total_intensity));
+}
+
+void	reflected_ray(t_vector3 *ray, t_vector3 *normal, t_vector3 *res)
+{
+	double	dot;
+
+	dot = ft_dot_product(ray, normal);
+	res->x = 2 * dot * normal->x - ray->x;
+	res->y = 2 * dot * normal->y - ray->y;
+	res->z = 2 * dot * normal->z - ray->z;
 }

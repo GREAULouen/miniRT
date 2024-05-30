@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:15:03 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/22 16:22:00 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/29 12:06:21 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	init_objects(void)
 	line = ft_get_next_line_nonl(fd);
 	while (line)
 	{
-		if (line[0])
+		if (line[0] && line[0] != '#')
 			get_program()->object_count++;
 		free(line);
 		line = ft_get_next_line_nonl(fd);
@@ -69,7 +69,7 @@ static int	save_object(char *line, uint8_t *unique_obj_count)
 	if (type == CAMERA && (*unique_obj_count & UNIQUE_OBJ_COUNT_C))
 		return (free_arr(splt, -1, 1), -1);
 	*unique_obj_count |= (type == CAMERA * UNIQUE_OBJ_COUNT_C);
-	res = get_obj_creator()[type](&get_program()->objects[count++], splt);
+	res = get_obj_creator()[type](&get_program()->objects[count++], get_length(splt), splt);
 	return (free_arr(splt, -1, 1), res);
 }
 
@@ -89,7 +89,7 @@ static int	read_file(uint8_t *unique_obj_count)
 	line = ft_get_next_line_nonl(fd);
 	while (line)
 	{
-		if (line[0] && save_object(line, unique_obj_count) < 0)
+		if (line[0] && line[0] != '#' && save_object(line, unique_obj_count) < 0)
 			return (free(line), -1);	// TODO : free alerady created objects
 		free(line);
 		line = ft_get_next_line_nonl(fd);
