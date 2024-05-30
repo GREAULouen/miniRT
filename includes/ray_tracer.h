@@ -6,14 +6,14 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:51 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/29 13:51:15 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/30 13:05:34 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RAY_TRACER_H
 # define RAY_TRACER_H
 
-# define BACKGROUND_COLOR 0x001030
+# define BACKGROUND_COLOR 0x0
 // # define BACKGROUND_COLOR 0xB0B0B0
 
 void		init_ray(void);
