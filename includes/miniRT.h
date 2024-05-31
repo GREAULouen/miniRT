@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:48:52 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/27 15:38:40 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/30 15:59:36 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include "parser.h"
 # include "ray_tracer.h"
 # include "mlx.h"
+# include "error.h"
 
 /* ~~~~ Other libraries ~~~	*/
 # include <math.h>		// math
@@ -33,8 +34,6 @@
 # include <stdio.h>		// printf, perror
 # include <stdlib.h>	// malloc, free
 # include <string.h>	// strerror
-
-# define BACKGROUND_COLOR 0xDCDCDC // (220, 220, 220)
 
 /* ~~~~ Main structure ~~~~	*/
 typedef struct s_program
@@ -50,12 +49,14 @@ typedef struct s_program
 	double			vc_height_ratio;
 	int				object_count;
 	t_scene_object	*objects;
+	int				max_reflections;
 	mlx_t			*mlx;
 	mlx_image_t		*image;
 }					t_program;
 
 t_program			*get_program(void);
 void				cleanup_program(void);
+void				part_cleanup_program(int last);
 
 /* ~ Argument validation ~	*/
 # define BAD_ARGS_FORMAT "Bad program arguments.\n"

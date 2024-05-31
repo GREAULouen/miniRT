@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   string_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/14 14:20:05 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 13:53:27 by lgreau           ###   ########.fr       */
+/*   Created: 2024/05/28 15:18:16 by lgreau            #+#    #+#             */
+/*   Updated: 2024/05/28 15:19:31 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "miniRT.h"
 
-# define UNIQUE_OBJ_COUNT_A 0b00000001
-# define UNIQUE_OBJ_COUNT_C 0b00000010
+/**
+ * @brief Returns the length of the NULL-terminated string array arr
+ *
+ * @param arr
+ * @return int
+ */
+int	get_length(char **arr)
+{
+	int	count;
 
-int	parse_input(void);
-
-#endif
+	count = 0;
+	while (arr[count])
+		count++;
+	return (count);
+}

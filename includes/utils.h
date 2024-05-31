@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:47:35 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 12:13:01 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/28 15:19:43 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define UTILS_H
 
 void			free_arr(char **arr, int last, int is_allocated);
+int				get_length(char **arr);
 void			print_object(t_scene_object *obj);
 void			print_objects(void);
 

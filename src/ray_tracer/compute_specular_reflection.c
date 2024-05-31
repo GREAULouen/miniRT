@@ -1,21 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   compute_specular_reflection.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/14 14:20:05 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 13:53:27 by lgreau           ###   ########.fr       */
+/*   Created: 2024/05/28 14:53:19 by lgreau            #+#    #+#             */
+/*   Updated: 2024/05/28 14:54:30 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "miniRT.h"
 
-# define UNIQUE_OBJ_COUNT_A 0b00000001
-# define UNIQUE_OBJ_COUNT_C 0b00000010
-
-int	parse_input(void);
-
-#endif
+uint32_t	compute_spec_reflection(t_vector3 *point, t_scene_object *light, t_scene_object *obj)
