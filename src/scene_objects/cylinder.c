@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:50:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/31 16:57:52 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/31 17:11:19 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ double	intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, in
 
 	cross_ray_dir = ft_v3_cross_product(ray, obj->s_cylinder.dir);
 	obj_org_pos = ft_v3_sub(obj->s_cylinder.pos, og);
-	cross_pos_dir = ft_v3_cross_product(obj_org_pos, ray);
+	cross_pos_dir = ft_v3_cross_product(obj_org_pos, obj->s_cylinder.dir);
 	dot_dir = ft_dot_product(obj->s_cylinder.dir, obj->s_cylinder.dir);
 
 	dot_pos_cross_ray_dir = ft_dot_product(obj_org_pos, cross_ray_dir);
@@ -92,19 +92,8 @@ double	intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, in
 	{
 		t22 = ft_dot_product(obj->s_cylinder.dir, ft_v3_sub(ft_v3_mult(ray, t2), obj_org_pos));
 		if (t22 < 0 || t22 > obj->s_cylinder.height)
-			t1 = INFINITY;
+			t2 = INFINITY;
 	}
-
-	// if (ray->x < 0.03 && ray->x > -0.03 & ray->z < 0.03 && ray->z > -0.03)
-	// {
-	// 	print_v3("ray", ray, ONELINE);
-	// 	printf("  |-a: %f\n", a);
-	// 	printf("  |-b: %f\n", b);
-	// 	printf("  |-c: %f\n", c);
-	// 	printf("  |- delta: %f\n", delta);
-	// 	printf("  |- t1: %f\n", t1);
-	// 	printf("  |- t2: %f\n", t2);
-	// }
 	return (closest_intersection(t1, t2, ray, og));
 }
 
