@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:50:24 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/28 18:14:35 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/31 18:15:59 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,6 @@ t_obj_normal	*get_obj_normal(void)
 	obj_normal[CAMERA] = NULL;
 	obj_normal[PLANE] = normal_plane;
 	obj_normal[SPHERE] = normal_sphere;
-	obj_normal[CYLINDER] = NULL;
+	obj_normal[CYLINDER] = normal_cylinder;
 	return (&obj_normal[0]);
 }

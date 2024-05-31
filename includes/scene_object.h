@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/31 14:41:23 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/31 18:15:48 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ typedef t_vector3	*(*t_obj_normal)(t_vector3 *, t_vector3 *, t_scene_object *);
 t_vector3					*normal_sphere(t_vector3 *og, t_vector3 *point,
 								t_scene_object *obj);
 t_vector3					*normal_plane(t_vector3 *og, t_vector3 *point, t_scene_object *obj);
+t_vector3					*normal_cylinder(t_vector3 *og, t_vector3 *point, t_scene_object *obj);
 
 /*	~~~~~~~~~~~~~~~~~ GETTERS ~~~~~~~~~~~~~~~~~	*/
 

@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:50:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/31 17:11:19 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/31 18:15:12 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,20 @@ void	update_ends(t_scene_object *obj)
 	obj->s_cylinder.end2 = ft_v3_mult(obj->s_cylinder.pos, -(obj->s_cylinder.height / 2.0));
 }
 
+double	signed_distance_t_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, double distance)
+{
+	t_vector3	*mult_ray_distance;
+	t_vector3	*sub_mult_ray_distance_og;
+	double		signed_distance;
+
+	mult_ray_distance = ft_v3_mult(ray, distance);
+	sub_mult_ray_distance_og = ft_v3_sub(mult_ray_distance, og);
+	signed_distance = ft_dot_product(obj->s_cylinder.dir, sub_mult_ray_distance_og);
+	free(mult_ray_distance);
+	free(sub_mult_ray_distance_og);
+	return (signed_distance);
+}
+
 double	intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double))
 {
 	double		delta;
@@ -81,7 +95,7 @@ double	intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, in
 		t1 = INFINITY;
 	else
 	{
-		t11 = ft_dot_product(obj->s_cylinder.dir, ft_v3_sub(ft_v3_mult(ray, t1), obj_org_pos));
+		t11 = signed_distance_t_cylinder(obj_org_pos, ray, obj, t1);
 		if (t11 < 0 || t11 > obj->s_cylinder.height)
 			t1 = INFINITY;
 	}
@@ -90,11 +104,34 @@ double	intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, in
 		t2 = INFINITY;
 	else
 	{
-		t22 = ft_dot_product(obj->s_cylinder.dir, ft_v3_sub(ft_v3_mult(ray, t2), obj_org_pos));
+		t22 = signed_distance_t_cylinder(obj_org_pos, ray, obj, t2);
 		if (t22 < 0 || t22 > obj->s_cylinder.height)
 			t2 = INFINITY;
 	}
 	return (closest_intersection(t1, t2, ray, og));
+}
+
+/**
+ * @brief Allocat & computes the normal vector at the point on the cylinder
+ *
+ * @param point
+ * @return t_vector3*
+ */
+t_vector3	*normal_cylinder(t_vector3 *og, t_vector3 *point, t_scene_object *obj)
+{
+	t_vector3	*normal;
+	double		signed_distance;
+	t_vector3	*obj_org_pos;
+	t_vector3	*sub_dir_pos;
+
+	obj_org_pos = ft_v3_sub(obj->s_cylinder.pos, og);
+	signed_distance = ft_dot_product(point, obj_org_pos);
+	sub_dir_pos = ft_v3_sub(obj->s_cylinder.dir, obj_org_pos);
+	normal = ft_v3_sub(point, sub_dir_pos);
+	free(obj_org_pos);
+	free(sub_dir_pos);
+	ft_v3_innormalize(normal);
+	return (normal);
 }
 
 void	cleanup_cylinder(t_scene_object *obj)
