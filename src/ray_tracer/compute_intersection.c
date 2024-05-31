@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:06:23 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 18:01:46 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:37:23 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ uint32_t	compute_intersection(t_vector3 *ray)
 			// if (program->objects[index].s_sphere.pos->z == 0.0)
 			if (intersect != INFINITY && intersect < min_value)
 			{
-				printf("intersect test: %f\n", intersect);
+				// printf("intersect test: %f\n", intersect);
 				min = index;
 				min_value = intersect;
 			}

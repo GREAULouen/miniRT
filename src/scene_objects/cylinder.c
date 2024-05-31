@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:50:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 18:16:45 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/31 16:57:52 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,34 +55,46 @@ void	update_ends(t_scene_object *obj)
 
 double	intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double))
 {
-	double		a;
-	double		b;
-	double		c;
 	double		delta;
 	double		t1;
+	double		t11;
 	double		t2;
-	t_matrix	*rot_ray = malloc(sizeof(t_matrix));
-	t_vector3	rotated_ray;
+	double		t22;
+	t_vector3	*cross_ray_dir;
+	t_vector3	*cross_pos_dir;
+	t_vector3	*obj_org_pos;
+	double		dot_dir;
+	double		dot_pos_cross_ray_dir;
 
-	og = ft_v3_sub(og, obj->s_cylinder.pos);
-	ft_rotation_matrix(ray, rot_ray);
-	ft_apply_rotate(ray, rot_ray, &rotated_ray);
-	ft_rotation_matrix(og, rot_ray);
-	ft_apply_rotate(og, rot_ray, og);
-	a = rotated_ray.x * rotated_ray.x + rotated_ray.y * rotated_ray.y;
-	b = 2.0 * ft_dot_product(&rotated_ray, og);
-	c = ft_dot_product(&rotated_ray, &rotated_ray)
-		- obj->s_cylinder.sq_rad;
-	free(og);
-	delta = b * b - 4.0 * a * c;
+	cross_ray_dir = ft_v3_cross_product(ray, obj->s_cylinder.dir);
+	obj_org_pos = ft_v3_sub(obj->s_cylinder.pos, og);
+	cross_pos_dir = ft_v3_cross_product(obj_org_pos, ray);
+	dot_dir = ft_dot_product(obj->s_cylinder.dir, obj->s_cylinder.dir);
+
+	dot_pos_cross_ray_dir = ft_dot_product(obj_org_pos, cross_ray_dir);
+
+	delta = ft_dot_product(cross_ray_dir, cross_ray_dir) * obj->s_cylinder.sq_rad - dot_dir * (dot_pos_cross_ray_dir * dot_pos_cross_ray_dir);
 	if (delta < 0)
 		return (INFINITY);
-	t1 = -1.0 * (-1.0 * b + sqrt(delta)) / (2.0 * a);
+	t1 = 1.0 * (ft_dot_product(cross_ray_dir, cross_pos_dir) + sqrt(delta)) / ft_dot_product(cross_ray_dir, cross_ray_dir);
 	if (!is_valid(t1))
 		t1 = INFINITY;
-	t2 = -1.0 * (-1.0 * b - sqrt(delta)) / (2.0 * a);
+	else
+	{
+		t11 = ft_dot_product(obj->s_cylinder.dir, ft_v3_sub(ft_v3_mult(ray, t1), obj_org_pos));
+		if (t11 < 0 || t11 > obj->s_cylinder.height)
+			t1 = INFINITY;
+	}
+	t2 = 1.0 * (ft_dot_product(cross_ray_dir, cross_pos_dir) - sqrt(delta)) / ft_dot_product(cross_ray_dir, cross_ray_dir);
 	if (!is_valid(t2))
 		t2 = INFINITY;
+	else
+	{
+		t22 = ft_dot_product(obj->s_cylinder.dir, ft_v3_sub(ft_v3_mult(ray, t2), obj_org_pos));
+		if (t22 < 0 || t22 > obj->s_cylinder.height)
+			t1 = INFINITY;
+	}
+
 	// if (ray->x < 0.03 && ray->x > -0.03 & ray->z < 0.03 && ray->z > -0.03)
 	// {
 	// 	print_v3("ray", ray, ONELINE);
