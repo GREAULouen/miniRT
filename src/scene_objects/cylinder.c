@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:50:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/31 18:24:21 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/05/31 19:19:59 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,19 +35,21 @@ int	create_cylinder(t_scene_object *obj, int argc, char **args)
 	if (obj->s_cylinder.diameter < 0)
 		return (free(obj->s_cylinder.pos), free(obj->s_cylinder.dir),
 			rt_perror((char *)__func__, DIAMETER_OUT_OF_RANGE), -1);
+	obj->s_cylinder.sq_rad = obj->s_cylinder.diameter * obj->s_cylinder.diameter / 4.0;
 	obj->s_cylinder.height = ft_atod(args[4]);
 	if (obj->s_cylinder.height < 0)
 		return (free(obj->s_cylinder.pos), free(obj->s_cylinder.dir),
 			rt_perror((char *)__func__, HEIGHT_OUT_OF_RANGE), -1);
 	obj->color = atoc(args[5]);
+	// update_ends(obj);
 	return (0);
 }
 
-void	update_ends(t_scene_object *obj)
-{
-	obj->s_cylinder.end1 = ft_v3_mult(obj->s_cylinder.pos, obj->s_cylinder.height / 2.0);
-	obj->s_cylinder.end2 = ft_v3_mult(obj->s_cylinder.pos, -(obj->s_cylinder.height / 2.0));
-}
+// void	update_ends(t_scene_object *obj)
+// {
+// 	obj->s_cylinder.end1 = ft_v3_mult(obj->s_cylinder.pos, obj->s_cylinder.height / 2.0);
+// 	obj->s_cylinder.end2 = ft_v3_mult(obj->s_cylinder.pos, -(obj->s_cylinder.height / 2.0));
+// }
 
 double	signed_distance_t_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, double distance)
 {
@@ -59,6 +61,17 @@ double	signed_distance_t_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object 
 	sub_mult_ray_distance_og = ft_v3_sub(mult_ray_distance, og);
 	signed_distance = ft_dot_product(obj->s_cylinder.dir, sub_mult_ray_distance_og);
 	free(mult_ray_distance);
+	free(sub_mult_ray_distance_og);
+	return (signed_distance);
+}
+
+double	signed_distance_t_cylinder_point(t_vector3 *point, t_vector3 *og, t_scene_object *obj)
+{
+	t_vector3	*sub_mult_ray_distance_og;
+	double		signed_distance;
+
+	sub_mult_ray_distance_og = ft_v3_sub(point, og);
+	signed_distance = ft_dot_product(obj->s_cylinder.dir, sub_mult_ray_distance_og);
 	free(sub_mult_ray_distance_og);
 	return (signed_distance);
 }
@@ -119,13 +132,17 @@ t_vector3	*normal_cylinder(t_vector3 *og, t_vector3 *point, t_scene_object *obj)
 	double		signed_distance;
 	t_vector3	*obj_org_pos;
 	t_vector3	*sub_dir_pos;
+	t_vector3	*mult_dir_dis;
 
 	obj_org_pos = ft_v3_sub(obj->s_cylinder.pos, og);
-	signed_distance = ft_dot_product(point, obj_org_pos);
-	sub_dir_pos = ft_v3_sub(obj->s_cylinder.dir, obj_org_pos);
-	normal = ft_v3_sub(point, sub_dir_pos);
+
+	signed_distance = signed_distance_t_cylinder_point(point, obj_org_pos, obj);
+	mult_dir_dis = ft_v3_mult(obj->s_cylinder.dir, signed_distance);
+	sub_dir_pos = ft_v3_sub(point, mult_dir_dis);
+	normal = ft_v3_sub(sub_dir_pos, obj_org_pos);
 	free(obj_org_pos);
 	free(sub_dir_pos);
+	free(mult_dir_dis);
 	ft_v3_innormalize(normal);
 	return (normal);
 }
