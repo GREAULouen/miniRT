@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 17:28:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/31 13:54:36 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/31 15:25:35 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ int	create_cone(t_scene_object *obj, int argc, char **args)
 		return (rt_perror((char *)__func__, HEIGHT_OUT_OF_RANGE), -1);
 	obj->s_cone.tan_theta = obj->s_cone.diameter / (2.0 * obj->s_cone.height);
 	obj->s_cone.sq_tan_theta = pow(obj->s_cone.tan_theta, 2.0);
-	printf("  |- tan_theta: %f\n", obj->s_cone.tan_theta);
-	printf("  |- sq_tan_theta: %f\n", obj->s_cone.sq_tan_theta);
 	obj->color = atoc(args[5]);
 	obj->shininess = 0.0;
 	if (argc >= 7)
@@ -80,11 +78,11 @@ double	intersect_cone(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*
 	// 	printf("  |- t2: %f\n", sol[1]);
 	// }
 	tmp = sol_to_point(sol[0], &n_ray, &n_og, NULL);
-	if (!is_valid(sol[0]) || tmp->z < 0 || tmp->z > obj->s_cone.height)
+	if (!is_valid(sol[0]))// || tmp->z < 0 || tmp->z > obj->s_cone.height)
 		sol[0] = INFINITY;
 	free(tmp);
 	tmp = sol_to_point(sol[1], &n_ray, &n_og, NULL);
-	if (!is_valid(sol[1]) || tmp->z < 0 || tmp->z > obj->s_cone.height)
+	if (!is_valid(sol[1]))// || tmp->z < 0 || tmp->z > obj->s_cone.height)
 		sol[1] = INFINITY;
 	free(tmp);
 	return (closest_intersection(sol[0], sol[1], ray, og));
