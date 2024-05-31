@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:15:03 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 16:04:13 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/31 11:20:09 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	save_object(char *line, uint8_t *unique_obj_count)
 		return (set_error((char *)__func__, ALLOC), -1);
 	type = get_object_type(splt[0]);
 	if (type < 0)
-		return (-1);
+		return (free_arr(splt, -1, 1), -1);
 	if (type == AMBIENT_LIGHT && (*unique_obj_count & UNIQUE_OBJ_COUNT_A))
 		return (rt_perror((char *)__func__, TOO_MUCH_AMBIENT_LIGHT), free_arr(splt, -1, 1), -1);
 	*unique_obj_count |= ((type == AMBIENT_LIGHT) * UNIQUE_OBJ_COUNT_A);

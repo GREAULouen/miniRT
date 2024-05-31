@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:36:31 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/23 17:50:35 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/31 11:19:31 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	get_object_type(char *type)
 		return (SPHERE);
 	if (ft_endswith(type, "cy"))
 		return (CYLINDER);
+	if (ft_endswith(type, "co"))
+		return (CONE);
 	return (-1);
 }
 

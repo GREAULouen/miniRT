@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 17:36:31 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/31 11:13:06 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct s_scene_object
 			double			diameter;
 			double			height;
 			double			tan_theta;
+			double			sq_tan_theta;
 			t_matrix		rot;
 			t_matrix		inv_rot;
 		}	s_cone;
@@ -122,6 +123,7 @@ typedef double	(*t_obj_intersect)(t_vector3 *, t_vector3 *, t_scene_object *, in
 
 double						intersect_sphere(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
 double						intersect_plane(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
+double						intersect_cone(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
 
 /*	~~~~~~~~~~~~~~~ NORMAL_CALC ~~~~~~~~~~~~~~~	*/
 
@@ -129,6 +131,7 @@ typedef t_vector3	*(*t_obj_normal)(t_vector3 *, t_vector3 *, t_scene_object *);
 
 t_vector3					*normal_sphere(t_vector3 *og, t_vector3 *point, t_scene_object *obj);
 t_vector3					*normal_plane(t_vector3 *og, t_vector3 *point, t_scene_object *obj);
+t_vector3					*normal_cone(t_vector3 *og, t_vector3 *point, t_scene_object *obj);
 
 /*	~~~~~~~~~~~~~~~~~ GETTERS ~~~~~~~~~~~~~~~~~	*/
 
@@ -136,6 +139,5 @@ t_obj_creator				*get_obj_creator(void);
 t_obj_cleanup				*get_obj_cleanup(void);
 t_obj_intersect				*get_obj_intersect(void);
 t_obj_normal				*get_obj_normal(void);
-
 
 #endif

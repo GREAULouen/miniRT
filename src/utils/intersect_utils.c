@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 11:50:18 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/27 14:45:32 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/31 11:10:27 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,19 @@
  * @param obj
  * @return t_vector3*
  */
-t_vector3	*sol_to_point(double intersect, t_vector3 *ray, t_vector3 *og)
+t_vector3	*sol_to_point(double intersect, t_vector3 *ray, t_vector3 *og, t_scene_object *obj)
 {
+	t_vector3	tmp;
 	t_vector3	*res;
 
-	res = ft_v3_cpy(ray);
-	ft_v3_inmult(res, intersect);
-	ft_v3_inadd(res, og);
+	tmp = (t_vector3){ray->x, ray->y, ray->z};
+	ft_v3_inmult(&tmp, intersect);
+	ft_v3_inadd(&tmp, og);
+	if (!obj || obj->type != CONE)
+		return (ft_v3_cpy(&tmp));
+	res = ft_v3_zero();
+	ft_apply_rotate(&tmp, &obj->s_cone.rot, res);
+	ft_v3_inadd(res, obj->s_cone.pos);
 	return (res);
 }
 
@@ -51,9 +57,9 @@ double	closest_intersection(double t1, double t2, t_vector3 *ray, t_vector3 *og)
 		return (t2);
 	if (t1 != INFINITY && t2 == INFINITY)
 		return (t1);
-	ogt1 = sol_to_point(t1, ray, og);
+	ogt1 = sol_to_point(t1, ray, og, NULL);
 	ft_v3_insub(ogt1, og);
-	ogt2 = sol_to_point(t2, ray, og);
+	ogt2 = sol_to_point(t2, ray, og, NULL);
 	ft_v3_insub(ogt2, og);
 	// if (ray->x < 0.03 && ray->x > -0.03 & ray->z < 0.03 && ray->z > -0.03)
 	// {

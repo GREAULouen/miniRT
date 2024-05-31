@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 17:44:08 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 17:48:59 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/31 11:47:58 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  * @param sol
  * @return int
  */
-int	solve_quadratic(double a, double b, double c, int sol[2])
+int	solve_quadratic(double a, double b, double c, double sol[2])
 {
 	double	delta;
 
