@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:53:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/31 15:28:06 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/31 15:37:35 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	main(int argc, char *argv[])
 	}
 	get_program()->file_name = argv[1];
 	set_width_height(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-	get_program()->max_reflections = 2;
 	if (parse_input() < 0)
 		exit(EXIT_FAILURE);
 	if (!start_mlx())
