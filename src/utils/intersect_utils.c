@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 11:50:18 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/31 11:10:27 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/31 13:50:40 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,28 @@
 t_vector3	*sol_to_point(double intersect, t_vector3 *ray, t_vector3 *og, t_scene_object *obj)
 {
 	t_vector3	tmp;
-	t_vector3	*res;
+	// t_vector3	*res;
 
 	tmp = (t_vector3){ray->x, ray->y, ray->z};
 	ft_v3_inmult(&tmp, intersect);
+	// if (ray->x > 0.0156 && ray->x < 0.0157 && ray->y > -0.119 && ray->y < -0.118)
+	// {
+	// 	print_v3("\nray", ray, ONELINE);
+	// 	print_v3("  |- og", og, ONELINE);
+	// 	printf("  |- sol: %f\n", intersect);
+	// 	print_v3("  |- tmp", &tmp, ONELINE);
+	// }
 	ft_v3_inadd(&tmp, og);
 	if (!obj || obj->type != CONE)
 		return (ft_v3_cpy(&tmp));
-	res = ft_v3_zero();
-	ft_apply_rotate(&tmp, &obj->s_cone.rot, res);
-	ft_v3_inadd(res, obj->s_cone.pos);
-	return (res);
+	// res = ft_v3_zero();
+	// ft_apply_rotate(&tmp, &obj->s_cone.inv_rot, res);
+	// if (ray->x > 0.0156 && ray->x < 0.0157 && ray->y > -0.119 && ray->y < -0.118)
+	// 	print_v3("  |- after_rotate", res, ONELINE);
+	// ft_v3_inadd(res, obj->s_cone.pos);
+	// if (ray->x > 0.0156 && ray->x < 0.0157 && ray->y > -0.119 && ray->y < -0.118)
+	// 	print_v3("  |- after offset", res, ONELINE);
+	return (ft_v3_cpy(&tmp));
 }
 
 /**
