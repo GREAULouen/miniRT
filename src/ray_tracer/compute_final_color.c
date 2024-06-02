@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 15:25:37 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/02 16:14:55 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/02 16:37:39 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	compute_final_color(int row, int col)
 		width = get_program()->canvas_width;
 		img_color = get_program()->image_buffer[index][row * width + col];
 		total_color.x += img_color >> 16;
-		total_color.y += img_color >> 8;
-		total_color.z += img_color;
+		total_color.y += (img_color >> 8) & 0xFF;
+		total_color.z += img_color & 0xFF;
 	}
 	final_color = color_clamp(
 		((u_int32_t) (total_color.x / get_program()->image_count) << 16)
