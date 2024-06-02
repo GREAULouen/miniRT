@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:55:30 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/31 15:25:56 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/02 13:02:48 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	create_plane(t_scene_object *obj, int argc, char **args)
 	obj->s_plane.normal = atov(args[2]);
 	if (!obj->s_plane.normal)
 		return (free(obj->s_plane.pos), -1);
+	ft_v3_innormalize(obj->s_plane.normal);
 	obj->color = atoc(args[3]);
 	obj->s_plane.dot = ft_dot_product(obj->s_plane.pos, obj->s_plane.normal);
 	obj->shininess = 0.0;

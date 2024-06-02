@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:06:23 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/31 13:13:05 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/02 13:25:53 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,8 @@ uint32_t	compute_intersection(t_vector3 *og, t_vector3 *ray, int depth, int (*is
 	}
 	if (min < 0)
 		return (BACKGROUND_COLOR);
-	point = sol_to_point(min_value, ray, og, &program->objects[min]);
+	point = sol_to_point(min_value, ray, og);
 	normal = get_obj_normal()[program->objects[min].type](og, point, &program->objects[min]);
-	// if (program->objects[min].type == CONE)
-	// {
-	// 	print_v3("\nray", ray, ONELINE);
-	// 	printf("  |- sol: %f\n", min_value);
-	// 	print_v3("point", point, ONELINE);
-	// 	print_v3("normal", normal, ONELINE);
-	// }
 	reflected_ray(&(t_vector3){-ray->x, -ray->y, -ray->z}, normal, &reflected);
 	local_color = compute_light(point, normal, &reflected, &program->objects[min]);
 	if (program->objects[min].reflectiveness <= 0.0 || depth <= 0.0)
@@ -69,15 +62,3 @@ uint32_t	compute_intersection(t_vector3 *og, t_vector3 *ray, int depth, int (*is
 		return (free(point), free(normal), local_color);
 	return (free(point), free(normal), color_add(color_scal_mult(local_color, 1.0 - program->objects[min].reflectiveness), color_scal_mult(reflected_color, program->objects[min].reflectiveness)));
 }
-
-// ray: (0.015625, -0.118750, 0.714074)
-//   |- a : 0.509449
-//   |- b : -143.166653
-//   |- c : 9955.555556
-//   |- t1: 126.312923
-//   |- t2: 154.709371
-
-// ray: (0.015625, -0.118750, 0.714074)
-//   |- sol: 126.312923
-// point: (1.973639, -60.196774, 85.000340)
-// normal: (0.032690, 0.069524, -0.997045)

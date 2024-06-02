@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 17:28:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/31 15:25:35 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/02 13:25:55 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,21 +68,12 @@ double	intersect_cone(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*
 	coef[2] = pow(n_og.x, 2.0) + pow(n_og.y, 2.0) - pow(n_og.z, 2.0) * obj->s_cone.sq_tan_theta;
 	if (solve_quadratic(coef[0], coef[1], coef[2], sol) <= 0)
 		return (INFINITY);
-	// if (ray->x > 0.0156 && ray->x < 0.0157 && ray->y > -0.119 && ray->y < -0.118)
-	// {
-	// 	print_v3("\nray", ray, ONELINE);
-	// 	printf("  |- a : %f\n", coef[0]);
-	// 	printf("  |- b : %f\n", coef[1]);
-	// 	printf("  |- c : %f\n", coef[2]);
-	// 	printf("  |- t1: %f\n", sol[0]);
-	// 	printf("  |- t2: %f\n", sol[1]);
-	// }
-	tmp = sol_to_point(sol[0], &n_ray, &n_og, NULL);
-	if (!is_valid(sol[0]))// || tmp->z < 0 || tmp->z > obj->s_cone.height)
+	tmp = sol_to_point(sol[0], &n_ray, &n_og);
+	if (!is_valid(sol[0]) || tmp->z < 0 || tmp->z > obj->s_cone.height)
 		sol[0] = INFINITY;
 	free(tmp);
-	tmp = sol_to_point(sol[1], &n_ray, &n_og, NULL);
-	if (!is_valid(sol[1]))// || tmp->z < 0 || tmp->z > obj->s_cone.height)
+	tmp = sol_to_point(sol[1], &n_ray, &n_og);
+	if (!is_valid(sol[1]) || tmp->z < 0 || tmp->z > obj->s_cone.height)
 		sol[1] = INFINITY;
 	free(tmp);
 	return (closest_intersection(sol[0], sol[1], ray, og));
@@ -91,13 +82,20 @@ double	intersect_cone(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*
 t_vector3	*normal_cone(t_vector3 *og, t_vector3 *point, t_scene_object *obj)
 {
 	t_vector3	*normal;
+	t_vector3	local_normal;
 	t_vector3	tmp;
 
 	(void)og;
-	tmp = (t_vector3){2.0 * point->x, 2.0 * point->y, -2.0 * point->z * obj->s_cone.sq_tan_theta};
-	ft_v3_innormalize(&tmp);
+	// tmp = (t_vector3){2.0 * point->x, 2.0 * point->y, -2.0 * point->z * obj->s_cone.sq_tan_theta};
+	// ft_v3_innormalize(&tmp);
+	// normal = ft_v3_zero();
+	// ft_apply_rotate(&tmp, &obj->s_cone.rot, normal);
+	tmp = (t_vector3){0.0, 0.0, 0.0};
+	ft_apply_rotate(&(t_vector3){point->x - obj->s_cone.pos->x, point->y - obj->s_cone.pos->y, point->z - obj->s_cone.pos->z}, &obj->s_cone.inv_rot, &tmp);
+	local_normal = (t_vector3){2.0 * tmp.x, 2.0 * tmp.y, -2.0 * tmp.z * obj->s_cone.sq_tan_theta};
+	ft_v3_innormalize(&local_normal);
 	normal = ft_v3_zero();
-	ft_apply_rotate(&tmp, &obj->s_cone.rot, normal);
+	ft_apply_rotate(&local_normal, &obj->s_cone.rot, normal);
 	ft_v3_innormalize(normal);
 	return (normal);
 }
