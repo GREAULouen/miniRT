@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 18:01:50 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/05/29 11:51:04 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/02 15:58:56 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,32 @@ bool	start_mlx(void)
 			program->canvas_height);
 	if (program->image == NULL)
 		return (mlx_print_error());
+	if (!start_img_buffer())
+		return (false);
 	if (mlx_image_to_window(program->mlx, program->image, 0, 0) == -1)
 		return (mlx_print_error());
 	register_hooks(program->mlx);
 	mlx_loop(program->mlx);
 	mlx_terminate(program->mlx);
+	return (true);
+}
+
+bool	start_img_buffer(void)
+{
+	t_program	*program;
+	int			index;
+
+	index = -1;
+	program = get_program();
+	while (++index < IMG_BUFFER_COUNT)
+	{
+		program->image_buffer[index] = ft_calloc(program->image->width * program->image->height, sizeof(uint32_t));
+		if (!program->image_buffer[index])
+		{
+			while (--index >= 0)
+				free(program->image_buffer[index]);
+			return (false);
+		}
+	}
 	return (true);
 }

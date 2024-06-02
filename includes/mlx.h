@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 20:55:20 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/05/28 15:03:09 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/06/02 15:22:58 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 /* ~~~~ Main structure ~~~~	*/
 bool	start_mlx(void);
+bool	start_img_buffer(void);
 
 /* ~~~~~~~~~ Hooks ~~~~~~~~~*/
 void	resize_hook(int32_t width, int32_t height, void *param);

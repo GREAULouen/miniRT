@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:48:52 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 15:59:36 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/02 15:58:00 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # include <string.h>	// strerror
 
 /* ~~~~ Main structure ~~~~	*/
+# define IMG_BUFFER_COUNT 10
+
 typedef struct s_program
 {
 	char			*file_name;
@@ -51,7 +53,9 @@ typedef struct s_program
 	t_scene_object	*objects;
 	int				max_reflections;
 	mlx_t			*mlx;
+	int				image_count;
 	mlx_image_t		*image;
+	uint32_t		*image_buffer[IMG_BUFFER_COUNT];
 }					t_program;
 
 t_program			*get_program(void);

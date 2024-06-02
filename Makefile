@@ -52,7 +52,8 @@ SCENE_OBJECTS_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${SCENE_OBJECTS_SRCS:.c=.
 RAY_TRACER_SRCS =	ray_init.c					\
 					compute_intersection.c		\
 					compute_light.c				\
-					compute_shadows.c
+					compute_shadows.c			\
+					compute_final_color.c
 RAY_TRACER_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${RAY_TRACER_SRCS:.c=.o}}}
 
 MLX_SRCS =	mlx.c			\
