@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:06:23 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 12:32:14 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/02 13:25:53 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ uint32_t	compute_intersection(t_vector3 *og, t_vector3 *ray, int depth, int (*is
 	reflected = (t_vector3){0.0, 0.0, 0.0};
 	while (++index < program->object_count)	// Can be changed to only test intersection with Solid objects that have been pre-processed
 	{
-		if ((int) program->objects[index].type == SPHERE || (int) program->objects[index].type == PLANE)	// Can be changed to only test intersection with Solid objects that have been pre-processed
+		if ((int) program->objects[index].type > CAMERA)// || (int) program->objects[index].type == PLANE)	// Can be changed to only test intersection with Solid objects that have been pre-processed
 		{
 			intersect = get_obj_intersect()[program->objects[index].type](og, ray, &program->objects[index], is_valid);
 			if (intersect != INFINITY && intersect < min_value)

@@ -28,7 +28,9 @@ UTILS_SRCS =	quit_utils.c				\
 				color_utils.c				\
 				ft_v3_math_utils.c			\
 				intersect_utils.c			\
-				string_utils.c
+				string_utils.c				\
+				quadratic_utils.c			\
+				matrix_utils.c
 UTILS_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${UTILS_SRCS:.c=.o}}}
 
 PARSER_SRCS =	parser.c
@@ -43,7 +45,8 @@ SCENE_OBJECTS_SRCS =	ambient_light.c				\
 						plane.c						\
 						sphere.c					\
 						cylinder.c					\
-						scene_object_utils.c
+						scene_object_utils.c		\
+						cone.c
 SCENE_OBJECTS_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${SCENE_OBJECTS_SRCS:.c=.o}}}
 
 RAY_TRACER_SRCS =	ray_init.c					\

@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:05:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/29 13:51:11 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/05/31 15:40:36 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,6 @@ uint32_t	compute_light(t_vector3 *point, t_vector3 *normal, t_vector3 *reflected
 {
 	t_program	*program;
 	t_vector3	*point_to_light;
-	// t_vector3	*point;
-	// t_vector3	*normal;
-	// t_vector3	reflected;
 	t_vector3	*point_to_cam;
 	double		n_dot_l;
 	double		r_dot_c;
@@ -39,11 +36,8 @@ uint32_t	compute_light(t_vector3 *point, t_vector3 *normal, t_vector3 *reflected
 	total_intensity = 0.0;
 	total_color = 0x0;
 	index = -1;
-	// point = sol_to_point(intersect, ray, get_object(CAMERA)->s_camera.pos);
-	// normal = get_obj_normal()[obj->type](get_object(CAMERA)->s_camera.pos, point, obj);
 	point_to_cam = ft_v3_dir(point, get_object(CAMERA)->s_camera.pos);
 	n_dot_l = 0.0;
-	// reflected = (t_vector3){0.0, 0.0, 0.0};
 	while (++index < program->object_count)	// TODO: add pre-processing to have an array of Lights for simpler loops
 	{
 		if ((int) program->objects[index].type == AMBIENT_LIGHT)
@@ -70,7 +64,6 @@ uint32_t	compute_light(t_vector3 *point, t_vector3 *normal, t_vector3 *reflected
 		}
 	}
 	free(point_to_cam);
-
 	return (color_scal_mult(color_rem_opposite(total_color, obj->color), total_intensity));
 }
 
