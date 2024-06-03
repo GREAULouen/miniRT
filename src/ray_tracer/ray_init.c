@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:10:17 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/02 16:37:44 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/03 12:47:50 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,16 @@ void	init_ray(void)
 			// 	mlx_put_pixel(program->image, col , row, (pixel_color << 8) | 255);
 			// else
 			// {
-				program->image_buffer[program->image_count][row * program->canvas_width + col] = pixel_color;
-				compute_final_color(row, col);
+				// program->image_buffer[program->image_count][row * program->canvas_width + col] = pixel_color;
+			if (program->image_count == 1)
+				program->avg_buffer[row * program->canvas_width + col] = (t_vector3){0.0, 0.0, 0.0};
+			if (program->image_count + 1 < IMG_BUFFER_COUNT)
+			{
+				program->avg_buffer[row * program->canvas_width + col].x += (double) get_red(pixel_color);
+				program->avg_buffer[row * program->canvas_width + col].y += (double) get_green(pixel_color);
+				program->avg_buffer[row * program->canvas_width + col].z += (double) get_blue(pixel_color);
+			}
+			compute_final_color(row, col);
 			// }
 		}
 	}

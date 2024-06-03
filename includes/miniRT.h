@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:48:52 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/02 16:28:03 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/03 12:48:14 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,8 @@
 # include <string.h>	// strerror
 
 /* ~~~~ Main structure ~~~~	*/
-# define IMG_BUFFER_COUNT 10
 
-# ifndef ANTI_ALIASING
-#  define ANTI_ALIASING 0
-# endif
+# define IMG_BUFFER_COUNT 50
 
 typedef struct s_program
 {
@@ -59,7 +56,7 @@ typedef struct s_program
 	mlx_t			*mlx;
 	int				image_count;
 	mlx_image_t		*image;
-	uint32_t		*image_buffer[IMG_BUFFER_COUNT];
+	t_vector3		*avg_buffer;
 }					t_program;
 
 t_program			*get_program(void);
