@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:50:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/03 19:50:04 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/06/03 20:05:27 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,21 +167,12 @@ double	intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, in
 	return (closest_intersection(distance_endcap, distance_side, ray, og));
 }
 
-/**
- * @brief Allocat & computes the normal vector at the point on the cylinder
- *
- * @param point
- * @return t_vector3*
- */
-t_vector3	*normal_cylinder(t_vector3 *og, t_vector3 *point, t_scene_object *obj)
+t_vector3	*normal_sides(double signed_distance, t_vector3 *point, t_scene_object *obj)
 {
 	t_vector3	*normal;
-	double		signed_distance;
 	t_vector3	*sub_dir_pos;
 	t_vector3	*mult_dir_dis;
 
-	(void) og;
-	signed_distance = signed_distance_t_cylinder_point(point, obj->s_cylinder.pos, obj);
 	mult_dir_dis = ft_v3_mult(obj->s_cylinder.dir, signed_distance);
 	if (mult_dir_dis == NULL)
 		return (NULL);
@@ -195,6 +186,26 @@ t_vector3	*normal_cylinder(t_vector3 *og, t_vector3 *point, t_scene_object *obj)
 		return (NULL);
 	ft_v3_innormalize(normal);
 	return (normal);
+}
+
+/**
+ * @brief Allocat & computes the normal vector at the point on the cylinder
+ *
+ * @param point
+ * @return t_vector3*
+ */
+t_vector3	*normal_cylinder(t_vector3 *og, t_vector3 *point, t_scene_object *obj)
+{
+	double		signed_distance;
+
+	(void) og;
+	signed_distance = signed_distance_t_cylinder_point(point, obj->s_cylinder.pos, obj);
+	if (signed_distance < 0.001111)
+		return (ft_v3_mult(obj->s_cylinder.pos, -1));
+	else if (signed_distance == obj->s_cylinder.height)
+		return (ft_v3_cpy(obj->s_cylinder.pos));
+	else
+		return (normal_sides(signed_distance, point, obj));
 }
 
 void	cleanup_cylinder(t_scene_object *obj)
