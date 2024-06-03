@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:50:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/03 19:03:38 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/06/03 19:47:50 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,9 @@ int	create_cylinder(t_scene_object *obj, int argc, char **args)
 		return (free(obj->s_cylinder.pos), free(obj->s_cylinder.dir),
 			rt_perror((char *)__func__, HEIGHT_OUT_OF_RANGE), -1);
 	obj->color = atoc(args[5]);
-	// update_ends(obj);
 	return (0);
 }
 
-// void	update_ends(t_scene_object *obj)
-// {
-// 	obj->s_cylinder.end1 = ft_v3_mult(obj->s_cylinder.pos, obj->s_cylinder.height / 2.0);
-// 	obj->s_cylinder.end2 = ft_v3_mult(obj->s_cylinder.pos, -(obj->s_cylinder.height / 2.0));
-// }
 
 double	signed_distance_t_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, double distance)
 {
@@ -78,7 +72,43 @@ double	signed_distance_t_cylinder_point(t_vector3 *point, t_vector3 *og, t_scene
 	return (signed_distance);
 }
 
-double	intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double))
+bool	intersect_endcaps_valid(double distance, t_vector3 *end, t_vector3 *ray, t_scene_object *obj)
+{
+	t_vector3	*ray_distance;
+	bool		isvalid;
+
+	ray_distance = ft_v3_mult(ray, distance);
+	if (ray_distance == NULL)
+		return (false);
+	ft_v3_insub(ray_distance, end);
+	isvalid = ft_dot_product(ray_distance, ray_distance) < obj->s_cylinder.sq_rad;
+	free(ray_distance);
+	return (isvalid);
+}
+
+double intersect_cylinder_endcaps(t_vector3 *og, t_vector3	*obj_org_pos, t_vector3 *ray, t_scene_object *obj)
+{
+	double		dot_dir_ray;
+	double		distance[2];
+	t_vector3	*end2;
+
+	dot_dir_ray = ft_dot_product(obj->s_cylinder.dir, ray);
+	if (dot_dir_ray == 0)
+		return (-1);
+	distance[0] = ft_dot_product(obj->s_cylinder.dir, obj_org_pos) / dot_dir_ray;
+	if (!intersect_endcaps_valid(distance[0], obj_org_pos, ray, obj))
+		distance[0] = INFINITY;
+	end2 = ft_v3_mult(obj->s_cylinder.dir, obj->s_cylinder.height);
+	if (end2 == NULL)
+		return (0);
+	ft_v3_inadd(end2, obj_org_pos);
+	distance[1] = ft_dot_product(obj->s_cylinder.dir, end2) / dot_dir_ray;
+	if (!intersect_endcaps_valid(distance[1], end2, ray, obj))
+		distance[1] = INFINITY;
+	return (closest_intersection(distance[0], distance[1], ray, og));
+}
+
+double	intersect_cylinder_side(t_vector3 *og, t_vector3 *obj_org_pos, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double))
 {
 	double		delta;
 	double		t1;
@@ -87,7 +117,6 @@ double	intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, in
 	double		t22;
 	t_vector3	*cross_ray_dir;
 	t_vector3	*cross_pos_dir;
-	t_vector3	*obj_org_pos;
 	double		dot_dir;
 	double		dot_pos_cross_ray_dir;
 	double		dot_crossraydir;
@@ -95,7 +124,6 @@ double	intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, in
 
 	cross_ray_dir = ft_v3_cross_product(ray, obj->s_cylinder.dir);
 	dot_crossraydir = ft_dot_product(cross_ray_dir, cross_ray_dir);
-	obj_org_pos = ft_v3_sub(obj->s_cylinder.pos, og);
 	cross_pos_dir = ft_v3_cross_product(obj_org_pos, obj->s_cylinder.dir);
 	dot_dir = ft_dot_product(obj->s_cylinder.dir, obj->s_cylinder.dir);
 
@@ -125,6 +153,18 @@ double	intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, in
 			t2 = INFINITY;
 	}
 	return (closest_intersection(t1, t2, ray, og));
+}
+
+double	intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double))
+{
+	t_vector3	*obj_org_pos;
+	double		distance_endcap;
+
+	obj_org_pos = ft_v3_sub(obj->s_cylinder.pos, og);
+	distance_endcap = intersect_cylinder_endcaps(og, obj_org_pos, ray, obj);
+	if (distance_endcap != INFINITY)
+		return (distance_endcap);
+	return (intersect_cylinder_side(og, obj_org_pos, ray, obj, is_valid));
 }
 
 /**
@@ -163,6 +203,4 @@ void	cleanup_cylinder(t_scene_object *obj)
 		return ;
 	free(obj->s_cylinder.pos);
 	free(obj->s_cylinder.dir);
-	free(obj->s_cylinder.end1);
-	free(obj->s_cylinder.end2);
 }

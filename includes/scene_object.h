@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/03 19:03:21 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/06/03 19:21:30 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ typedef struct s_scene_object
 		{
 			t_vector3		*pos;
 			t_vector3		*dir;
-			t_vector3		*end1;
-			t_vector3		*end2;
 			double			diameter;
 			double			sq_rad;
 			double			height;
