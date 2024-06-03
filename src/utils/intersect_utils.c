@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 11:50:18 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/02 13:25:58 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/03 15:00:10 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,25 @@ int	valid_sol_from_cam(double sol)
 int	valid_sol_till_spot(double sol)
 {
 	return (sol >= EPSILON && sol <= (1 - EPSILON));
+}
+
+int	is_in_plane(double sol, t_vector3 *ray, t_vector3 *og, t_scene_object *obj)
+{
+	t_vector3 *pos;
+	t_vector3 u;
+	t_vector3 *v;
+	t_vector3 *to_pos;
+
+	pos = sol_to_point(sol, ray, og);
+	if (fabs(obj->s_plane.normal->x) > fabs(obj->s_plane.normal->y))
+		u = (t_vector3){-obj->s_plane.normal->z, 0.0, obj->s_plane.normal->x};
+	else
+		u = (t_vector3){0.0, obj->s_plane.normal->z, -obj->s_plane.normal->y};
+	v = ft_v3_cross_product(&u, obj->s_plane.normal);
+	ft_v3_innormalize(&u);
+	ft_v3_innormalize(v);
+	to_pos = ft_v3_dir(obj->s_plane.pos, pos);
+	if (fabs(ft_dot_product(to_pos, &u)) > obj->s_plane.width / 2.0 || fabs(ft_dot_product(to_pos, v)) > obj->s_plane.height / 2.0)
+		return (free(v), free(to_pos), free(pos), 0);
+	return (free(v), free(to_pos), free(pos), 1);
 }

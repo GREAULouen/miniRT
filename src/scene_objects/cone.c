@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 17:28:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/02 14:14:34 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/03 15:05:21 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	create_cone(t_scene_object *obj, int argc, char **args)
 	obj->s_cone.pos = atov(args[1]);
 	if (!obj->s_cone.pos)
 		return (-1);
-	// ft_v3_insub(obj->s_cone.pos, &(t_vector3){0,0, obj->s_cone.height});
 	obj->s_cone.dir = atov(args[2]);
 	if (!obj->s_cone.dir)
 		return (free(obj->s_cone.pos), -1);

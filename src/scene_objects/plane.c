@@ -6,36 +6,11 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:55:30 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/03 14:47:13 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/03 15:03:05 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-
-static int	is_in_plane(double sol, t_vector3 *ray, t_vector3 *og, t_scene_object *obj)
-{
-	t_vector3 *pos;
-	t_vector3 u;
-	t_vector3 *v;
-	t_vector3 *to_pos;
-
-	pos = sol_to_point(sol, ray, og);
-	if (fabs(obj->s_plane.normal->x) > fabs(obj->s_plane.normal->y))
-		u = (t_vector3){-obj->s_plane.normal->z, 0.0, obj->s_plane.normal->x};
-	else
-		u = (t_vector3){0.0, obj->s_plane.normal->z, -obj->s_plane.normal->y};
-	v = ft_v3_cross_product(&u, obj->s_plane.normal);
-	ft_v3_innormalize(&u);
-	ft_v3_innormalize(v);
-	to_pos = ft_v3_dir(obj->s_plane.pos, pos);
-	// print_v3("\nray", ray, ONELINE);
-	// print_v3("  |- u", &u, ONELINE);
-	// print_v3("  |- v", v, ONELINE);
-	// print_v3("  |- local_pos", to_pos, ONELINE);
-	if (fabs(ft_dot_product(to_pos, &u)) > obj->s_plane.width / 2.0 || fabs(ft_dot_product(to_pos, v)) > obj->s_plane.height / 2.0)
-		return (free(v), free(to_pos), free(pos), 0);
-	return (free(v), free(to_pos), free(pos), 1);
-}
 
 /**
  * @brief Initialize a plane using the args as values
@@ -49,13 +24,6 @@ int	create_plane(t_scene_object *obj, int argc, char **args)
 	if (argc < 4 || !args[1] || !args[2] || !args[3])
 		return (rt_perror((char *)__func__, WRONG_ARGUMENT_COUNT), -1);
 	obj->type = PLANE;
-	obj->s_plane.pos = atov(args[1]);
-	if (!obj->s_plane.pos)
-		return (-1);
-	obj->s_plane.normal = atov(args[2]);
-	if (!obj->s_plane.normal)
-		return (free(obj->s_plane.pos), -1);
-	ft_v3_innormalize(obj->s_plane.normal);
 	obj->color = atoc(args[3]);
 	obj->s_plane.dot = ft_dot_product(obj->s_plane.pos, obj->s_plane.normal);
 	obj->shininess = 0.0;
@@ -69,8 +37,19 @@ int	create_plane(t_scene_object *obj, int argc, char **args)
 	{
 		obj->s_plane.is_finite = 1;
 		obj->s_plane.width = ft_atod(args[6]);
+		if (obj->s_plane.width < 0.0)
+			return (rt_perror((char *)__func__, WIDTH_OUT_OF_RANGE), -1);
 		obj->s_plane.height = ft_atod(args[7]);
+		if (obj->s_plane.height < 0.0)
+			return (rt_perror((char *)__func__, HEIGHT_OUT_OF_RANGE), -1);
 	}
+	obj->s_plane.pos = atov(args[1]);
+	if (!obj->s_plane.pos)
+		return (-1);
+	obj->s_plane.normal = atov(args[2]);
+	if (!obj->s_plane.normal)
+		return (free(obj->s_plane.pos), -1);
+	ft_v3_innormalize(obj->s_plane.normal);
 	return (0);
 }
 
