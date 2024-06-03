@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:51 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 13:05:34 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/02 15:36:52 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ void		reflected_ray(t_vector3 *ray, t_vector3 *normal, t_vector3 *res);
 uint32_t	compute_intersection(t_vector3 *og, t_vector3 *ray, int depth, int (*is_valid)(double));
 uint32_t	compute_light(t_vector3 *point, t_vector3 *normal, t_vector3 *reflected, t_scene_object *obj);
 int			is_in_shadow(t_vector3 *new_og, t_vector3 *light_pos);
+void		compute_final_color(int row, int col);
 
 #endif

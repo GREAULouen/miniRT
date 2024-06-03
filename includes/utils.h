@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:47:35 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/02 12:40:18 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/02 16:13:12 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ uint32_t		get_red(uint32_t color);
 uint32_t		get_green(uint32_t color);
 uint32_t		get_blue(uint32_t color);
 
+uint32_t		color_clamp(uint32_t color);
 uint32_t		color_sub(uint32_t color1, uint32_t color2);
 uint32_t		color_scal_mult(uint32_t color, double k);
 uint32_t		color_add(uint32_t color1, uint32_t color2);
