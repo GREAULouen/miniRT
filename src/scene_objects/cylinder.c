@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:50:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/31 19:19:59 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/06/03 19:03:38 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ double	signed_distance_t_cylinder_point(t_vector3 *point, t_vector3 *og, t_scene
 	double		signed_distance;
 
 	sub_mult_ray_distance_og = ft_v3_sub(point, og);
+	if (sub_mult_ray_distance_og == NULL)
+		return (0);
 	signed_distance = ft_dot_product(obj->s_cylinder.dir, sub_mult_ray_distance_og);
 	free(sub_mult_ray_distance_og);
 	return (signed_distance);
@@ -88,18 +90,23 @@ double	intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, in
 	t_vector3	*obj_org_pos;
 	double		dot_dir;
 	double		dot_pos_cross_ray_dir;
+	double		dot_crossraydir;
+	double		dot_crossraydir_crossposdir;
 
 	cross_ray_dir = ft_v3_cross_product(ray, obj->s_cylinder.dir);
+	dot_crossraydir = ft_dot_product(cross_ray_dir, cross_ray_dir);
 	obj_org_pos = ft_v3_sub(obj->s_cylinder.pos, og);
 	cross_pos_dir = ft_v3_cross_product(obj_org_pos, obj->s_cylinder.dir);
 	dot_dir = ft_dot_product(obj->s_cylinder.dir, obj->s_cylinder.dir);
 
 	dot_pos_cross_ray_dir = ft_dot_product(obj_org_pos, cross_ray_dir);
 
-	delta = ft_dot_product(cross_ray_dir, cross_ray_dir) * obj->s_cylinder.sq_rad - dot_dir * (dot_pos_cross_ray_dir * dot_pos_cross_ray_dir);
+	delta = dot_crossraydir * obj->s_cylinder.sq_rad - dot_dir * (dot_pos_cross_ray_dir * dot_pos_cross_ray_dir);
 	if (delta < 0)
 		return (INFINITY);
-	t1 = 1.0 * (ft_dot_product(cross_ray_dir, cross_pos_dir) + sqrt(delta)) / ft_dot_product(cross_ray_dir, cross_ray_dir);
+	delta = sqrt(delta);
+	dot_crossraydir_crossposdir = ft_dot_product(cross_ray_dir, cross_pos_dir);
+	t1 = 1.0 * (dot_crossraydir_crossposdir + delta) / dot_crossraydir;
 	if (!is_valid(t1))
 		t1 = INFINITY;
 	else
@@ -108,7 +115,7 @@ double	intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, in
 		if (t11 < 0 || t11 > obj->s_cylinder.height)
 			t1 = INFINITY;
 	}
-	t2 = 1.0 * (ft_dot_product(cross_ray_dir, cross_pos_dir) - sqrt(delta)) / ft_dot_product(cross_ray_dir, cross_ray_dir);
+	t2 = 1.0 * (dot_crossraydir_crossposdir - delta) / dot_crossraydir;
 	if (!is_valid(t2))
 		t2 = INFINITY;
 	else
@@ -130,19 +137,22 @@ t_vector3	*normal_cylinder(t_vector3 *og, t_vector3 *point, t_scene_object *obj)
 {
 	t_vector3	*normal;
 	double		signed_distance;
-	t_vector3	*obj_org_pos;
 	t_vector3	*sub_dir_pos;
 	t_vector3	*mult_dir_dis;
 
-	obj_org_pos = ft_v3_sub(obj->s_cylinder.pos, og);
-
-	signed_distance = signed_distance_t_cylinder_point(point, obj_org_pos, obj);
+	(void) og;
+	signed_distance = signed_distance_t_cylinder_point(point, obj->s_cylinder.pos, obj);
 	mult_dir_dis = ft_v3_mult(obj->s_cylinder.dir, signed_distance);
+	if (mult_dir_dis == NULL)
+		return (NULL);
 	sub_dir_pos = ft_v3_sub(point, mult_dir_dis);
-	normal = ft_v3_sub(sub_dir_pos, obj_org_pos);
-	free(obj_org_pos);
+	if (sub_dir_pos == NULL)
+		return (free(mult_dir_dis), NULL);
+	normal = ft_v3_sub(sub_dir_pos, obj->s_cylinder.pos);
 	free(sub_dir_pos);
 	free(mult_dir_dis);
+	if (normal == NULL)
+		return (NULL);
 	ft_v3_innormalize(normal);
 	return (normal);
 }
