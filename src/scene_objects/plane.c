@@ -6,11 +6,36 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:55:30 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/02 13:02:48 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/03 14:47:13 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+static int	is_in_plane(double sol, t_vector3 *ray, t_vector3 *og, t_scene_object *obj)
+{
+	t_vector3 *pos;
+	t_vector3 u;
+	t_vector3 *v;
+	t_vector3 *to_pos;
+
+	pos = sol_to_point(sol, ray, og);
+	if (fabs(obj->s_plane.normal->x) > fabs(obj->s_plane.normal->y))
+		u = (t_vector3){-obj->s_plane.normal->z, 0.0, obj->s_plane.normal->x};
+	else
+		u = (t_vector3){0.0, obj->s_plane.normal->z, -obj->s_plane.normal->y};
+	v = ft_v3_cross_product(&u, obj->s_plane.normal);
+	ft_v3_innormalize(&u);
+	ft_v3_innormalize(v);
+	to_pos = ft_v3_dir(obj->s_plane.pos, pos);
+	// print_v3("\nray", ray, ONELINE);
+	// print_v3("  |- u", &u, ONELINE);
+	// print_v3("  |- v", v, ONELINE);
+	// print_v3("  |- local_pos", to_pos, ONELINE);
+	if (fabs(ft_dot_product(to_pos, &u)) > obj->s_plane.width / 2.0 || fabs(ft_dot_product(to_pos, v)) > obj->s_plane.height / 2.0)
+		return (free(v), free(to_pos), free(pos), 0);
+	return (free(v), free(to_pos), free(pos), 1);
+}
 
 /**
  * @brief Initialize a plane using the args as values
@@ -39,6 +64,13 @@ int	create_plane(t_scene_object *obj, int argc, char **args)
 	obj->reflectiveness = 0.0;
 	if (argc >= 6)
 		obj->reflectiveness = ft_atod(args[5]);
+	obj->s_plane.is_finite = 0;
+	if (argc >= 8)
+	{
+		obj->s_plane.is_finite = 1;
+		obj->s_plane.width = ft_atod(args[6]);
+		obj->s_plane.height = ft_atod(args[7]);
+	}
 	return (0);
 }
 
@@ -59,12 +91,9 @@ double	intersect_plane(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (
 	ray_n = ft_dot_product(ray, obj->s_plane.normal);
 	og_n = ft_dot_product(og, obj->s_plane.normal);
 	if (fabs(ray_n) <= EPSILON)
-	{
-		// Ray parallel to the plane
 		return (INFINITY);
-	}
 	t = (obj->s_plane.dot - og_n) / ray_n;
-	if (!is_valid(t))
+	if (!is_valid(t) || (obj->s_plane.is_finite && !is_in_plane(t, ray, og, obj)))
 		return (INFINITY);
 	return (t);
 }
