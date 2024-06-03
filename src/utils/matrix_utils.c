@@ -6,11 +6,31 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 17:06:35 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 17:08:42 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/03 13:53:45 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+static void	minus_one_rot_matrix(t_matrix *rot)
+{
+	int	row;
+	int	col;
+
+	row = -1;
+	while (++row < 3)
+	{
+		col = -1;
+		while (++col < 3)
+			(*rot)[row][col] = (row == col) * (1.0 - 2.0 * (row == 2));
+	}
+	for(int row = 0; row < 3; row++)
+	{
+		for(int col = 0; col < 3; col++)
+			printf("% .6f ", (*rot)[row][col]);
+		printf("\n");
+	}
+}
 
 /**
  * @brief Computes & store the roation matrix rot from the given direction
@@ -27,6 +47,8 @@ void	ft_rotation_matrix(t_vector3 *dir, t_matrix *rot)
 	float		cosA;
 	float		k;
 
+	if (dir->x == 0.0 && dir->y == 0.0 && dir->z == -1.0)
+		return(minus_one_rot_matrix(rot));
 	n_dir = (t_vector3){dir->x, dir->y, -dir->z};
 	og = (t_vector3){0.0, 0.0, -1.0};
 	axis = ft_v3_cross_product(&n_dir, &og);
