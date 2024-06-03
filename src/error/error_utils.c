@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:31:47 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 16:11:18 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/03 15:03:44 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char	**get_error_msgs(void)
 	error_msgs[COLOR_OUT_OF_RANGE] = COLOR_OUT_OF_RANGE_MSG;
 	error_msgs[FOV_OUT_OF_RANGE] = FOV_OUT_OF_RANGE_MSG;
 	error_msgs[DIAMETER_OUT_OF_RANGE] = DIAMETER_OUT_OF_RANGE_MSG;
+	error_msgs[WIDTH_OUT_OF_RANGE] = WIDTH_OUT_OF_RANGE_MSG;
 	error_msgs[HEIGHT_OUT_OF_RANGE] = HEIGHT_OUT_OF_RANGE_MSG;
 	error_msgs[NO_CAMERA] = NO_CAMERA_MSG;
 	error_msgs[TOO_MUCH_CAMERA] = TOO_MUCH_CAMERA_MSG;

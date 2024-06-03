@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/31 11:13:06 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/03 14:15:46 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ typedef struct s_scene_object
 			t_vector3		*pos;
 			t_vector3		*normal;
 			double			dot;
+			int				is_finite;
+			double			width;
+			double			height;
 		}	s_plane;
 		struct
 		{

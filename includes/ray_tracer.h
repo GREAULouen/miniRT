@@ -6,15 +6,15 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:51 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/02 15:36:52 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/03 14:57:39 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RAY_TRACER_H
 # define RAY_TRACER_H
 
-# define BACKGROUND_COLOR 0x0
-// # define BACKGROUND_COLOR 0xB0B0B0
+// # define BACKGROUND_COLOR 0x0
+# define BACKGROUND_COLOR 0xB0B0B0
 
 void		init_ray(void);
 void		reflected_ray(t_vector3 *ray, t_vector3 *normal, t_vector3 *res);
