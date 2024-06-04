@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:10:17 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/04 14:18:13 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/04 15:13:28 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,10 @@ void	*init_ray(void *arg)
 	int			col;
 	uint32_t	pixel_color;
 	int			index;
-	// int			*min_max;
 
 	program = get_program();
 	if (arg)
-	{
 		index = *(int *)arg;
-		// min_max = (int[2]){
-		// 	index * program->row_per_thread,
-		// 	(index + 1) * program->row_per_thread
-		// };
-		// if (index + 1 == program->thread_count)
-		// 	min_max[1] = program->canvas_height;
-	}
 	else
 		index = 0;
 	row = index;
@@ -78,7 +69,7 @@ void	*init_ray(void *arg)
 			else
 				mlx_put_pixel(program->image, col, row, (pixel_color << 8) | 255);
 		}
-		row += program->thread_count;
+		row += (program->thread_count) + (program->thread_count <= 0);
 	}
 	return (NULL);
 }

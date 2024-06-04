@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 15:56:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/04 12:14:53 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/04 15:25:17 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	create_camera(t_scene_object *obj, int argc, char **args)
 		get_program()->thread_count = ft_btoi(args[6], BASE10_STR);
 		if (get_program()->thread_count > MAX_THREAD_COUNT)
 			get_program()->thread_count = MAX_THREAD_COUNT;
-		get_program()->row_per_thread = 1 + get_program()->canvas_height / get_program()->thread_count;
 	}
 	obj->s_camera.pos = atov(args[1]);
 	if (!obj->s_camera.pos)

@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:48:52 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/04 14:17:42 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/04 15:25:12 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ typedef struct s_program
 	mlx_image_t		*image;
 	t_vector3		*avg_buffer;
 	int				thread_count;
-	int				row_per_thread;
 	pthread_t		rendering_thread[MAX_THREAD_COUNT];
 }					t_program;
 
