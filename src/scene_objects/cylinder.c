@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:50:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/04 18:19:01 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:49:57 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,16 @@ int	create_cylinder(t_scene_object *obj, int argc, char **args)
 
 double	intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double))
 {
-	t_vector3	*obj_org_pos;
-	double		distance_endcap;
-	double		distance_side;
+	double			distance_endcap;
+	double			distance_side;
+	t_is_cylinder	is_cylinder;
 
-	obj_org_pos = ft_v3_sub(obj->s_cylinder.pos, og);
-	distance_endcap = intersect_cylinder_endcaps(og, obj_org_pos, ray, obj);
-	distance_side = intersect_cylinder_side(og, obj_org_pos, ray, obj, is_valid);
+	is_cylinder.og = og;
+	is_cylinder.ray = ray;
+	is_cylinder.obj = obj;
+	is_cylinder.obj_org_pos = ft_v3_sub(obj->s_cylinder.pos, og);
+	distance_endcap = intersect_cylinder_endcaps(og, is_cylinder.obj_org_pos, ray, obj);
+	distance_side = intersect_cylinder_side(&is_cylinder, is_valid);
 	return (closest_intersection(distance_endcap, distance_side, ray, og));
 }
 

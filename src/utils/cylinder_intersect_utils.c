@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:09:43 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/06/04 18:16:28 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:48:25 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,49 +48,40 @@ double intersect_cylinder_endcaps(t_vector3 *og, t_vector3	*obj_org_pos, t_vecto
 	return (closest_intersection(distance[0], distance[1], ray, og));
 }
 
-double	intersect_cylinder_side(t_vector3 *og, t_vector3 *obj_org_pos, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double))
+static double	closest_intersection_cylinder(t_is_cylinder *is_cylinder, int (*is_valid)(double))
 {
-	double		delta;
-	double		t1;
-	double		t11;
-	double		t2;
-	double		t22;
-	t_vector3	*cross_ray_dir;
-	t_vector3	*cross_pos_dir;
-	double		dot_dir;
-	double		dot_pos_cross_ray_dir;
-	double		dot_crossraydir;
-	double		dot_crossraydir_crossposdir;
+	is_cylinder->t[0] = (is_cylinder->dot_crossraydir_crossposdir + is_cylinder->delta) / is_cylinder->dot_crossraydir;
+	if (!is_valid(is_cylinder->t[0]))
+		is_cylinder->t[0] = INFINITY;
+	else
+	{
+		is_cylinder->t[1] = signed_distance_t_cylinder(is_cylinder->obj_org_pos, is_cylinder->ray, is_cylinder->obj, is_cylinder->t[0]);
+		if (is_cylinder->t[1] < 0 || is_cylinder->t[1] > is_cylinder->obj->s_cylinder.height)
+			is_cylinder->t[0] = INFINITY;
+	}
+	is_cylinder->t[2] = (is_cylinder->dot_crossraydir_crossposdir - is_cylinder->delta) / is_cylinder->dot_crossraydir;
+	if (!is_valid(is_cylinder->t[2]))
+		is_cylinder->t[2] = INFINITY;
+	else
+	{
+		is_cylinder->t[3] = signed_distance_t_cylinder(is_cylinder->obj_org_pos, is_cylinder->ray, is_cylinder->obj, is_cylinder->t[2]);
+		if (is_cylinder->t[3] < 0 || is_cylinder->t[3] > is_cylinder->obj->s_cylinder.height)
+			is_cylinder->t[2] = INFINITY;
+	}
+	return (closest_intersection(is_cylinder->t[0], is_cylinder->t[2], is_cylinder->ray, is_cylinder->og));
+}
 
-	cross_ray_dir = ft_v3_cross_product(ray, obj->s_cylinder.dir);
-	dot_crossraydir = ft_dot_product(cross_ray_dir, cross_ray_dir);
-	cross_pos_dir = ft_v3_cross_product(obj_org_pos, obj->s_cylinder.dir);
-	dot_dir = ft_dot_product(obj->s_cylinder.dir, obj->s_cylinder.dir);
-
-	dot_pos_cross_ray_dir = ft_dot_product(obj_org_pos, cross_ray_dir);
-
-	delta = dot_crossraydir * obj->s_cylinder.sq_rad - dot_dir * (dot_pos_cross_ray_dir * dot_pos_cross_ray_dir);
-	if (delta < 0)
+double	intersect_cylinder_side(t_is_cylinder *is_cylinder, int (*is_valid)(double))
+{
+	is_cylinder->cross_ray_dir = ft_v3_cross_product(is_cylinder->ray, is_cylinder->obj->s_cylinder.dir);
+	is_cylinder->dot_crossraydir = ft_dot_product(is_cylinder->cross_ray_dir, is_cylinder->cross_ray_dir);
+	is_cylinder->cross_pos_dir = ft_v3_cross_product(is_cylinder->obj_org_pos, is_cylinder->obj->s_cylinder.dir);
+	is_cylinder->dot_dir = ft_dot_product(is_cylinder->obj->s_cylinder.dir, is_cylinder->obj->s_cylinder.dir);
+	is_cylinder->dot_pos_cross_ray_dir = ft_dot_product(is_cylinder->obj_org_pos, is_cylinder->cross_ray_dir);
+	is_cylinder->delta = is_cylinder->dot_crossraydir * is_cylinder->obj->s_cylinder.sq_rad - is_cylinder->dot_dir * (is_cylinder->dot_pos_cross_ray_dir * is_cylinder->dot_pos_cross_ray_dir);
+	if (is_cylinder->delta < 0)
 		return (INFINITY);
-	delta = sqrt(delta);
-	dot_crossraydir_crossposdir = ft_dot_product(cross_ray_dir, cross_pos_dir);
-	t1 = 1.0 * (dot_crossraydir_crossposdir + delta) / dot_crossraydir;
-	if (!is_valid(t1))
-		t1 = INFINITY;
-	else
-	{
-		t11 = signed_distance_t_cylinder(obj_org_pos, ray, obj, t1);
-		if (t11 < 0 || t11 > obj->s_cylinder.height)
-			t1 = INFINITY;
-	}
-	t2 = 1.0 * (dot_crossraydir_crossposdir - delta) / dot_crossraydir;
-	if (!is_valid(t2))
-		t2 = INFINITY;
-	else
-	{
-		t22 = signed_distance_t_cylinder(obj_org_pos, ray, obj, t2);
-		if (t22 < 0 || t22 > obj->s_cylinder.height)
-			t2 = INFINITY;
-	}
-	return (closest_intersection(t1, t2, ray, og));
+	is_cylinder->delta = sqrt(is_cylinder->delta);
+	is_cylinder->dot_crossraydir_crossposdir = ft_dot_product(is_cylinder->cross_ray_dir, is_cylinder->cross_pos_dir);
+	return (closest_intersection_cylinder(is_cylinder, is_valid));
 }
