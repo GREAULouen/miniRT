@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:50:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/03 20:05:27 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/06/04 17:57:32 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,12 +200,15 @@ t_vector3	*normal_cylinder(t_vector3 *og, t_vector3 *point, t_scene_object *obj)
 
 	(void) og;
 	signed_distance = signed_distance_t_cylinder_point(point, obj->s_cylinder.pos, obj);
-	if (signed_distance < 0.001111)
-		return (ft_v3_mult(obj->s_cylinder.pos, -1));
-	else if (signed_distance == obj->s_cylinder.height)
-		return (ft_v3_cpy(obj->s_cylinder.pos));
-	else
+
+	if (fabs(signed_distance) < EPSILON)
+		return (ft_v3_mult(obj->s_cylinder.dir, -1));
+	else if (fabs(signed_distance - obj->s_cylinder.height) < EPSILON)
+		return (ft_v3_cpy(obj->s_cylinder.dir));
+	else if (0 < signed_distance && signed_distance < obj->s_cylinder.height)
 		return (normal_sides(signed_distance, point, obj));
+	else
+		return (ft_v3_cpy(&(t_vector3){0.000000, 0.0, 0.0}));
 }
 
 void	cleanup_cylinder(t_scene_object *obj)
