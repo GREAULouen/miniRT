@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 15:56:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/31 15:43:06 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/03 17:43:20 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ int	create_camera(t_scene_object *obj, int argc, char **args)
 	get_program()->max_reflections = 0;
 	if (argc >= 5)
 		get_program()->max_reflections = ft_btoi(args[4], BASE10_STR);
+	get_program()->max_image_buffering = 0;
+	if (argc >= 6)
+		get_program()->max_image_buffering = ft_btoi(args[5], BASE10_STR);
 	obj->s_camera.pos = atov(args[1]);
 	if (!obj->s_camera.pos)
 		return (-1);

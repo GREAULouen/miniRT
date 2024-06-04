@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:48:52 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/03 12:48:14 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/03 17:42:01 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_program
 	t_scene_object	*objects;
 	int				max_reflections;
 	mlx_t			*mlx;
+	int				max_image_buffering;
 	int				image_count;
 	mlx_image_t		*image;
 	t_vector3		*avg_buffer;
