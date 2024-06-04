@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:10:17 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/04 12:31:38 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/04 13:06:03 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,23 @@ void	*init_ray(void *arg)
 	int			row;
 	int			col;
 	uint32_t	pixel_color;
+	int			index;
 	int			*min_max;
 
-	min_max = (int *)arg;
-	row = min_max[0] - 1;
 	program = get_program();
+	if (arg)
+	{
+		index = *(int *)arg;
+		min_max = (int[2]){
+			index * program->row_per_thread,
+			(index + 1) * program->row_per_thread
+		};
+		if (index + 1 == program->thread_count)
+			min_max[1] = program->canvas_height;
+	}
+	else
+		min_max = (int[2]){0, program->canvas_height};
+	row = min_max[0] - 1;
 	ray.z = get_object(CAMERA)->s_camera.view_plane;
 	while (++row < min_max[1])
 	{
