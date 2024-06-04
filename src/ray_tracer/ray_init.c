@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:10:17 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/04 13:06:03 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/04 14:18:13 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,24 @@ void	*init_ray(void *arg)
 	int			col;
 	uint32_t	pixel_color;
 	int			index;
-	int			*min_max;
+	// int			*min_max;
 
 	program = get_program();
 	if (arg)
 	{
 		index = *(int *)arg;
-		min_max = (int[2]){
-			index * program->row_per_thread,
-			(index + 1) * program->row_per_thread
-		};
-		if (index + 1 == program->thread_count)
-			min_max[1] = program->canvas_height;
+		// min_max = (int[2]){
+		// 	index * program->row_per_thread,
+		// 	(index + 1) * program->row_per_thread
+		// };
+		// if (index + 1 == program->thread_count)
+		// 	min_max[1] = program->canvas_height;
 	}
 	else
-		min_max = (int[2]){0, program->canvas_height};
-	row = min_max[0] - 1;
+		index = 0;
+	row = index;
 	ray.z = get_object(CAMERA)->s_camera.view_plane;
-	while (++row < min_max[1])
+	while (row < program->canvas_height)
 	{
 		if (program->max_image_buffering > 0)
 			ray.y = program->half_view_height - (((double)row + rand_offset()) * program->vc_height_ratio);
@@ -78,6 +78,7 @@ void	*init_ray(void *arg)
 			else
 				mlx_put_pixel(program->image, col, row, (pixel_color << 8) | 255);
 		}
+		row += program->thread_count;
 	}
 	return (NULL);
 }
