@@ -6,13 +6,14 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:18:39 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/06/04 18:19:02 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:23:25 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-t_vector3	*normal_sides(double signed_distance, t_vector3 *point, t_scene_object *obj)
+t_vector3	*normal_sides(double signed_distance, t_vector3 *point,
+		t_scene_object *obj)
 {
 	t_vector3	*normal;
 	t_vector3	*sub_dir_pos;

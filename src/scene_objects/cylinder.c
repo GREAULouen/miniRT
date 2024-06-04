@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:50:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/04 18:49:57 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:22:09 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ int	create_cylinder(t_scene_object *obj, int argc, char **args)
 	if (obj->s_cylinder.diameter < 0)
 		return (free(obj->s_cylinder.pos), free(obj->s_cylinder.dir),
 			rt_perror((char *)__func__, DIAMETER_OUT_OF_RANGE), -1);
-	obj->s_cylinder.sq_rad = obj->s_cylinder.diameter * obj->s_cylinder.diameter / 4.0;
+	obj->s_cylinder.sq_rad = obj->s_cylinder.diameter * obj->s_cylinder.diameter
+		/ 4.0;
 	obj->s_cylinder.height = ft_atod(args[4]);
 	if (obj->s_cylinder.height < 0)
 		return (free(obj->s_cylinder.pos), free(obj->s_cylinder.dir),
@@ -44,7 +45,8 @@ int	create_cylinder(t_scene_object *obj, int argc, char **args)
 	return (0);
 }
 
-double	intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double))
+double	intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj,
+		int (*is_valid)(double))
 {
 	double			distance_endcap;
 	double			distance_side;
@@ -54,7 +56,8 @@ double	intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, in
 	is_cylinder.ray = ray;
 	is_cylinder.obj = obj;
 	is_cylinder.obj_org_pos = ft_v3_sub(obj->s_cylinder.pos, og);
-	distance_endcap = intersect_cylinder_endcaps(og, is_cylinder.obj_org_pos, ray, obj);
+	distance_endcap = intersect_cylinder_endcaps(og, is_cylinder.obj_org_pos,
+			ray, obj);
 	distance_side = intersect_cylinder_side(&is_cylinder, is_valid);
 	return (closest_intersection(distance_endcap, distance_side, ray, og));
 }
@@ -65,13 +68,14 @@ double	intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, in
  * @param point
  * @return t_vector3*
  */
-t_vector3	*normal_cylinder(t_vector3 *og, t_vector3 *point, t_scene_object *obj)
+t_vector3	*normal_cylinder(t_vector3 *og, t_vector3 *point,
+		t_scene_object *obj)
 {
-	double		signed_distance;
+	double	signed_distance;
 
-	(void) og;
-	signed_distance = signed_distance_t_cylinder_point(point, obj->s_cylinder.pos, obj);
-
+	(void)og;
+	signed_distance = signed_distance_t_cylinder_point(point,
+			obj->s_cylinder.pos, obj);
 	if (fabs(signed_distance) < EPSILON)
 		return (ft_v3_mult(obj->s_cylinder.dir, -1));
 	else if (fabs(signed_distance - obj->s_cylinder.height) < EPSILON)
