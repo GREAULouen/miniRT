@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/03 14:15:46 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/04 15:11:29 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ t_vector3					*normal_cone(t_vector3 *og, t_vector3 *point, t_scene_object *obj)
 
 t_obj_creator				*get_obj_creator(void);
 t_obj_cleanup				*get_obj_cleanup(void);
-t_obj_intersect				*get_obj_intersect(void);
-t_obj_normal				*get_obj_normal(void);
+const t_obj_intersect		*get_obj_intersect(void);
+const t_obj_normal			*get_obj_normal(void);
 
 #endif
