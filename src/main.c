@@ -6,20 +6,20 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:53:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 16:10:26 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/04 14:31:00 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	leaks(void)
-{
-	system("leaks miniRT");
-}
+// void	leaks(void)
+// {
+// 	system("leaks miniRT");
+// }
 
 int	main(int argc, char *argv[])
 {
-	atexit(leaks);
+	// atexit(leaks);
 	if (argc != 2 || !ft_endswith(argv[1], ".rt"))
 	{
 		rt_perror((char *)__func__, WRONG_PROGRAM_ARGUMENT);
@@ -27,7 +27,6 @@ int	main(int argc, char *argv[])
 	}
 	get_program()->file_name = argv[1];
 	set_width_height(DEFAULT_WIDTH, DEFAULT_HEIGHT);
-	get_program()->max_reflections = 2;
 	if (parse_input() < 0)
 		exit(EXIT_FAILURE);
 	if (!start_mlx())

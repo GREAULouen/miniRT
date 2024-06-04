@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/04 18:45:59 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:26:24 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef enum e_scene_object_type
 	PLANE,
 	SPHERE,
 	CYLINDER,
+	CONE,
 	OBJECT_TYPE_COUNT
 }							t_scene_object_type;
 
@@ -64,6 +65,9 @@ typedef struct s_scene_object
 			t_vector3		*pos;
 			t_vector3		*normal;
 			double			dot;
+			int				is_finite;
+			double			width;
+			double			height;
 		}	s_plane;
 		struct
 		{
@@ -79,6 +83,17 @@ typedef struct s_scene_object
 			double			sq_rad;
 			double			height;
 		}	s_cylinder;
+		struct
+		{
+			t_vector3		*pos;
+			t_vector3		*dir;
+			double			diameter;
+			double			height;
+			double			tan_theta;
+			double			sq_tan_theta;
+			t_matrix		rot;
+			t_matrix		inv_rot;
+		}	s_cone;
 	};
 }							t_scene_object;
 
@@ -109,6 +124,7 @@ void						update_viewport(t_scene_object *obj);
 int							create_plane(t_scene_object *obj, int argc, char **args);
 int							create_sphere(t_scene_object *obj, int argc, char **args);
 int							create_cylinder(t_scene_object *obj, int argc, char **args);
+int							create_cone(t_scene_object *obj, int argc, char **args);
 
 /*	~~~~~~~~~~~~~~~~ CLEANUP ~~~~~~~~~~~~~~~~	*/
 
@@ -119,6 +135,7 @@ void						cleanup_camera(t_scene_object *obj);
 void						cleanup_plane(t_scene_object *obj);
 void						cleanup_sphere(t_scene_object *obj);
 void						cleanup_cylinder(t_scene_object *obj);
+void						cleanup_cone(t_scene_object *obj);
 
 /*	~~~~~~~~~~~~ INTERSECTION_CALC ~~~~~~~~~~~~	*/
 
@@ -126,6 +143,7 @@ typedef double	(*t_obj_intersect)(t_vector3 *, t_vector3 *, t_scene_object *, in
 
 double						intersect_sphere(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
 double						intersect_plane(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
+double						intersect_cone(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
 double						intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
 double 						intersect_cylinder_endcaps(t_vector3 *og, t_vector3	*obj_org_pos, t_vector3 *ray, t_scene_object *obj);
 double						intersect_cylinder_side(t_is_cylinder *is_cylinder, int (*is_valid)(double));
@@ -139,14 +157,14 @@ typedef t_vector3	*(*t_obj_normal)(t_vector3 *, t_vector3 *, t_scene_object *);
 
 t_vector3					*normal_sphere(t_vector3 *og, t_vector3 *point, t_scene_object *obj);
 t_vector3					*normal_plane(t_vector3 *og, t_vector3 *point, t_scene_object *obj);
+t_vector3					*normal_cone(t_vector3 *og, t_vector3 *point, t_scene_object *obj);
 t_vector3					*normal_cylinder(t_vector3 *og, t_vector3 *point, t_scene_object *obj);
 
 /*	~~~~~~~~~~~~~~~~~ GETTERS ~~~~~~~~~~~~~~~~~	*/
 
 t_obj_creator				*get_obj_creator(void);
 t_obj_cleanup				*get_obj_cleanup(void);
-t_obj_intersect				*get_obj_intersect(void);
-t_obj_normal				*get_obj_normal(void);
-
+const t_obj_intersect		*get_obj_intersect(void);
+const t_obj_normal			*get_obj_normal(void);
 
 #endif

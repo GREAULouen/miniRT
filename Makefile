@@ -1,5 +1,6 @@
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -Ofast
+# -fsanitize=thread
 
 NAME = miniRT
 
@@ -29,6 +30,8 @@ UTILS_SRCS =	quit_utils.c				\
 				ft_v3_math_utils.c			\
 				intersect_utils.c			\
 				string_utils.c				\
+				quadratic_utils.c			\
+				matrix_utils.c				\
 				cylinder_intersect_utils.c	\
 				cylinder_distance_utils.c	\
 				cylinder_normal_utils.c
@@ -46,13 +49,15 @@ SCENE_OBJECTS_SRCS =	ambient_light.c				\
 						plane.c						\
 						sphere.c					\
 						cylinder.c					\
-						scene_object_utils.c
+						scene_object_utils.c		\
+						cone.c
 SCENE_OBJECTS_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${SCENE_OBJECTS_SRCS:.c=.o}}}
 
 RAY_TRACER_SRCS =	ray_init.c					\
 					compute_intersection.c		\
 					compute_light.c				\
-					compute_shadows.c
+					compute_shadows.c			\
+					compute_final_color.c
 RAY_TRACER_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${RAY_TRACER_SRCS:.c=.o}}}
 
 MLX_SRCS =	mlx.c			\

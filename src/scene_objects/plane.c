@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:55:30 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 14:03:35 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/03 15:08:43 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,31 @@ int	create_plane(t_scene_object *obj, int argc, char **args)
 	if (argc < 4 || !args[1] || !args[2] || !args[3])
 		return (rt_perror((char *)__func__, WRONG_ARGUMENT_COUNT), -1);
 	obj->type = PLANE;
+	obj->color = atoc(args[3]);
+	obj->shininess = 0.0;
+	if (argc >= 5)
+		obj->shininess = ft_atod(args[4]);
+	obj->reflectiveness = 0.0;
+	if (argc >= 6)
+		obj->reflectiveness = ft_atod(args[5]);
+	obj->s_plane.is_finite = 0;
+	if (argc >= 8)
+	{
+		obj->s_plane.is_finite = 1;
+		obj->s_plane.width = ft_atod(args[6]);
+		if (obj->s_plane.width < 0.0)
+			return (rt_perror((char *)__func__, WIDTH_OUT_OF_RANGE), -1);
+		obj->s_plane.height = ft_atod(args[7]);
+		if (obj->s_plane.height < 0.0)
+			return (rt_perror((char *)__func__, HEIGHT_OUT_OF_RANGE), -1);
+	}
 	obj->s_plane.pos = atov(args[1]);
 	if (!obj->s_plane.pos)
 		return (-1);
 	obj->s_plane.normal = atov(args[2]);
 	if (!obj->s_plane.normal)
 		return (free(obj->s_plane.pos), -1);
-	obj->color = atoc(args[3]);
+	ft_v3_innormalize(obj->s_plane.normal);
 	obj->s_plane.dot = ft_dot_product(obj->s_plane.pos, obj->s_plane.normal);
 	return (0);
 }
@@ -52,12 +70,9 @@ double	intersect_plane(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (
 	ray_n = ft_dot_product(ray, obj->s_plane.normal);
 	og_n = ft_dot_product(og, obj->s_plane.normal);
 	if (fabs(ray_n) <= EPSILON)
-	{
-		// Ray parallel to the plane
 		return (INFINITY);
-	}
 	t = (obj->s_plane.dot - og_n) / ray_n;
-	if (!is_valid(t))
+	if (!is_valid(t) || (obj->s_plane.is_finite && !is_in_plane(t, ray, og, obj)))
 		return (INFINITY);
 	return (t);
 }

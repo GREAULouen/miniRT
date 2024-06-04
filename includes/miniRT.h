@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:48:52 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 15:59:36 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/04 15:52:36 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,15 @@
 # include <unistd.h>	// read, write, close
 # include <fcntl.h>		// open & flags
 # include <stdio.h>		// printf, perror
-# include <stdlib.h>	// malloc, free
+# include <stdlib.h>	// malloc, free				| bonus: rand for anti_aliasing
 # include <string.h>	// strerror
 
+# include <pthread.h>	// multi-threading (bonus)
+
 /* ~~~~ Main structure ~~~~	*/
+
+# define MAX_THREAD_COUNT 16
+
 typedef struct s_program
 {
 	char			*file_name;
@@ -51,7 +56,12 @@ typedef struct s_program
 	t_scene_object	*objects;
 	int				max_reflections;
 	mlx_t			*mlx;
+	int				max_image_buffering;
+	int				image_count;
 	mlx_image_t		*image;
+	t_vector3		*avg_buffer;
+	int				thread_count;
+	pthread_t		rendering_thread[MAX_THREAD_COUNT];
 }					t_program;
 
 t_program			*get_program(void);

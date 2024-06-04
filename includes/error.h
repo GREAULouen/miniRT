@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:32:45 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 16:10:14 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/03 15:01:39 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef enum e_error_types
 	COLOR_OUT_OF_RANGE,
 	FOV_OUT_OF_RANGE,
 	DIAMETER_OUT_OF_RANGE,
+	WIDTH_OUT_OF_RANGE,
 	HEIGHT_OUT_OF_RANGE,
 	NO_CAMERA,
 	TOO_MUCH_CAMERA,
@@ -36,6 +37,7 @@ typedef enum e_error_types
 # define COLOR_OUT_OF_RANGE_MSG "color value not in range [0, 255]"
 # define FOV_OUT_OF_RANGE_MSG "fov value not in range [0, 180]"
 # define DIAMETER_OUT_OF_RANGE_MSG "diameter value not in range [0, +inf["
+# define WIDTH_OUT_OF_RANGE_MSG "width value not in range [0, +inf["
 # define HEIGHT_OUT_OF_RANGE_MSG "height value not in range [0, +inf["
 # define NO_CAMERA_MSG "a scene needs a camera to be rendered"
 # define TOO_MUCH_CAMERA_MSG "a scene can only have one camera"

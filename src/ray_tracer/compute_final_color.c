@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key_hook.c                                         :+:      :+:    :+:   */
+/*   compute_final_color.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 14:45:18 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/06/04 14:19:53 by lgreau           ###   ########.fr       */
+/*   Created: 2024/06/02 15:25:37 by lgreau            #+#    #+#             */
+/*   Updated: 2024/06/04 14:18:55 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-void	key_hook(mlx_key_data_t keydata, void *param)
+void	compute_final_color(int row, int col)
 {
 	t_program	*program;
+	t_vector3	total_color;
+	uint32_t	final_color;
 
 	program = get_program();
-	(void) param;
-	if (keydata.key == MLX_KEY_ESCAPE)
-		mlx_close_window(program->mlx);
-	if (keydata.key == MLX_KEY_R)
-		program->image_count = 0;
+	total_color = program->avg_buffer[row * program->canvas_width + col];
+	ft_v3_indiv(&total_color, program->image_count);
+	final_color = color_clamp(
+		((u_int32_t) (total_color.x) << 16)
+		| ((u_int32_t) (total_color.y) << 8)
+		| (u_int32_t) (total_color.z)
+	);
+	mlx_put_pixel(program->image, col, row, (final_color << 8) | 255);
 }
