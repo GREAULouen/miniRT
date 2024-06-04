@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 15:25:37 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/03 12:49:55 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/04 11:42:12 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,5 @@ void	compute_final_color(int row, int col)
 		| ((u_int32_t) (total_color.y) << 8)
 		| (u_int32_t) (total_color.z)
 	);
-	mlx_put_pixel(get_program()->image, col, row, (final_color << 8 | 255));
+	mlx_put_pixel(get_program()->image, col, row, (final_color << 8) | 255);
 }
