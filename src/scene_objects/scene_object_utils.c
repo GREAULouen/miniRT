@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:50:24 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/31 11:16:44 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/04 15:11:22 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,46 @@ t_obj_cleanup	*get_obj_cleanup(void)
 	return (&obj_cleanup[0]);
 }
 
-t_obj_intersect	*get_obj_intersect(void)
+const t_obj_intersect	*get_obj_intersect(void)
 {
-	static t_obj_intersect	obj_intersect[OBJECT_TYPE_COUNT];
+	static const t_obj_intersect	obj_intersect[OBJECT_TYPE_COUNT] = {
+		NULL,
+		NULL,
+		NULL,
+		intersect_plane,
+		intersect_sphere,
+		NULL,
+		intersect_cone
+	};
 
-	obj_intersect[AMBIENT_LIGHT] = NULL;
-	obj_intersect[SPOT_LIGHT] = NULL;
-	obj_intersect[CAMERA] = NULL;
-	obj_intersect[PLANE] = intersect_plane;
-	obj_intersect[SPHERE] = intersect_sphere;
-	obj_intersect[CYLINDER] = NULL;
-	obj_intersect[CONE] = intersect_cone;
+	// obj_intersect[AMBIENT_LIGHT] = NULL;
+	// obj_intersect[SPOT_LIGHT] = NULL;
+	// obj_intersect[CAMERA] = NULL;
+	// obj_intersect[PLANE] = intersect_plane;
+	// obj_intersect[SPHERE] = intersect_sphere;
+	// obj_intersect[CYLINDER] = NULL;
+	// obj_intersect[CONE] = intersect_cone;
 	return (&obj_intersect[0]);
 }
 
-t_obj_normal	*get_obj_normal(void)
+const t_obj_normal	*get_obj_normal(void)
 {
-	static t_obj_normal	obj_normal[OBJECT_TYPE_COUNT];
+	static const t_obj_normal	obj_normal[OBJECT_TYPE_COUNT] = {
+		NULL,
+		NULL,
+		NULL,
+		normal_plane,
+		normal_sphere,
+		NULL,
+		normal_cone
+	};
 
-	obj_normal[AMBIENT_LIGHT] = NULL;
-	obj_normal[SPOT_LIGHT] = NULL;
-	obj_normal[CAMERA] = NULL;
-	obj_normal[PLANE] = normal_plane;
-	obj_normal[SPHERE] = normal_sphere;
-	obj_normal[CYLINDER] = NULL;
-	obj_normal[CONE] = normal_cone;
+	// obj_normal[AMBIENT_LIGHT] = NULL;
+	// obj_normal[SPOT_LIGHT] = NULL;
+	// obj_normal[CAMERA] = NULL;
+	// obj_normal[PLANE] = normal_plane;
+	// obj_normal[SPHERE] = normal_sphere;
+	// obj_normal[CYLINDER] = NULL;
+	// obj_normal[CONE] = normal_cone;
 	return (&obj_normal[0]);
 }

@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:48:52 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/03 17:42:01 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/04 15:52:36 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,11 @@
 # include <stdlib.h>	// malloc, free				| bonus: rand for anti_aliasing
 # include <string.h>	// strerror
 
+# include <pthread.h>	// multi-threading (bonus)
+
 /* ~~~~ Main structure ~~~~	*/
 
-# define IMG_BUFFER_COUNT 50
+# define MAX_THREAD_COUNT 16
 
 typedef struct s_program
 {
@@ -58,6 +60,8 @@ typedef struct s_program
 	int				image_count;
 	mlx_image_t		*image;
 	t_vector3		*avg_buffer;
+	int				thread_count;
+	pthread_t		rendering_thread[MAX_THREAD_COUNT];
 }					t_program;
 
 t_program			*get_program(void);
