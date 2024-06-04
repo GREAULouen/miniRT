@@ -1,6 +1,6 @@
 CC = cc
 CFLAGS = -Wall -Werror -Wextra -Ofast
-#  -fsanitize=thread
+# -fsanitize=thread
 
 NAME = miniRT
 
