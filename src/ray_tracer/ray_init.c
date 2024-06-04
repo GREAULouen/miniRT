@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:10:17 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/04 11:40:44 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/04 12:18:25 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static double	rand_offset(void)
  * & giving it to a calculation function
  *
  */
-void	init_ray(void)
+void	init_ray(void *arg)
 {
 	t_program	*program;
 	t_vector3	ray;
@@ -30,11 +30,16 @@ void	init_ray(void)
 	int			row;
 	int			col;
 	uint32_t	pixel_color;
+	int			*min_max;
 
-	row = -1;
+	min_max = (int *)arg;
+	printf("min_max: %p\n", min_max);
+	printf("min_max[0]: %d\n", min_max[0]);
+	printf("min_max[1]: %d\n", min_max[1]);
+	row = min_max[0] - 1;
 	program = get_program();
 	ray.z = get_object(CAMERA)->s_camera.view_plane;
-	while (++row < program->canvas_height)
+	while (++row < min_max[1])
 	{
 		if (program->max_image_buffering > 0)
 			ray.y = program->half_view_height - (((double)row + rand_offset()) * program->vc_height_ratio);
