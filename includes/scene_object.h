@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/03 19:21:30 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:19:11 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,11 @@ typedef double	(*t_obj_intersect)(t_vector3 *, t_vector3 *, t_scene_object *, in
 double						intersect_sphere(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
 double						intersect_plane(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
 double						intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
+double 						intersect_cylinder_endcaps(t_vector3 *og, t_vector3	*obj_org_pos, t_vector3 *ray, t_scene_object *obj);
+double						intersect_cylinder_side(t_vector3 *og, t_vector3 *obj_org_pos, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
+double						signed_distance_t_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, double distance);
+double						signed_distance_t_cylinder_point(t_vector3 *point, t_vector3 *og, t_scene_object *obj);
+t_vector3					*normal_sides(double signed_distance, t_vector3 *point, t_scene_object *obj);
 
 /*	~~~~~~~~~~~~~~~ NORMAL_CALC ~~~~~~~~~~~~~~~	*/
 
