@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 18:21:12 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 14:03:20 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/05 15:46:00 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ uint32_t	atoc(char *arg)
 		return (rt_perror((char *)__func__, WRONG_ARGUMENT_COUNT), -1);
 	tmp = ft_btoi(splt[0], BASE10_STR);
 	if (*get_errno() != NO_ERROR || tmp < 0 || tmp >= 256)
-		return (rt_perror((char *)__func__, COLOR_OUT_OF_RANGE), 0);
+		return (rt_perror((char *)__func__, COLOR_OUT_OF_RANGE), -1);
 	color |= (tmp << SHIFT_R);
 	tmp = ft_btoi(splt[1], BASE10_STR);
 	if (*get_errno() != NO_ERROR || tmp < 0 || tmp >= 256)
-		return (rt_perror((char *)__func__, COLOR_OUT_OF_RANGE), 0);
+		return (rt_perror((char *)__func__, COLOR_OUT_OF_RANGE), -1);
 	color |= (tmp << SHIFT_G);
 	tmp = ft_btoi(splt[2], BASE10_STR);
 	if (*get_errno() != NO_ERROR || tmp < 0 || tmp >= 256)
-		return (rt_perror((char *)__func__, COLOR_OUT_OF_RANGE), 0);
+		return (rt_perror((char *)__func__, COLOR_OUT_OF_RANGE), -1);
 	color |= tmp;
 	return (free_arr(splt, -1, 1), color);
 }

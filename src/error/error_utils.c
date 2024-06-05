@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 13:31:47 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/03 15:03:44 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/05 15:43:57 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ char	**get_error_msgs(void)
 	error_msgs[DIAMETER_OUT_OF_RANGE] = DIAMETER_OUT_OF_RANGE_MSG;
 	error_msgs[WIDTH_OUT_OF_RANGE] = WIDTH_OUT_OF_RANGE_MSG;
 	error_msgs[HEIGHT_OUT_OF_RANGE] = HEIGHT_OUT_OF_RANGE_MSG;
+	error_msgs[REFL_OUT_OF_RANGE] = REFL_OUT_OF_RANGE_MSG;
 	error_msgs[NO_CAMERA] = NO_CAMERA_MSG;
 	error_msgs[TOO_MUCH_CAMERA] = TOO_MUCH_CAMERA_MSG;
 	error_msgs[TOO_MUCH_AMBIENT_LIGHT] = TOO_MUCH_AMBIENT_LIGHT_MSG;

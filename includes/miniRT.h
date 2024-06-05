@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:48:52 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/04 15:52:36 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/05 16:13:40 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # include <unistd.h>	// read, write, close
 # include <fcntl.h>		// open & flags
 # include <stdio.h>		// printf, perror
-# include <stdlib.h>	// malloc, free				| bonus: rand for anti_aliasing
+# include <stdlib.h>	// malloc, free			| bonus: rand for anti_aliasing
 # include <string.h>	// strerror
 
 # include <pthread.h>	// multi-threading (bonus)

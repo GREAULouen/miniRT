@@ -23,7 +23,6 @@ LIBS = ${INCLUDE_LIBFT} -L. ${MLX42_DIR}/${LIBMLX42} -ldl -lglfw -L"/opt/homebre
 
 UTILS_SRCS =	quit_utils.c				\
 				object_type_utils.c			\
-				object_type_misc.c			\
 				parsing_utils.c				\
 				color_extract_utils.c		\
 				color_utils.c				\
