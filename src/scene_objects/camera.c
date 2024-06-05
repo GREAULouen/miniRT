@@ -6,11 +6,30 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 15:56:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/04 15:52:31 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/05 15:53:01 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
+
+static int	additional_args(int argc, char **args,
+	t_program *program)
+{
+	program->max_reflections = 0;
+	if (argc >= 5)
+		program->max_reflections = ft_btoi(args[4], BASE10_STR);
+	program->max_image_buffering = 0;
+	if (argc >= 6)
+		program->max_image_buffering = ft_btoi(args[5], BASE10_STR);
+	program->thread_count = 0;
+	if (argc >= 7)
+	{
+		program->thread_count = ft_btoi(args[6], BASE10_STR);
+		if (program->thread_count > MAX_THREAD_COUNT)
+			program->thread_count = MAX_THREAD_COUNT;
+	}
+	return (0);
+}
 
 /**
  * @brief Initialize a camera using the args as values
@@ -21,22 +40,14 @@
  */
 int	create_camera(t_scene_object *obj, int argc, char **args)
 {
-	if (argc < 4 || !args[1] || !args[2] || !args[3])
+	t_program	*program;
+
+	program = get_program();
+	if (argc < 4)
 		return (rt_perror((char *)__func__, WRONG_ARGUMENT_COUNT), -1);
 	obj->type = CAMERA;
-	get_program()->max_reflections = 0;
-	if (argc >= 5)
-		get_program()->max_reflections = ft_btoi(args[4], BASE10_STR);
-	get_program()->max_image_buffering = 0;
-	if (argc >= 6)
-		get_program()->max_image_buffering = ft_btoi(args[5], BASE10_STR);
-	get_program()->thread_count = 0;
-	if (argc >= 7)
-	{
-		get_program()->thread_count = ft_btoi(args[6], BASE10_STR);
-		if (get_program()->thread_count > MAX_THREAD_COUNT)
-			get_program()->thread_count = MAX_THREAD_COUNT;
-	}
+	if (additional_args(argc, args, program) < 0)
+		return (-1);
 	obj->s_camera.pos = atov(args[1]);
 	if (!obj->s_camera.pos)
 		return (-1);
