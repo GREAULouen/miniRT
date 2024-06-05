@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:06:28 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/06/05 14:26:50 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/05 16:12:53 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	resize_hook(int32_t width, int32_t height, void *param)
 	update_viewport(get_object(CAMERA));
 	free(program->avg_buffer);
 	program->avg_buffer = ft_calloc(program->canvas_width
-		* program->canvas_height, sizeof(t_vector3));
+			* program->canvas_height, sizeof(t_vector3));
 	if (!program->avg_buffer)
 		return ;
 	program->image_count = 0;
