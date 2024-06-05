@@ -6,14 +6,14 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/04 15:11:29 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/05 16:20:34 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SCENE_OBJECT_H
 # define SCENE_OBJECT_H
 
-typedef double t_matrix[3][3];
+typedef double				t_matrix[3][3];
 
 typedef enum e_scene_object_type
 {
@@ -38,9 +38,9 @@ typedef enum e_scene_object_type
 
 typedef struct s_scene_object
 {
-	uint32_t	color;
-	double		shininess;
-	double		reflectiveness;
+	uint32_t				color;
+	double					shininess;
+	double					reflectiveness;
 	t_scene_object_type		type;
 	union {
 		struct
@@ -98,20 +98,27 @@ typedef struct s_scene_object
 
 /*	~~~~~~~~~~~~~~~~ CREATION ~~~~~~~~~~~~~~~~	*/
 
-typedef int	(*t_obj_creator)(t_scene_object *, int, char **);
+typedef int					(*t_obj_creator)(t_scene_object *, int, char **);
 
-int							create_ambient_light(t_scene_object *obj, int argc, char **args);
-int							create_spot_light(t_scene_object *obj, int argc, char **args);
-int							create_camera(t_scene_object *obj, int argc, char **args);
+int							create_ambient_light(t_scene_object *obj, int argc,
+								char **args);
+int							create_spot_light(t_scene_object *obj, int argc,
+								char **args);
+int							create_camera(t_scene_object *obj, int argc,
+								char **args);
 void						update_viewport(t_scene_object *obj);
-int							create_plane(t_scene_object *obj, int argc, char **args);
-int							create_sphere(t_scene_object *obj, int argc, char **args);
-int							create_cylinder(t_scene_object *obj, int argc, char **args);
-int							create_cone(t_scene_object *obj, int argc, char **args);
+int							create_plane(t_scene_object *obj, int argc,
+								char **args);
+int							create_sphere(t_scene_object *obj, int argc,
+								char **args);
+int							create_cylinder(t_scene_object *obj, int argc,
+								char **args);
+int							create_cone(t_scene_object *obj, int argc,
+								char **args);
 
 /*	~~~~~~~~~~~~~~~~ CLEANUP ~~~~~~~~~~~~~~~~	*/
 
-typedef void	(*t_obj_cleanup)(t_scene_object *);
+typedef void				(*t_obj_cleanup)(t_scene_object *);
 
 void						cleanup_spot_light(t_scene_object *obj);
 void						cleanup_camera(t_scene_object *obj);
@@ -122,19 +129,27 @@ void						cleanup_cone(t_scene_object *obj);
 
 /*	~~~~~~~~~~~~ INTERSECTION_CALC ~~~~~~~~~~~~	*/
 
-typedef double	(*t_obj_intersect)(t_vector3 *, t_vector3 *, t_scene_object *, int (*)(double));
+typedef double				(*t_obj_intersect)(t_vector3 *, t_vector3 *,
+								t_scene_object *, int (*)(double));
 
-double						intersect_sphere(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
-double						intersect_plane(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
-double						intersect_cone(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
+double						intersect_sphere(t_vector3 *og, t_vector3 *ray,
+								t_scene_object *obj, int (*is_valid)(double));
+double						intersect_plane(t_vector3 *og, t_vector3 *ray,
+								t_scene_object *obj, int (*is_valid)(double));
+double						intersect_cone(t_vector3 *og, t_vector3 *ray,
+								t_scene_object *obj, int (*is_valid)(double));
 
 /*	~~~~~~~~~~~~~~~ NORMAL_CALC ~~~~~~~~~~~~~~~	*/
 
-typedef t_vector3	*(*t_obj_normal)(t_vector3 *, t_vector3 *, t_scene_object *);
+typedef t_vector3*			(*t_obj_normal)(t_vector3 *, t_vector3 *,
+								t_scene_object *);
 
-t_vector3					*normal_sphere(t_vector3 *og, t_vector3 *point, t_scene_object *obj);
-t_vector3					*normal_plane(t_vector3 *og, t_vector3 *point, t_scene_object *obj);
-t_vector3					*normal_cone(t_vector3 *og, t_vector3 *point, t_scene_object *obj);
+t_vector3					*normal_sphere(t_vector3 *og, t_vector3 *point,
+								t_scene_object *obj);
+t_vector3					*normal_plane(t_vector3 *og, t_vector3 *point,
+								t_scene_object *obj);
+t_vector3					*normal_cone(t_vector3 *og, t_vector3 *point,
+								t_scene_object *obj);
 
 /*	~~~~~~~~~~~~~~~~~ GETTERS ~~~~~~~~~~~~~~~~~	*/
 
