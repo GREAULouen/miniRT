@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:51 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/05 14:36:58 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/05 14:50:05 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,16 @@ typedef struct s_utils
 	uint32_t	reflected_color;
 	t_vector3	refl;
 }				t_utils;
+
+typedef struct s_l_utils
+{
+	double		obj_shi;
+	double		n_dot_l;
+	double		r_dot_c;
+	double		total_intensity;
+	uint32_t	total_color;
+	int			index;
+}				t_l_utils;
 
 void			*init_ray(void *arg);
 void			reflected_ray(t_vector3 *ray, t_vector3 *normal, t_vector3 *res);
