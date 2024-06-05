@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   resize_hook.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 12:06:28 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/05/28 15:32:16 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/06/05 14:26:50 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,17 @@ void	set_width_height(int32_t width, int32_t height)
 
 void	resize_hook(int32_t width, int32_t height, void *param)
 {
+	t_program	*program;
+
+	program = get_program();
 	(void) param;
 	set_width_height(width, height);
-	mlx_resize_image(get_program()->image, width, height);
+	mlx_resize_image(program->image, width, height);
 	update_viewport(get_object(CAMERA));
+	free(program->avg_buffer);
+	program->avg_buffer = ft_calloc(program->canvas_width
+		* program->canvas_height, sizeof(t_vector3));
+	if (!program->avg_buffer)
+		return ;
+	program->image_count = 0;
 }

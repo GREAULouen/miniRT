@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:21:31 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/30 16:05:05 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/05 14:26:02 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	cleanup_program(void)
 			get_obj_cleanup()[program->objects[index].type]
 				(&program->objects[index]);
 	free(program->objects);
+	free(program->avg_buffer);
 }
 
 void	part_cleanup_program(int last)
