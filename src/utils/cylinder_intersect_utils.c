@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:09:43 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/06/05 15:37:15 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/06/05 16:26:36 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,13 @@ double	intersect_cylinder_side(t_is_cylinder *is_cylinder,
 		* (is_cylinder->dot_pos_cross_ray_dir
 			* is_cylinder->dot_pos_cross_ray_dir);
 	if (is_cylinder->delta < 0)
-		return (INFINITY);
+		return (free(is_cylinder->cross_pos_dir),
+			free(is_cylinder->cross_ray_dir), INFINITY);
 	is_cylinder->delta = sqrt(is_cylinder->delta);
 	is_cylinder->dot_crossraydir_crossposdir = ft_dot_product(
 			is_cylinder->cross_ray_dir,
 			is_cylinder->cross_pos_dir);
 	free(is_cylinder->cross_pos_dir);
+	free(is_cylinder->cross_ray_dir);
 	return (closest_intersection_cylinder(is_cylinder, is_valid));
 }
