@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:15:03 by lgreau            #+#    #+#             */
-/*   Updated: 2024/05/31 11:20:09 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/05 14:07:35 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,15 @@ static int	save_object(char *line, uint8_t *unique_obj_count)
 	if (type < 0)
 		return (free_arr(splt, -1, 1), -1);
 	if (type == AMBIENT_LIGHT && (*unique_obj_count & UNIQUE_OBJ_COUNT_A))
-		return (rt_perror((char *)__func__, TOO_MUCH_AMBIENT_LIGHT), free_arr(splt, -1, 1), -1);
+		return (rt_perror((char *)__func__, TOO_MUCH_AMBIENT_LIGHT),
+			free_arr(splt, -1, 1), -1);
 	*unique_obj_count |= ((type == AMBIENT_LIGHT) * UNIQUE_OBJ_COUNT_A);
 	if (type == CAMERA && (*unique_obj_count & UNIQUE_OBJ_COUNT_C))
-		return (rt_perror((char *)__func__, TOO_MUCH_CAMERA), free_arr(splt, -1, 1), -1);
+		return (rt_perror((char *)__func__, TOO_MUCH_CAMERA),
+			free_arr(splt, -1, 1), -1);
 	*unique_obj_count |= ((type == CAMERA) * UNIQUE_OBJ_COUNT_C);
-	res = get_obj_creator()[type](&get_program()->objects[count++], get_length(splt), splt);
+	res = get_obj_creator()[type](&get_program()->objects[count++],
+			get_length(splt), splt);
 	return (free_arr(splt, -1, 1), res);
 }
 
@@ -91,8 +94,9 @@ static int	read_file(uint8_t *unique_obj_count)
 	count = -1;
 	while (line)
 	{
-		if (line[0] && line[0] != '#' && ++count > -1 && save_object(line, unique_obj_count) < 0)
-			return (free(line), part_cleanup_program(count), -1);	// TODO : free alerady created objects
+		if (line[0] && line[0] != '#' && ++count > -1
+			&& save_object(line, unique_obj_count) < 0)
+			return (free(line), part_cleanup_program(count), -1);
 		free(line);
 		line = ft_get_next_line_nonl(fd);
 	}
@@ -106,15 +110,11 @@ int	parse_input(void)
 	uint8_t	unique_objects_count;
 
 	unique_objects_count = 0b0;
-	printf("program state:\n");
-	printf("  |- file_name: %s\n", get_program()->file_name);
 	if (init_objects() < 0)
 		return (-1);
-	printf("  |- object_count: %d\n", get_program()->object_count);
 	if (read_file(&unique_objects_count) < 0)
 		return (free(get_program()->objects), -1);
 	if (!(unique_objects_count & UNIQUE_OBJ_COUNT_C))
 		return (rt_perror((char *)__func__, NO_CAMERA), cleanup_program(), -1);
-	print_objects();
 	return (0);
 }
