@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:47:35 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/03 15:00:24 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/05 16:20:46 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@ t_scene_object	*get_object(int type);
 /*	~~~~~~~~~~~~~~~ INTERSECT ~~~~~~~~~~~~~~~~	*/
 
 t_vector3		*sol_to_point(double intersect, t_vector3 *ray, t_vector3 *og);
-double			closest_intersection(double t1, double t2, t_vector3 *ray, t_vector3 *og);
+double			closest_intersection(double t1, double t2, t_vector3 *ray,
+					t_vector3 *og);
 int				valid_sol_from_cam(double sol);
 int				valid_sol_till_spot(double sol);
 int				solve_quadratic(double a, double b, double c, double sol[2]);
-int				is_in_plane(double sol, t_vector3 *ray, t_vector3 *og, t_scene_object *obj);
+int				is_in_plane(double sol, t_vector3 *ray, t_vector3 *og,
+					t_scene_object *obj);
 
 /*	~~~~~~~~~~~~~~~~ VECTOR3 ~~~~~~~~~~~~~~~~	*/
 
