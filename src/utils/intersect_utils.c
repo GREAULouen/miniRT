@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 11:50:18 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/03 15:00:10 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/05 16:10:15 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ t_vector3	*sol_to_point(double intersect, t_vector3 *ray, t_vector3 *og)
  * @param og
  * @return double
  */
-double	closest_intersection(double t1, double t2, t_vector3 *ray, t_vector3 *og)
+double	closest_intersection(double t1, double t2, t_vector3 *ray,
+	t_vector3 *og)
 {
 	t_vector3	*ogt1;
 	t_vector3	*ogt2;
@@ -72,10 +73,10 @@ int	valid_sol_till_spot(double sol)
 
 int	is_in_plane(double sol, t_vector3 *ray, t_vector3 *og, t_scene_object *obj)
 {
-	t_vector3 *pos;
-	t_vector3 u;
-	t_vector3 *v;
-	t_vector3 *to_pos;
+	t_vector3	*pos;
+	t_vector3	u;
+	t_vector3	*v;
+	t_vector3	*to_pos;
 
 	pos = sol_to_point(sol, ray, og);
 	if (fabs(obj->s_plane.normal->x) > fabs(obj->s_plane.normal->y))
@@ -86,7 +87,8 @@ int	is_in_plane(double sol, t_vector3 *ray, t_vector3 *og, t_scene_object *obj)
 	ft_v3_innormalize(&u);
 	ft_v3_innormalize(v);
 	to_pos = ft_v3_dir(obj->s_plane.pos, pos);
-	if (fabs(ft_dot_product(to_pos, &u)) > obj->s_plane.width / 2.0 || fabs(ft_dot_product(to_pos, v)) > obj->s_plane.height / 2.0)
+	if (fabs(ft_dot_product(to_pos, &u)) > obj->s_plane.width / 2.0
+		|| fabs(ft_dot_product(to_pos, v)) > obj->s_plane.height / 2.0)
 		return (free(v), free(to_pos), free(pos), 0);
 	return (free(v), free(to_pos), free(pos), 1);
 }
