@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:58:46 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/06/04 15:52:01 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/05 14:05:11 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	loop_hook(void *param)
 	program = get_program();
 	thread_id = get_thread_ids();
 	(void) param;
-	if (program->max_image_buffering > 0 && program->image_count + 1 < program->max_image_buffering)
+	if (program->max_image_buffering > 0 && program->image_count + 1
+		< program->max_image_buffering)
 		++program->image_count;
 	if (program->thread_count <= 0)
 		init_ray((void *)0);
@@ -40,7 +41,8 @@ void	loop_hook(void *param)
 	{
 		index = -1;
 		while (++index < program->thread_count)
-			pthread_create(&program->rendering_thread[index], NULL, init_ray, (void *)&thread_id[index]);
+			pthread_create(&program->rendering_thread[index], NULL,
+				init_ray, (void *)&thread_id[index]);
 		index = -1;
 		while (++index < program->thread_count)
 			pthread_join(program->rendering_thread[index], NULL);
