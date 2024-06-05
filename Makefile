@@ -117,7 +117,6 @@ ${OBJ_DIR} :
 	@mkdir -p ${OBJ_DIR}
 
 ${LIBFT} :
-	@git submodule update --init --remote
 	@make -sC ${LIBFT_DIR} all
 
 ${LIBMLX42} :
