@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:50:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/05 18:28:28 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/05 18:43:56 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int	create_cylinder(t_scene_object *obj, int argc, char **args)
 	if (additional_args(obj, argc, args) < 0)
 		return (rt_perror((char *)__func__, REFL_OUT_OF_RANGE), -1);
 	obj->color = atoc(args[5]);
+	if (obj->color == (uint32_t)-1)
+		return (-1);
 	obj->s_cylinder.pos = atov(args[1]);
 	if (!obj->s_cylinder.pos)
 		return (-1);

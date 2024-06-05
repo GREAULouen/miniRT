@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 09:55:30 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/05 16:02:55 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/05 18:44:18 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	create_plane(t_scene_object *obj, int argc, char **args)
 		return (rt_perror((char *)__func__, WRONG_ARGUMENT_COUNT), -1);
 	obj->type = PLANE;
 	obj->color = atoc(args[3]);
-	if (additional_args(obj, argc, args) < 0)
+	if (obj->color == (uint32_t)-1 || additional_args(obj, argc, args) < 0)
 		return (-1);
 	obj->s_plane.pos = atov(args[1]);
 	if (!obj->s_plane.pos)

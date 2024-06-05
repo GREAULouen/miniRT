@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 10:53:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/05 16:29:46 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:33:53 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 
-// void	leaks(void)
-// {
-// 	system("leaks miniRT");
-// 	atexit(leaks);
-// }
+void	leaks(void)
+{
+	system("leaks miniRT");
+}
 
 int	main(int argc, char *argv[])
 {
+	atexit(leaks);
 	if (argc != 2 || !ft_endswith(argv[1], ".rt"))
 	{
 		rt_perror((char *)__func__, WRONG_PROGRAM_ARGUMENT);
