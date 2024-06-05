@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene_object_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 17:50:24 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/05 16:03:13 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/05 16:30:33 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ const t_obj_intersect	*get_obj_intersect(void)
 		NULL,
 		intersect_plane,
 		intersect_sphere,
-		NULL,
+		intersect_cylinder,
 		intersect_cone
 	};
 
@@ -63,7 +63,7 @@ const t_obj_normal	*get_obj_normal(void)
 		NULL,
 		normal_plane,
 		normal_sphere,
-		NULL,
+		normal_cylinder,
 		normal_cone
 	};
 

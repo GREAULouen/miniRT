@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_v3_math_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 11:58:36 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/03 14:32:55 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/04 19:29:42 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

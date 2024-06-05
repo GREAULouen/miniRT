@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   compute_light.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:05:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/05 14:56:34 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/05 16:30:22 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

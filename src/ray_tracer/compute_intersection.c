@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   compute_intersection.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:06:23 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/05 14:41:40 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/05 16:30:15 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -30,7 +30,10 @@ UTILS_SRCS =	quit_utils.c				\
 				intersect_utils.c			\
 				string_utils.c				\
 				quadratic_utils.c			\
-				matrix_utils.c
+				matrix_utils.c				\
+				cylinder_intersect_utils.c	\
+				cylinder_distance_utils.c	\
+				cylinder_normal_utils.c
 UTILS_OBJS =	${addprefix ${OBJ_DIR}/, ${notdir ${UTILS_SRCS:.c=.o}}}
 
 PARSER_SRCS =	parser.c
