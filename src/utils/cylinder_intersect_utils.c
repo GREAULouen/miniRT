@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 18:09:43 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/06/04 19:22:56 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:37:15 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ double	intersect_cylinder_endcaps(t_vector3 *og, t_vector3 *obj_org_pos,
 	distance[1] = ft_dot_product(obj->s_cylinder.dir, end2) / dot_dir_ray;
 	if (!intersect_endcaps_valid(distance[1], end2, ray, obj))
 		distance[1] = INFINITY;
+	free(end2);
 	return (closest_intersection(distance[0], distance[1], ray, og));
 }
 
@@ -104,5 +105,6 @@ double	intersect_cylinder_side(t_is_cylinder *is_cylinder,
 	is_cylinder->dot_crossraydir_crossposdir = ft_dot_product(
 			is_cylinder->cross_ray_dir,
 			is_cylinder->cross_pos_dir);
+	free(is_cylinder->cross_pos_dir);
 	return (closest_intersection_cylinder(is_cylinder, is_valid));
 }

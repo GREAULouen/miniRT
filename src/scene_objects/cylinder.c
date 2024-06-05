@@ -6,7 +6,7 @@
 /*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 10:50:58 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/04 19:22:09 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:33:08 by pgrossma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ double	intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj,
 	distance_endcap = intersect_cylinder_endcaps(og, is_cylinder.obj_org_pos,
 			ray, obj);
 	distance_side = intersect_cylinder_side(&is_cylinder, is_valid);
+	free(is_cylinder.obj_org_pos);
 	return (closest_intersection(distance_endcap, distance_side, ray, og));
 }
 
