@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene_object.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 13:50:25 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/05 16:29:15 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:30:13 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef enum e_scene_object_type
 # define COLOR_G 0x00FF00
 # define COLOR_B 0x0000FF
 
-# define EPSILON 0.0000001
+# define EPSILON 0.00001
 
 typedef struct s_scene_object
 {
@@ -102,8 +102,8 @@ typedef struct s_is_cylinder
 	t_scene_object	*obj;
 	double			delta;
 	double			t[4];
-	t_vector3 		*og;
-	t_vector3 		*ray;
+	t_vector3		*og;
+	t_vector3		*ray;
 	t_vector3		*cross_ray_dir;
 	t_vector3		*cross_pos_dir;
 	t_vector3		*obj_org_pos;
@@ -155,12 +155,20 @@ double						intersect_plane(t_vector3 *og, t_vector3 *ray,
 								t_scene_object *obj, int (*is_valid)(double));
 double						intersect_cone(t_vector3 *og, t_vector3 *ray,
 								t_scene_object *obj, int (*is_valid)(double));
-double						intersect_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, int (*is_valid)(double));
-double 						intersect_cylinder_endcaps(t_vector3 *og, t_vector3	*obj_org_pos, t_vector3 *ray, t_scene_object *obj);
-double						intersect_cylinder_side(t_is_cylinder *is_cylinder, int (*is_valid)(double));
-double						signed_distance_t_cylinder(t_vector3 *og, t_vector3 *ray, t_scene_object *obj, double distance);
-double						signed_distance_t_cylinder_point(t_vector3 *point, t_vector3 *og, t_scene_object *obj);
-t_vector3					*normal_sides(double signed_distance, t_vector3 *point, t_scene_object *obj);
+double						intersect_cylinder(t_vector3 *og, t_vector3 *ray,
+								t_scene_object *obj, int (*is_valid)(double));
+double						intersect_cylinder_endcaps(t_vector3 *og,
+								t_vector3	*obj_org_pos, t_vector3 *ray,
+								t_scene_object *obj);
+double						intersect_cylinder_side(t_is_cylinder *is_cylinder,
+								int (*is_valid)(double));
+double						signed_distance_t_cylinder(t_vector3 *og,
+								t_vector3 *ray, t_scene_object *obj,
+								double distance);
+double						signed_distance_t_cylinder_point(t_vector3 *point,
+								t_vector3 *og, t_scene_object *obj);
+t_vector3					*normal_sides(double signed_distance,
+								t_vector3 *point, t_scene_object *obj);
 
 /*	~~~~~~~~~~~~~~~ NORMAL_CALC ~~~~~~~~~~~~~~~	*/
 
@@ -173,7 +181,8 @@ t_vector3					*normal_plane(t_vector3 *og, t_vector3 *point,
 								t_scene_object *obj);
 t_vector3					*normal_cone(t_vector3 *og, t_vector3 *point,
 								t_scene_object *obj);
-t_vector3					*normal_cylinder(t_vector3 *og, t_vector3 *point, t_scene_object *obj);
+t_vector3					*normal_cylinder(t_vector3 *og, t_vector3 *point,
+								t_scene_object *obj);
 
 /*	~~~~~~~~~~~~~~~~~ GETTERS ~~~~~~~~~~~~~~~~~	*/
 

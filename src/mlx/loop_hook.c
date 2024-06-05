@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   loop_hook.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 14:58:46 by pgrossma          #+#    #+#             */
-/*   Updated: 2024/06/05 16:29:56 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:29:11 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

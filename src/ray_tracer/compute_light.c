@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   compute_light.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgrossma <pgrossma@student.42heilbronn.de> +#+  +:+       +#+        */
+/*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:05:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/05 16:30:22 by pgrossma         ###   ########.fr       */
+/*   Updated: 2024/06/05 18:28:22 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ static void	compute_spot_light(t_l_utils *utils, t_vector3 *point,
 				program->objects[utils->index].s_spot_light.intensity
 				* utils->n_dot_l / (ft_v3_length(point_to_light)),
 				program->objects[utils->index].color);
+		if (utils->obj_shi > 0.0)
+			compute_specular_light(utils, program, point, reflected);
 	}
-	if (utils->obj_shi > 0.0)
-		compute_specular_light(utils, program, point, reflected);
 	free(point_to_light);
 }
 

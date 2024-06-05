@@ -6,7 +6,7 @@
 /*   By: lgreau <lgreau@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 17:28:57 by lgreau            #+#    #+#             */
-/*   Updated: 2024/06/05 15:59:56 by lgreau           ###   ########.fr       */
+/*   Updated: 2024/06/05 17:34:05 by lgreau           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ double	intersect_cone(t_vector3 *og, t_vector3 *ray, t_scene_object *obj,
 	if (solve_quadratic(coef[0], coef[1], coef[2], sol) <= 0)
 		return (free(tmp[0]), INFINITY);
 	tmp[1] = sol_to_point(sol[0], &nv[0], &nv[1]);
-	if (!is_valid(sol[0]) || tmp[1]->z > 0 || tmp[1]->z > obj->s_cone.height)
+	if (!is_valid(sol[0]) || tmp[1]->z > 0 || tmp[1]->z < -obj->s_cone.height)
 		sol[0] = INFINITY;
 	tmp[2] = sol_to_point(sol[1], &nv[0], &nv[1]);
-	if (!is_valid(sol[1]) || tmp[2]->z > 0 || tmp[2]->z > obj->s_cone.height)
+	if (!is_valid(sol[1]) || tmp[2]->z > 0 || tmp[2]->z < -obj->s_cone.height)
 		sol[1] = INFINITY;
 	return (free(tmp[0]), free(tmp[1]), free(tmp[2]),
 		closest_intersection(sol[0], sol[1], ray, og));
